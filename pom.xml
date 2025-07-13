@@ -29,6 +29,7 @@
 	            <include>**/*.sno</include>
 	            <include>**/*.tem</include>
 	            <include>**/*.urb</include>
+	            <include>**/*.pos</include>
 	        </includes>
         </resource>
     </resources>

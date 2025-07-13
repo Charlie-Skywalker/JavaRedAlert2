@@ -31,7 +31,7 @@ public class ZepIn extends Vehicle{
 		super.unitColor = color;
 		super.priority = 48;
 		try {
-			this.allFrames = VxlFileReader.convertPngFileToBuildingFrames("E:/zep_in.png",8,1);
+			this.allFrames = VxlFileReader.convertPngFileToBuildingFrames("E:/zep_in.png",8,1,color);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

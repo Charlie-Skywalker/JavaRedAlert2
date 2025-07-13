@@ -244,17 +244,17 @@ public class MainTest {
 //		CanvasPainter.drawGuidelines(GameContext.getMainPanel().getGuidelinesCanvas());
 		
 		Thread.sleep(500);
-		GrizTank gtank = new GrizTank(64*2-64,32*3-64,UnitColor.Blue);
+		GrizTank gtank = new GrizTank(64*2-64,32*3-64,UnitColor.Orange);
 		Constructor.putOneShapeUnit(gtank, scenePanel);//灰熊坦克
 //		
 		CenterPoint cc = PointUtil.getCenterPoint(300, 100);
-		XiniuTank2 xt2 = new XiniuTank2(cc.getX()-64,cc.getY()-64,UnitColor.Blue);
+		XiniuTank2 xt2 = new XiniuTank2(cc.getX()-64,cc.getY()-64,UnitColor.Orange);
 		Constructor.putOneShapeUnit(xt2, scenePanel);//犀牛坦克
 		
 		Thread.sleep(1000);
 		
 		CenterPoint dd = PointUtil.getCenterPoint(600, 450);
-		Mcv mcv = new Mcv(dd.getX()-64,dd.getY()-64,UnitColor.Blue);//基地车
+		Mcv mcv = new Mcv(dd.getX()-64,dd.getY()-64,UnitColor.Orange);//基地车
 		Constructor.putOneShapeUnit(mcv, scenePanel);
 		
 //		Thread.sleep(3000);

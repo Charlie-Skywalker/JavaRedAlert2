@@ -24,7 +24,7 @@ public class ShapeUnitFrame {
 	private int realPartWidth;//有效宽度   动态图是几个shp文件拼起来的,鉴于这个变量目前没什么用  就先不计算它了  挺麻烦的
 	private int realPartHeight;//有效高度
 	
-	private List<ColorPoint> colorPointList;//含有颜色信息的像素坐标
+	private List<ColorPoint> colorPointList;//含有队伍颜色信息的像素坐标
 	
 	public ShapeUnitFrame() {
 		

@@ -25,7 +25,7 @@ public class XiniuTank2 extends Vehicle{
 	 * 而是利用车身、炮塔结合绘制出来的图片,因为车身和炮塔应该有一样的绘制优先级
 	 * 
 	 */
-	public XiniuTank2(int positionX,int positionY,UnitColor color) {
+	public XiniuTank2(int positionX,int positionY,UnitColor unitColor) {
 		super.initVehicleParam(positionX,positionY, unitColor, "htnk");
 		//定义名称
 		super.unitName = "犀牛坦克";
