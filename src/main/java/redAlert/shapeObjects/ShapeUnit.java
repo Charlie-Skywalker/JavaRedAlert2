@@ -66,6 +66,10 @@ public abstract class ShapeUnit implements Comparable<ShapeUnit>{
 	 */
 	public int unitNo;
 	/**
+	 * 指挥官唯一编号
+	 */
+	public int commanderNo;
+	/**
 	 * 阵营颜色
 	 * null表示不含有阵营颜色信息
 	 * 为什么ShapeUnit有颜色属性?为什么不安排在Building中设置此参数
@@ -187,6 +191,15 @@ public abstract class ShapeUnit implements Comparable<ShapeUnit>{
 	public void setUnitNo(int unitNo) {
 		this.unitNo = unitNo;
 	}
+
+	public int getCommanderNo() {
+		return commanderNo;
+	}
+
+	public void setCommanderNo(int commanderNo) {
+		this.commanderNo = commanderNo;
+	}
+
 	public int getCenterOffX() {
 		return centerOffX;
 	}

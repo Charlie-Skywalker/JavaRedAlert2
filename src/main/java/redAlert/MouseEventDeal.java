@@ -33,13 +33,7 @@ import redAlert.militaryBuildings.AfWeth;
 import redAlert.militaryBuildings.AfYard;
 import redAlert.militaryBuildings.SfMisl;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
-import redAlert.shapeObjects.Bloodable;
-import redAlert.shapeObjects.Building;
-import redAlert.shapeObjects.Expandable;
-import redAlert.shapeObjects.MovableUnit;
-import redAlert.shapeObjects.ShapeUnit;
-import redAlert.shapeObjects.Soldier;
-import redAlert.shapeObjects.Vehicle;
+import redAlert.shapeObjects.*;
 import redAlert.tabIcon.Tab00Manager;
 import redAlert.tabIcon.Tab01Manager;
 import redAlert.utilBean.CenterPoint;
@@ -266,6 +260,64 @@ public class MouseEventDeal {
 									}
 								}
 								
+							}
+							return;
+						}
+
+						/**
+						 * 选中敌方单位
+						 */
+						if (MainTest.mouseStatus == MouseStatus.PreSingleSelectEnemy) {
+							//看是否有选中单位
+							CenterPoint centerPoint = coord.getCenterPoint();
+							if (!ShapeUnitResourceCenter.selectedMovableUnits.isEmpty()
+									&&centerPoint.isExistSingleSelectUnit()) {
+								ShapeUnit selectUnit = centerPoint.mouseClickGetUnit();
+								if (GameContext.getCommanderNo() != selectUnit.getCommanderNo()) {
+//									// 敌方单位
+//									if (selectUnit instanceof Vehicle) {
+//										Vehicle enemyVehicleUnit = (Vehicle) selectUnit;
+//										// 遍历已选己方作战单位，触发攻击动作
+//										for (int i = 0; i < ShapeUnitResourceCenter.selectedMovableUnits.size(); i++) {
+//											MovableUnit unit = ShapeUnitResourceCenter.selectedMovableUnits.get(i);
+//											if (unit instanceof Attackable) {
+//												Attackable myCombatUnit = (Attackable) unit;
+//												if (myCombatUnit.isAttackable()) {
+//													myCombatUnit.attack(enemyVehicleUnit);
+//												}
+//											}
+//										}
+//									}
+//									//敌方士兵
+//									if (selectUnit instanceof Soldier) {
+//										Soldier enemySoldierUnit = (Soldier) selectUnit;
+//										// 遍历已选己方作战单位，触发攻击动作
+//										for (int i = 0; i < ShapeUnitResourceCenter.selectedMovableUnits.size(); i++) {
+//											MovableUnit unit = ShapeUnitResourceCenter.selectedMovableUnits.get(i);
+//											if (unit instanceof Attackable) {
+//												Attackable myCombatUnit = (Attackable) unit;
+//												if (myCombatUnit.isAttackable()) {
+//													myCombatUnit.attack(enemySoldierUnit);
+//												}
+//											}
+//										}
+//									}
+									//敌方建筑
+									if (selectUnit instanceof Building) {
+										Building enemyBuildingUnit = (Building) selectUnit;
+										// 遍历已选己方作战单位，触发攻击动作
+										for (int i = 0; i < ShapeUnitResourceCenter.selectedMovableUnits.size(); i++) {
+											MovableUnit unit = ShapeUnitResourceCenter.selectedMovableUnits.get(i);
+											if (unit instanceof Attackable) {
+												Attackable myCombatUnit = (Attackable) unit;
+												if (myCombatUnit.isAttackable()) {
+													System.err.println("设置攻击目标");
+													myCombatUnit.setAttackTarget(enemyBuildingUnit);
+												}
+											}
+										}
+									}
+								}
 							}
 							return;
 						}
@@ -629,7 +681,7 @@ public class MouseEventDeal {
 							}else {
 								scenePanel.setLastMoveX(mapX);
 								scenePanel.setLastMoveY(mapY);
-								
+
 								CenterPoint centerPoint = PointUtil.getCenterPoint(coord.getMapX(), coord.getMapY());
 								CenterPoint lastCenterPoint = scenePanel.getLastMoveCenterPoint();
 								if(centerPoint.equals(lastCenterPoint)) {
@@ -805,42 +857,56 @@ public class MouseEventDeal {
 				MainTest.mouseStatus = MouseStatus.UnitMove;
 			}else {
 				ShapeUnit unitUnderMouse = centerPoint.mouseClickGetUnit();
-				
-				if(unitUnderMouse instanceof Expandable) {//可部署
-					if(ShapeUnitResourceCenter.selectedMovableUnits.size()==1) {
-						ShapeUnit selectedShapeUnit = ShapeUnitResourceCenter.selectedMovableUnits.get(0);
-						if(unitUnderMouse.equals(selectedShapeUnit)) {
-							Expandable ex = (Expandable)unitUnderMouse;
-							if(ex.isExpandable()) {
-								//部署鼠标
-								MainTest.mouseStatus = MouseStatus.UnitExpand;
-							}else {
-								//禁止部署鼠标
-								MainTest.mouseStatus = MouseStatus.UnitNoExpand;
+
+				if (unitUnderMouse.getCommanderNo() == 0) {
+					// 无阵营/中立 单位
+
+					// 禁止移动
+					MainTest.mouseStatus = MouseStatus.UnitNoMove;
+				} else if (GameContext.getCommanderNo() == unitUnderMouse.getCommanderNo()) {
+					// 当前阵营单位
+
+					if (unitUnderMouse instanceof Expandable) {//可部署
+						if (ShapeUnitResourceCenter.selectedMovableUnits.size() == 1) {
+							ShapeUnit selectedShapeUnit = ShapeUnitResourceCenter.selectedMovableUnits.get(0);
+							if (unitUnderMouse.equals(selectedShapeUnit)) {
+								Expandable ex = (Expandable) unitUnderMouse;
+								if (ex.isExpandable()) {
+									//部署鼠标
+									MainTest.mouseStatus = MouseStatus.UnitExpand;
+								} else {
+									//禁止部署鼠标
+									MainTest.mouseStatus = MouseStatus.UnitNoExpand;
+								}
+							} else {
+								//单选鼠标
+								MainTest.mouseStatus = MouseStatus.PreSingleSelect;
 							}
-						}else {
-							//单选鼠标
-							MainTest.mouseStatus = MouseStatus.PreSingleSelect;
+						} else {
+							if (ShapeUnitResourceCenter.selectedMovableUnits.contains(unitUnderMouse)) {
+								//禁止移动
+								MainTest.mouseStatus = MouseStatus.UnitNoMove;
+							} else {
+								//单选鼠标
+								MainTest.mouseStatus = MouseStatus.PreSingleSelect;
+							}
 						}
-					}else {
-						if(ShapeUnitResourceCenter.selectedMovableUnits.contains(unitUnderMouse)) {
+					} else {
+						// 如果鼠标上的单位是选中的单位中的某个,则是禁止移动鼠标,否则是单选鼠标
+						if (ShapeUnitResourceCenter.selectedMovableUnits.contains(unitUnderMouse)) {
 							//禁止移动
 							MainTest.mouseStatus = MouseStatus.UnitNoMove;
-						}else {
-							//单选鼠标
+						} else {
+							// 预选中当前玩家单位
 							MainTest.mouseStatus = MouseStatus.PreSingleSelect;
 						}
 					}
-				}else {
-					
-					//如果鼠标上的单位是选中的单位中的某个,则是禁止移动鼠标,否则是单选鼠标
-					if(ShapeUnitResourceCenter.selectedMovableUnits.contains(unitUnderMouse)) {
-						//禁止移动
-						MainTest.mouseStatus = MouseStatus.UnitNoMove;
-					}else {
-						//单选鼠标
-						MainTest.mouseStatus = MouseStatus.PreSingleSelect;
-					}
+				} else {
+					// 其他阵营单位
+
+					// 预选中敌方单位
+					System.err.println(String.format("当前阵营编号:%d,预选单位阵营编号：%d", GameContext.getCommanderNo(), unitUnderMouse.getCommanderNo()));
+					MainTest.mouseStatus = MouseStatus.PreSingleSelectEnemy;
 				}
 				
 			}

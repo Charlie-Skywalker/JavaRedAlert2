@@ -76,7 +76,8 @@ public class Mcv extends Vehicle implements Expandable{
 				this.getBloodBar().setEnd(true);
 				this.setVisible(false);
 				this.setEnd(true);
-				AfCnst afCnst = new AfCnst(cp,GlobalConfig.sceneType, GlobalConfig.unitColor);
+				AfCnst afCnst = new AfCnst(cp,GlobalConfig.sceneType, this.unitColor);
+				afCnst.setCommanderNo(this.getCommanderNo());
 				Constructor.putOneBuilding(afCnst,GameContext.getMainPanel());//盟军基地
 				try {
 					Thread.sleep(50);
