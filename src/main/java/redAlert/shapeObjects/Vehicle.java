@@ -82,7 +82,8 @@ public abstract class Vehicle extends MovableUnit implements Turnable,Attackable
 	 * 载具默认是可以攻击的
 	 */
 	public boolean attackable = true;
-	
+
+	public ReentrantLock lock = new ReentrantLock();
 	
 	
 	
@@ -539,23 +540,38 @@ public abstract class Vehicle extends MovableUnit implements Turnable,Attackable
 		}
 		
 	}
-	
+
 	/**
 	 * 载具的开火方法默认调用炮塔的开火方法
-	 * 
+	 *
 	 * 有特殊攻击方法的载具，由载具的实现类重写此方法
 	 */
 	@Override
-	public void attack(Building building) {
+	public void attack() {
 		if(isAttackable()) {
 			if(turret!=null) {
-				turret.attack(building);
+				if(turret.getAttackBuilding() == null){
+					return;
+				}
+				// 检查是否单位被上锁，若被上锁则不进行攻击行为，避免出现不跟手操作
+				if(!lock.isLocked()){
+					turret.attack(turret.getAttackBuilding());
+				}
 			}
-			
 		}
 	}
-	
-	
+
+	@Override
+	public void setAttackTarget(Bloodable attackTarget) {
+		// 修改攻击目标时，应先上锁，防止单位出现意外的攻击行为
+		lock.lock();
+		if (attackTarget instanceof Building) {
+			if (turret != null) {
+				turret.setAttackBuilding((Building) attackTarget);
+			}
+		}
+		lock.unlock();
+	}
 
 	public int getMaxHp() {
 		return maxHp;

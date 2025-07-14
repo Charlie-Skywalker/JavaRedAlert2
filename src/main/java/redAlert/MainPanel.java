@@ -291,6 +291,9 @@ public class MainPanel extends JPanel{
 						if(MainTest.mouseStatus==MouseStatus.PreSingleSelect) {
 							drawPreSingleSelectMouseCursor(mousePoint);
 						}
+						if(MainTest.mouseStatus==MouseStatus.PreSingleSelectEnemy) {
+							drawPreSingleSelectEnemyMouseCursor(mousePoint);
+						}
 						if(MainTest.mouseStatus==MouseStatus.Construct) {
 							drawDefaultMouseCursor(mousePoint);
 						}
@@ -660,6 +663,20 @@ public class MainPanel extends JPanel{
 		positionY = mouesePoint.y-21;
 		g2d.dispose();
 	}
+
+	/**
+	 * 绘制预单选样式的鼠标
+	 */
+	private void drawPreSingleSelectEnemyMouseCursor(Point mouesePoint) {
+		CanvasPainter.clearImage(this.mouseCursorImage);
+		Graphics2D g2d = this.mouseCursorImage.createGraphics();
+		BufferedImage defaultMouse = Mouse.getPreSingleSelectEnemyCursorImage();
+		g2d.drawImage(defaultMouse, 0, 0, null);
+		positionX = mouesePoint.x-27;
+		positionY = mouesePoint.y-21;
+		g2d.dispose();
+	}
+
 	/**
 	 * 绘制单位移动指针样式的鼠标
 	 */

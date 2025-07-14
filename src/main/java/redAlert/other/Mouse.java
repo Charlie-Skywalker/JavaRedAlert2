@@ -92,6 +92,15 @@ public class Mouse {
 		ShapeUnitFrame suf = mouseShapeFrames.get(index);
 		return suf.getImg();
 	}
+
+	/**
+	 * 获取预单选敌方鼠标指针图片
+	 */
+	public static BufferedImage getPreSingleSelectEnemyCursorImage() {
+		int index = 53 + (int) MainPanel.frameCount / 4 % 5;//除以4目的在于控制帧率,5表示动画图像有5帧画面
+		ShapeUnitFrame suf = mouseShapeFrames.get(index);
+		return suf.getImg();
+	}
 	
 	/**
 	 * 获取单位移动指针图片

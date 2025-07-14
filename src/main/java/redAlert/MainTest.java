@@ -60,6 +60,12 @@ public class MainTest {
 		 */
 		PreSingleSelect("预单选单位或建筑"),
 		/**
+		 * 预选敌方状态  鼠标指针为PreSingleSelectEnemy样式
+		 * 当鼠标为空闲状态时,放在单位上进入此状态
+		 * 当鼠标移出单位上时,回到空闲状态
+		 */
+		PreSingleSelectEnemy("预单选敌方单位或建筑"),
+		/**
 		 * 选中移动单位
 		 */
 		UnitMove("选中可移动单位"),
@@ -99,7 +105,9 @@ public class MainTest {
 		
 		jf.add(BorderLayout.CENTER,scenePanel);//格式布局放中间
 		scenePanel.setCursor(Mouse.getNoneCursor());//设置一个看不见的鼠标
-		
+		GameContext.setCommanderNo(1);//设置指挥官编号
+		GameContext.setUnitColor(UnitColor.Green);//设置指挥官编号
+
 		//选项卡页面
 		OptionsPanel optionsPanel = new OptionsPanel();
 		jf.add(BorderLayout.EAST,optionsPanel);
@@ -130,7 +138,9 @@ public class MainTest {
 		
 		
 		int time = 2000;
-		
+		int enemyCommandNo = 2,enemyCommandNo2=3;//敌方指挥官编号
+		UnitColor enemyUnitColor = UnitColor.Red, enemyUnitColor2 = UnitColor.Yellow;//敌方指挥官编号
+
 		//改变建筑颜色的操作
 		/*
 		AfAirc afAric = new AfAirc(SceneType.TEM,UnitColor.LightBlue,500,550);
@@ -164,11 +174,13 @@ public class MainTest {
 //		Constructor.putOneBuilding(new AfOrep(SceneType.TEM,UnitColor.Green,515,800),scenePanel);//矿石精炼厂
 //		Thread.sleep(time);
 		CenterPoint cp = PointUtil.getCenterPoint(800, 550);
-		AfPill targetPill = new AfPill(cp,SceneType.TEM,UnitColor.Green);
+		AfPill targetPill = new AfPill(cp,SceneType.TEM,GameContext.getUnitColor());
+		targetPill.setCommanderNo(GameContext.getCommanderNo());//设置当前指挥官编号
 		Constructor.putOneBuilding(targetPill,scenePanel);//机枪碉堡
 		
 		CenterPoint cp2222 = PointUtil.getCenterPoint(200, 550);
-		AfPill targetPill2 = new AfPill(cp2222,SceneType.TEM,UnitColor.Red);
+		AfPill targetPill2 = new AfPill(cp2222,SceneType.TEM, enemyUnitColor);
+		targetPill2.setCommanderNo(enemyCommandNo);//设置敌方指挥官编号
 		Constructor.putOneBuilding(targetPill2,scenePanel);//机枪碉堡
 //		Thread.sleep(time);
 //		Constructor.putOneBuilding(new AfSam(SceneType.TEM,UnitColor.LightBlue,550,550),scenePanel);//爱国者飞弹
@@ -244,19 +256,28 @@ public class MainTest {
 //		CanvasPainter.drawGuidelines(GameContext.getMainPanel().getGuidelinesCanvas());
 		
 		Thread.sleep(500);
-		GrizTank gtank = new GrizTank(64*2-64,32*3-64,UnitColor.Orange);
+		GrizTank gtank = new GrizTank(64*2-64,32*3-64,GameContext.getUnitColor());
+		gtank.setCommanderNo(GameContext.getCommanderNo());//设置当前指挥官编号
 		Constructor.putOneShapeUnit(gtank, scenePanel);//灰熊坦克
 //		
 		CenterPoint cc = PointUtil.getCenterPoint(300, 100);
-		XiniuTank2 xt2 = new XiniuTank2(cc.getX()-64,cc.getY()-64,UnitColor.Orange);
+		XiniuTank2 xt2 = new XiniuTank2(cc.getX()-64,cc.getY()-64, enemyUnitColor);
+		xt2.setCommanderNo(enemyCommandNo);//设置敌方指挥官编号
 		Constructor.putOneShapeUnit(xt2, scenePanel);//犀牛坦克
 		
 		Thread.sleep(1000);
 		
 		CenterPoint dd = PointUtil.getCenterPoint(600, 450);
-		Mcv mcv = new Mcv(dd.getX()-64,dd.getY()-64,UnitColor.Orange);//基地车
+		Mcv mcv = new Mcv(dd.getX()-64,dd.getY()-64,GameContext.getUnitColor());//基地车
+		mcv.setCommanderNo(GameContext.getCommanderNo());//设置当前指挥官编号
 		Constructor.putOneShapeUnit(mcv, scenePanel);
-		
+
+		CenterPoint dd2 = PointUtil.getCenterPoint(400, 450);
+		Mcv mcv2 = new Mcv(dd2.getX()-64,dd2.getY()-64,enemyUnitColor);//基地车
+		mcv2.setCommanderNo(enemyCommandNo);//设置当前指挥官编号
+		Constructor.putOneShapeUnit(mcv2, scenePanel);
+		mcv2.expand();
+
 //		Thread.sleep(3000);
 //		mcv.status = Mcv.MCV_STATUS_EXPANDING;
 		
@@ -269,24 +290,29 @@ public class MainTest {
 		CenterPoint cp4 = PointUtil.getCenterPoint(375, 620);
 		
 		LittleCenterPoint lcp1Up = cp1.getUpLittleCenterPoint();
-		Sniper sniper1Lcp1Up = new Sniper(lcp1Up,UnitColor.Red);
+		Sniper sniper1Lcp1Up = new Sniper(lcp1Up, GameContext.getUnitColor());
 		sniper1Lcp1Up.setUnitName("狙击手0");
+		sniper1Lcp1Up.setCommanderNo(GameContext.getCommanderNo());
+
 		LittleCenterPoint lcp1Right = cp1.getRightLittleCenterPoint();
-		Sniper sniper1Lcp1Right = new Sniper(lcp1Right,UnitColor.Red);
+		Sniper sniper1Lcp1Right = new Sniper(lcp1Right, GameContext.getUnitColor());
 		sniper1Lcp1Right.setUnitName("狙击手2");
-		
+		sniper1Lcp1Right.setCommanderNo(GameContext.getCommanderNo());
+
 		Constructor.putOneShapeUnit(sniper1Lcp1Up, scenePanel);//狙击手
 		Constructor.putOneShapeUnit(sniper1Lcp1Right, scenePanel);//狙击手
 		
 		
 		LittleCenterPoint lcpRight = cp2.getRightLittleCenterPoint();
-		Sniper sniper3 = new Sniper(lcpRight,UnitColor.Red);
+		Sniper sniper3 = new Sniper(lcpRight,enemyUnitColor);
 		sniper3.setUnitName("狙击手3");
+		sniper3.setCommanderNo(enemyCommandNo);//设置敌方指挥官编号
 		Constructor.putOneShapeUnit(sniper3, scenePanel);//狙击手
 		
 		LittleCenterPoint lcpDown = cp3.getDownLittleCenterPoint();
-		Sniper sniper4 = new Sniper(lcpDown,UnitColor.Red);
+		Sniper sniper4 = new Sniper(lcpDown,enemyUnitColor2);
 		sniper4.setUnitName("狙击手4");
+		sniper4.setCommanderNo(enemyCommandNo2);//设置第三方指挥官编号
 		Constructor.putOneShapeUnit(sniper4, scenePanel);//狙击手
 		
 //		LittleCenterPoint lcp1 = cp4.getDownLittleCenterPoint();
@@ -318,10 +344,10 @@ public class MainTest {
 		
 		//简单的攻击效果
 		while(!targetPill.end) {
-			gtank.attack(targetPill);
+			gtank.attack();
 		}
 		while(!targetPill2.end) {
-			gtank.attack(targetPill2);
+			gtank.attack();
 		}
 		
 		

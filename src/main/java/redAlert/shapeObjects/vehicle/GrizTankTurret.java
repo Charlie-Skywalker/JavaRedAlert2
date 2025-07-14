@@ -37,9 +37,8 @@ public class GrizTankTurret extends TankTurret{
 	 */
 	@Override
 	public void attack(Building targetBuilding) {
-		
 		super.attackBuilding = targetBuilding;
-		
+
 		//攻击目标坐标
 		CenterPoint target = targetBuilding.getCurCenterPoint();
 		//载具当前所在中心点

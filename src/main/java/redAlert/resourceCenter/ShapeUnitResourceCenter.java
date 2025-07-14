@@ -19,10 +19,7 @@ import redAlert.militaryBuildings.AfPile;
 import redAlert.militaryBuildings.AfWeap;
 import redAlert.other.MoveLine;
 import redAlert.other.OneDamage;
-import redAlert.shapeObjects.Building;
-import redAlert.shapeObjects.MovableUnit;
-import redAlert.shapeObjects.PowerPlant;
-import redAlert.shapeObjects.ShapeUnit;
+import redAlert.shapeObjects.*;
 import redAlert.shapeObjects.soldier.Adog;
 import redAlert.shapeObjects.soldier.Engn;
 import redAlert.shapeObjects.soldier.Gi;
@@ -285,7 +282,7 @@ public class ShapeUnitResourceCenter {
 			Iterator<MovableUnit> iterator = movableUnitQueryList.iterator();
 			while(iterator.hasNext()) {
 				MovableUnit shapeUnit = iterator.next();
-				if(shapeUnit!=null) {
+				if(shapeUnit!=null && GameContext.getCommanderNo() == shapeUnit.getCommanderNo()) {
 					int centerX = shapeUnit.getCenterOffX()+shapeUnit.getPositionX();
 					int centerY = shapeUnit.getCenterOffY()+shapeUnit.getPositionY();
 					
@@ -667,6 +664,29 @@ public class ShapeUnitResourceCenter {
 			}
 		};
 		thread.start();
+
+		Thread attackThread = new Thread() {
+			public void run() {
+				while(true) {
+					try {
+						if(!ShapeUnitResourceCenter.movableUnitQueryList.isEmpty()){
+							for (MovableUnit movableUnit:movableUnitQueryList){
+								if(movableUnit instanceof Attackable){
+									Attackable compatUnit=(Attackable)movableUnit;
+									if(compatUnit.isAttackable()){
+										compatUnit.attack();
+									}
+								}
+							}
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+						continue;
+					}
+				}
+			}
+		};
+		attackThread.start();
 	}
 	
 	/**
