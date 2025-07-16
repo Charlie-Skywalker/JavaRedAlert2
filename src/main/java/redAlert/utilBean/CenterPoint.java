@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.locks.ReentrantLock;
 
+import lombok.Data;
 import redAlert.enums.BuildingAreaType;
 import redAlert.enums.OverlayType;
 import redAlert.enums.RampType;
@@ -26,6 +27,7 @@ import redAlert.utils.PointUtil;
  * 但是地块属性AreaType、OnAreaType 由类内部管理，不对外暴露
  * 
  */
+@Data
 public class CenterPoint {
 	
 	private static final int ox = 30;//菱形横半轴长
@@ -627,74 +629,13 @@ public class CenterPoint {
 		return PointUtil.fetchLittleCenterPoint(x, y1);
 	}
 	
-	public int getX() {
-		return x;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public int getY() {
-		return y;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
 	public boolean isInShadow() {
 		return isInShadow;
 	}
 	public void setInShadow(boolean isInShadow) {
 		this.isInShadow = isInShadow;
 	}
-	public int getTileIndex() {
-		return tileIndex;
-	}
-	public void setTileIndex(int tileIndex) {
-		this.tileIndex = tileIndex;
-	}
-	public Building getBuilding() {
-		return building;
-	}
-	public void setBuilding(Building building) {
-		this.building = building;
-	}
-	public Vehicle getVehicle() {
-		return vehicle;
-	}
-	public void setVehicle(Vehicle vehicle) {
-		this.vehicle = vehicle;
-	}
-	public List<Soldier> getSoldiers() {
-		return soldiers;
-	}
-	public void setSoldiers(List<Soldier> soldiers) {
-		this.soldiers = soldiers;
-	}
-	public RampType getRampType() {
-		return rampType;
-	}
-	public void setRampType(RampType rampType) {
-		this.rampType = rampType;
-	}
-	public TerrainType getTerrainType() {
-		return terrainType;
-	}
-	public void setTerrainType(TerrainType terrainType) {
-		this.terrainType = terrainType;
-	}
-	public OverlayType getOverlayType() {
-		return overlayType;
-	}
-	public void setOverlayType(OverlayType overlayType) {
-		this.overlayType = overlayType;
-	}
-	public BuildingAreaType getBuildingAreaType() {
-		return buildingAreaType;
-	}
-	public void setBuildingAreaType(BuildingAreaType buildingAreaType) {
-		this.buildingAreaType = buildingAreaType;
-	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);

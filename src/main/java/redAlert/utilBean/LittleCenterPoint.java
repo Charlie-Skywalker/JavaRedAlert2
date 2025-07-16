@@ -3,6 +3,7 @@ package redAlert.utilBean;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import lombok.Data;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import redAlert.enums.Direction;
@@ -28,6 +29,7 @@ import redAlert.utils.PointUtil;
  * 
  * 获取小中心点  一定从中心点的方法获取  且获取的中心点要么指定  要么随机
  */
+@Data
 public class LittleCenterPoint {
 
 	/**
@@ -227,36 +229,6 @@ public class LittleCenterPoint {
 		}
 		return PointUtil.fetchLittleCenterPoint(x1, y1);
 	}
-
-
-
-
-	public int getX() {
-		return x;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public int getY() {
-		return y;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
-	public Direction getDirection() {
-		return direction;
-	}
-	public void setDirection(Direction direction) {
-		this.direction = direction;
-	}
-	public Soldier getSoldier() {
-		return soldier;
-	}
-	public void setSoldier(Soldier soldier) {
-		this.soldier = soldier;
-	}
-
-
 
 
 	@Override

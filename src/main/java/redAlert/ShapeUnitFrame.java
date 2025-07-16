@@ -3,6 +3,7 @@ package redAlert;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import lombok.Data;
 import redAlert.utilBean.ColorPoint;
 import redAlert.utils.CanvasPainter;
 
@@ -14,6 +15,7 @@ import redAlert.utils.CanvasPainter;
  * 需要优化此类,图片中阵营颜色应该可以改变,增加一个表示颜色的集合,渲染时使用此集合来设定颜色
  * 这样在一个SHP加载完成后,再次建造此单位,不需要重复从硬盘中加载此资源
  */
+@Data
 public class ShapeUnitFrame {
 
 	private BufferedImage img;//图片
@@ -56,67 +58,4 @@ public class ShapeUnitFrame {
 		this.minY = minY;
 	}
 
-	public BufferedImage getImg() {
-		return img;
-	}
-
-	public void setImg(BufferedImage img) {
-		this.img = img;
-	}
-
-	public int getMinY() {
-		return minY;
-	}
-
-	public void setMinY(int minY) {
-		this.minY = minY;
-	}
-
-	public int getMinX() {
-		return minX;
-	}
-
-	public void setMinX(int minX) {
-		this.minX = minX;
-	}
-	
-
-	public int getMaxY() {
-		return maxY;
-	}
-
-	public void setMaxY(int maxY) {
-		this.maxY = maxY;
-	}
-
-	public int getMaxX() {
-		return maxX;
-	}
-
-	public void setMaxX(int maxX) {
-		this.maxX = maxX;
-	}
-
-	public int getRealPartWidth() {
-		return realPartWidth;
-	}
-
-	public void setRealPartWidth(int realPartWidth) {
-		this.realPartWidth = realPartWidth;
-	}
-
-	public int getRealPartHeight() {
-		return realPartHeight;
-	}
-
-	public void setRealPartHeight(int realPartHeight) {
-		this.realPartHeight = realPartHeight;
-	}
-	public List<ColorPoint> getColorPointList() {
-		return colorPointList;
-	}
-	public void setColorPointList(List<ColorPoint> colorPointList) {
-		this.colorPointList = colorPointList;
-	}
-	
 }

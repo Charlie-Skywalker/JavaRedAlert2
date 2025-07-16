@@ -18,6 +18,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JPanel;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -36,6 +38,8 @@ import redAlert.utils.TmpFileReader;
  * 游戏场景界面
  *
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class MainPanel extends JPanel{
 	
 	private static final long serialVersionUID = -682168191460964814L;
@@ -561,54 +565,7 @@ public class MainPanel extends JPanel{
 			
 	}
 	
-	
-	
-	
-	
-	public BufferedImage getMainInterface() {
-		return mainInterface;
-	}
 
-	public void setMainInterface(BufferedImage mainInterface) {
-		this.mainInterface = mainInterface;
-	}
-
-	public BufferedImage getCanvasFirst() {
-		return canvasFirst;
-	}
-
-	public void setCanvasFirst(BufferedImage canvasFirst) {
-		this.canvasFirst = canvasFirst;
-	}
-
-	public BufferedImage getGuidelinesCanvas() {
-		return guidelinesCanvas;
-	}
-
-	public void setGuidelinesCanvas(BufferedImage guidelinesCanvas) {
-		this.guidelinesCanvas = guidelinesCanvas;
-	}
-
-	public CenterPoint getLastMoveCenterPoint() {
-		return lastMoveCenterPoint;
-	}
-	public void setLastMoveCenterPoint(CenterPoint lastMoveCenterPoint) {
-		this.lastMoveCenterPoint = lastMoveCenterPoint;
-	}
-	public int getLastMoveX() {
-		return lastMoveX;
-	}
-	public void setLastMoveX(int lastMoveX) {
-		this.lastMoveX = lastMoveX;
-	}
-	public int getLastMoveY() {
-		return lastMoveY;
-	}
-	public void setLastMoveY(int lastMoveY) {
-		this.lastMoveY = lastMoveY;
-	}
-	
-	
 	/**
 	 * 表示鼠标指针的图片
 	 */

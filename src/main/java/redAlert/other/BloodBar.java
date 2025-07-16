@@ -2,6 +2,8 @@ package redAlert.other;
 
 import java.awt.Color;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import redAlert.shapeObjects.ShapeUnit;
 
 /**
@@ -14,6 +16,8 @@ import redAlert.shapeObjects.ShapeUnit;
  * 1/4以下是红色
  * 血最少的时候只有一个像素红
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
 public abstract class BloodBar extends ShapeUnit{
 	
 	/**
@@ -37,31 +41,6 @@ public abstract class BloodBar extends ShapeUnit{
 	public final Color yColor = new Color(240,240,0);//亚健康状态下的暗血条颜色
 	public final Color rColor = new Color(128,0,0);//不健康状态下的暗血条颜色
 
-	public int getCurHp() {
-		return curHp;
-	}
-	public void setCurHp(int curHp) {
-		this.curHp = curHp;
-	}
-	public int getMaxBloodNum() {
-		return maxBloodNum;
-	}
-	public void setMaxBloodNum(int maxBloodNum) {
-		this.maxBloodNum = maxBloodNum;
-	}
-	public int getMaxHp() {
-		return maxHp;
-	}
-	public void setMaxHp(int maxHp) {
-		this.maxHp = maxHp;
-	}
-	public int getCurBloodNum() {
-		return curBloodNum;
-	}
-	public void setCurBloodNum(int curBloodNum) {
-		this.curBloodNum = curBloodNum;
-	}
-	
 	/**
 	 * 重绘血量条
 	 */

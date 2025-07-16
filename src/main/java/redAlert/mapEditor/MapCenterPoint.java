@@ -1,10 +1,13 @@
 package redAlert.mapEditor;
 
+import lombok.Data;
+
 import java.util.Objects;
 
 /**
  * 地编专用的CenterPoint
  */
+@Data
 public class MapCenterPoint {
 
 	private static final int ox = 30;//菱形横半轴长
@@ -100,27 +103,6 @@ public class MapCenterPoint {
 		int x1 = x;
 		int y1 = y - oy*2;
 		return MapCenterPointUtil.fetchCenterPoint(x1, y1);
-	}
-	
-	
-	
-	public Tile getTile() {
-		return tile;
-	}
-	public void setTile(Tile tile) {
-		this.tile = tile;
-	}
-	public int getX() {
-		return x;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public int getY() {
-		return y;
-	}
-	public void setY(int y) {
-		this.y = y;
 	}
 	
 	@Override
