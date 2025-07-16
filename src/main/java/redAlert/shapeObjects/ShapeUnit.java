@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Objects;
 
+import lombok.Data;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
 import redAlert.ShapeUnitFrame;
@@ -18,6 +19,7 @@ import redAlert.utils.RandomUtil;
  * 
  * 绘制方块可以是建筑、人物、静态物、载具等任何可以在游戏主界面中绘制的东西
  */
+@Data
 public abstract class ShapeUnit implements Comparable<ShapeUnit>{
 
 	public ShapeUnit() {
@@ -128,110 +130,7 @@ public abstract class ShapeUnit implements Comparable<ShapeUnit>{
 	
 	
 	
-	public int getPriority() {
-		return priority;
-	}
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
-	public int getPositionX() {
-		return positionX;
-	}
-	public void setPositionX(int positionX) {
-		this.positionX = positionX;
-	}
-	public int getPositionY() {
-		return positionY;
-	}
-	public void setPositionY(int positionY) {
-		this.positionY = positionY;
-	}
-	public int getPositionMinX() {
-		return positionMinX;
-	}
-	public void setPositionMinX(int positionMinX) {
-		this.positionMinX = positionMinX;
-	}
-	public int getPositionMinY() {
-		return positionMinY;
-	}
-	public void setPositionMinY(int positionMinY) {
-		this.positionMinY = positionMinY;
-	}
-	public ShapeUnitFrame getCurFrame() {
-		return curFrame;
-	}
-	public void setCurFrame(ShapeUnitFrame curFrame) {
-		this.curFrame = curFrame;
-	}
-	public boolean isEnd() {
-		return end;
-	}
-	public void setEnd(boolean end) {
-		this.end = end;
-	}
-	public UnitColor getUnitColor() {
-		return unitColor;
-	}
-	public void setUnitColor(UnitColor unitColor) {
-		this.unitColor = unitColor;
-	}
-	public String getUnitName() {
-		return unitName;
-	}
-	public void setUnitName(String unitName) {
-		this.unitName = unitName;
-	}
-	public int getUnitNo() {
-		return unitNo;
-	}
-	public void setUnitNo(int unitNo) {
-		this.unitNo = unitNo;
-	}
-	public int getCenterOffX() {
-		return centerOffX;
-	}
-	public void setCenterOffX(int centerOffX) {
-		this.centerOffX = centerOffX;
-	}
-	public int getCenterOffY() {
-		return centerOffY;
-	}
-	public void setCenterOffY(int centerOffY) {
-		this.centerOffY = centerOffY;
-	}
-	public int getFrameSpeed() {
-		return frameSpeed;
-	}
-	public void setFrameSpeed(int frameSpeed) {
-		this.frameSpeed = frameSpeed;
-	}
-	public int getFrameNum() {
-		return frameNum;
-	}
-	public void setFrameNum(int frameNum) {
-		this.frameNum = frameNum;
-	}
-	public boolean isHided() {
-		return isHided;
-	}
-	public void setHided(boolean isHided) {
-		this.isHided = isHided;
-	}
-	public boolean isVisible() {
-		return isVisible;
-	}
-	public void setVisible(boolean isVisible) {
-		this.isVisible = isVisible;
-	}
-	public CenterPoint getCurCenterPoint() {
-		return curCenterPoint;
-	}
-	public void setCurCenterPoint(CenterPoint curCenterPoint) {
-		this.curCenterPoint = curCenterPoint;
-	}
-
-	/**
+    /**
 	 * 由于优先级比较
 	 * 先比较优先级,值越小的优先级越高，值越大的优先级越高
 	 * 优先级相同则minY越小优先级越高  
