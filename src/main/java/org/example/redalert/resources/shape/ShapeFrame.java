@@ -3,6 +3,9 @@ package org.example.redalert.resources.shape;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 图形帧数据
+ */
 public class ShapeFrame {
     public int mMinX;
     public int mMinY;

@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ShapeResource {
     private final ConcurrentHashMap<String, List<ShapeFrame>> mCache = new ConcurrentHashMap<>();
-    
+
     {
         Enumeration<URL> resources = GameResource.getResources("shp/");
         while (resources.hasMoreElements()) {
@@ -21,16 +21,17 @@ public class ShapeResource {
             mCache.put(name, new ArrayList<>());
         }
     }
-    
+
     public List<ShapeFrame> load(String name) {
-        List<ShapeFrame> frames = null;
+        List<ShapeFrame> frames;
         try {
             if (!mCache.containsKey(name)) {
-            
+                frames = new ArrayList<>();
             } else {
                 frames = mCache.get(name);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
         return frames;
