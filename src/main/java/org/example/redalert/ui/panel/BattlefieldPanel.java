@@ -1,6 +1,7 @@
 package org.example.redalert.ui.panel;
 
 import org.example.redalert.GameContext;
+import org.example.redalert.controller.MouseCursorController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +31,8 @@ public class BattlefieldPanel extends JPanel {
         super.setLocation(sLocationX, sLocationY);
         // JPanel 的布局默认是 FlowLayout
         super.setLayout(null);
+        // 设置一个看不见的鼠标
+        setCursor(MouseCursorController.sEmpty.mCursor);
         // 在上下文中注册
         GameContext.sBattlefield = this;
     }

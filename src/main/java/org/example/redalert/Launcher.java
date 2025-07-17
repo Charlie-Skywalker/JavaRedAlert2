@@ -41,7 +41,6 @@ public class Launcher {
         
         // 初始化鼠标指针形状图片
         // MouseCursorController.init();
-        // battlefield.setCursor(MouseCursorController.getNone()); // 设置一个看不见的鼠标
         
         // 鼠标事件的处理
         // MouseEventDeal.init(battlefield);
