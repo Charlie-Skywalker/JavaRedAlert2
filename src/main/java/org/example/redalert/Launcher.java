@@ -22,9 +22,14 @@ public class Launcher {
         // 程序窗口
         JFrame frame = new JFrame("红色警戒");
         
-        frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        frame.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
-        frame.setResizable(false); // 不可调整大小
+        // 设置尺寸
+        Dimension dimension = new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT);
+        frame.setSize(dimension);
+        frame.setPreferredSize(dimension);
+        frame.setMinimumSize(dimension);
+        frame.setMaximumSize(dimension);
+        
+        frame.setResizable(true); // 不可调整大小
         frame.setAlwaysOnTop(false); // 总是在最上层
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null); // 屏幕居中
@@ -41,7 +46,6 @@ public class Launcher {
         
         // 初始化鼠标指针形状图片
         // MouseCursorController.init();
-        
         // 鼠标事件的处理
         // MouseEventDeal.init(battlefield);
         // 键盘事件的处理

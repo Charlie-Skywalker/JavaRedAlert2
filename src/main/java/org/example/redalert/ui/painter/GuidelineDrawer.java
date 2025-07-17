@@ -13,9 +13,6 @@ public class GuidelineDrawer implements Drawer {
     @Override
     public void draw(BufferedImage image) {
         Graphics2D graphics = image.createGraphics();
-        graphics.setColor(Color.lightGray); // 底色
-        graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
-        
         graphics.setColor(Color.black); // 直线颜色
         // 绘制单元格边框
         for (Cell cell : MapController.sCells) {

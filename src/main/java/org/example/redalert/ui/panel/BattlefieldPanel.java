@@ -30,17 +30,17 @@ public class BattlefieldPanel extends JPanel {
     public final ArrayList<Drawer> mDrawers = new ArrayList<>();
     
     public BattlefieldPanel() {
-        Dimension dimension = new Dimension(sWidth,sHeight);
         // 设置尺寸
-        super.setSize(dimension);
-        // 最小尺寸
-        super.setMinimumSize(dimension);
-        // 首选尺寸
-        super.setPreferredSize(dimension);
+        Dimension dimension = new Dimension(sWidth, sHeight);
+        setSize(dimension);
+        setPreferredSize(dimension);
+        setMinimumSize(dimension);
+        setMaximumSize(dimension);
+        
         // 设置坐标
-        super.setLocation(sLocationX, sLocationY);
+        setLocation(sLocationX, sLocationY);
         // JPanel 的布局默认是 FlowLayout
-        super.setLayout(null);
+        setLayout(null);
         // 设置一个看不见的鼠标
         setCursor(MouseCursorController.sEmpty.mCursor);
         // 在上下文中注册
