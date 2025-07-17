@@ -11,7 +11,7 @@ public class BattlefieldOptionPanel extends JPanel {
      * 选项卡页面宽高
      */
     public static final int sWidth = 168;
-    public static final int sHeight = 900;
+    public static final int sHeight = BattlefieldPanel.sHeight;
     
     public BattlefieldOptionPanel() {
         // JFrame是边界布局，只有这个方法可以设置大小，setSize和设置最大最小都没用
