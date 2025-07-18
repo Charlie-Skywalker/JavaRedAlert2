@@ -21,7 +21,7 @@
   	
   	 <resources>
         <resource>
-	        <directory>src/main/resources</directory>
+	        <directory>awt/src/main/resources</directory>
 	        <includes>
 	            <include>**/*.shp</include>
 	            <include>**/*.wav</include>

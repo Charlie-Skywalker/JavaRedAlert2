@@ -1,0 +1,14 @@
+[versions]
+java = "21"
+junit = "4.13.2"
+kotlin = "2.2.0"
+
+[libraries]
+apache-common-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.18.0" }
+apache-common-io = { module = "commons-io:commons-io", version = "2.14.0" }
+junit = { module = "junit:junit", version.ref = "junit" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
