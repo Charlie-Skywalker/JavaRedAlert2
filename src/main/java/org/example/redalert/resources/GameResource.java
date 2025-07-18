@@ -1,5 +1,6 @@
 package org.example.redalert.resources;
 
+import org.example.redalert.resources.audio.AudioResource;
 import org.example.redalert.resources.palette.PaletteResource;
 import org.example.redalert.resources.shape.ShapeResource;
 import org.example.redalert.utils.JavaResourcesUtil;
@@ -19,6 +20,10 @@ public class GameResource {
      * 图形资源
      */
     public static final ShapeResource sShape =  new ShapeResource();
+    /**
+     * 音频资源
+     */
+    public static final AudioResource sAudio =  new AudioResource();
     
     /**
      * 获取游戏资源

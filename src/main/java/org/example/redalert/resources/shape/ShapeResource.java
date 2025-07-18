@@ -22,7 +22,7 @@ public class ShapeResource {
         }
     }
 
-    public List<ShapeFrame> load(String name) {
+    public List<ShapeFrame> get(String name) {
         List<ShapeFrame> frames;
         try {
             if (!mCache.containsKey(name)) {
@@ -31,7 +31,6 @@ public class ShapeResource {
                 frames = mCache.get(name);
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
         return frames;
