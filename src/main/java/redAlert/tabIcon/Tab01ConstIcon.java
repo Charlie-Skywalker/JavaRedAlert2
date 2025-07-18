@@ -17,9 +17,10 @@ import javax.swing.JLabel;
 
 import redAlert.Constructor;
 import redAlert.MainTest;
+import redAlert.MainTest.MouseStatus;
 import redAlert.MouseEventDeal;
 import redAlert.ShapeUnitFrame;
-import redAlert.MainTest.MouseStatus;
+import redAlert.enums.ConstConfig;
 import redAlert.enums.ConstEnum;
 import redAlert.resourceCenter.ShpResourceCenter;
 import redAlert.utils.CanvasPainter;
@@ -32,7 +33,7 @@ public class Tab01ConstIcon extends JLabel{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public ConstEnum constInfo = null;
+	public ConstConfig constInfo = null;
 	
 	public final static int STATUS_IDLE = 0;//正常
 	public final static int STATUS_USING = 1;//倒计时中
@@ -71,7 +72,7 @@ public class Tab01ConstIcon extends JLabel{
 	/**
 	 * 构造方法
 	 */
-	public Tab01ConstIcon(ConstEnum constInfo) {
+	public Tab01ConstIcon(ConstConfig constInfo) {
 		this.constInfo = constInfo;
 		List<ShapeUnitFrame> list = ShpResourceCenter.loadShpResource(constInfo.shpIconPrefix, "cameo", false);
 		iconImage = list.get(0).getImg();

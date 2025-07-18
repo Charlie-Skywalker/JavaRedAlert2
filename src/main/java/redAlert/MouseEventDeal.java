@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.SwingUtilities;
 
 import redAlert.MainTest.MouseStatus;
+import redAlert.enums.ConstConfig;
 import redAlert.enums.ConstEnum;
 import redAlert.militaryBuildings.AfAirc;
 import redAlert.militaryBuildings.AfCnst;
@@ -35,12 +36,12 @@ import redAlert.militaryBuildings.SfMisl;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
 import redAlert.shapeObjects.Bloodable;
 import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.Building.BuildingStage;
 import redAlert.shapeObjects.Expandable;
 import redAlert.shapeObjects.MovableUnit;
 import redAlert.shapeObjects.ShapeUnit;
 import redAlert.shapeObjects.Soldier;
 import redAlert.shapeObjects.Vehicle;
-import redAlert.shapeObjects.Building.BuildingStage;
 import redAlert.tabIcon.Tab00Manager;
 import redAlert.tabIcon.Tab01Manager;
 import redAlert.utilBean.CenterPoint;
@@ -62,7 +63,7 @@ public class MouseEventDeal {
 	/**
 	 * 建造的建筑
 	 */
-	public static ConstEnum constName;
+	public static ConstConfig constName;
 	
 	/**
 	 * 鼠标按下时的坐标
@@ -332,16 +333,19 @@ public class MouseEventDeal {
 						}
 						
 						/**
-						 * 卖建筑
+						 * 贱卖建筑
 						 */
 						if(MainTest.mouseStatus==MouseStatus.Sell) {
 							CenterPoint targetCp = PointUtil.getCenterPoint(coord.getMapX(), coord.getMapY());
 							ShapeUnit shapeUnit = targetCp.mouseClickGetUnit();
 							if(shapeUnit instanceof Building) {
 								Building unit = (Building)shapeUnit;
-								unit.setStage(BuildingStage.Selling);
+								if(unit.stage!=BuildingStage.Selling) {
+									unit.setStage(BuildingStage.Selling);
+									Constructor.playOneMusic("uselbuil");
+								}
 							}
-							System.out.println("???");
+							
 							resetMouseStatus(coord);
 							return;
 						}
@@ -355,7 +359,7 @@ public class MouseEventDeal {
 							
 							CenterPoint center = PointUtil.getCenterPoint(coord.getMapX(), coord.getMapY());
 							
-							if(constName==ConstEnum.AfCnst) {
+							if(constName==ConstConfig.AfCnst) {
 								AfCnst sf = new AfCnst(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//基地车
 								if(isSuccess) {
@@ -366,7 +370,7 @@ public class MouseEventDeal {
 								}
 								return;
 							}
-							if(constName==ConstEnum.AfPowr) {
+							if(constName==ConstConfig.AfPowr) {
 								AfPowr sf = new AfPowr(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//发电厂
 								if(isSuccess) {
@@ -378,7 +382,7 @@ public class MouseEventDeal {
 								}
 								return;
 							}
-							if(constName==ConstEnum.AfRefn) {
+							if(constName==ConstConfig.AfRefn) {
 								AfRefn sf = new AfRefn(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//采矿场
 								if(isSuccess) {
@@ -390,7 +394,7 @@ public class MouseEventDeal {
 								}
 								return;
 							}
-							if(constName==ConstEnum.AfPile) {
+							if(constName==ConstConfig.AfPile) {
 								AfPile sf = new AfPile(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//盟军兵营
 								if(isSuccess) {
@@ -402,7 +406,7 @@ public class MouseEventDeal {
 								}
 								return;
 							}
-							if(constName==ConstEnum.AfWeap) {
+							if(constName==ConstConfig.AfWeap) {
 								AfWeap sf = new AfWeap(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//建设工厂
 								if(isSuccess) {
@@ -414,7 +418,7 @@ public class MouseEventDeal {
 								}
 								return;
 							}
-							if(constName==ConstEnum.AfAirc) {
+							if(constName==ConstConfig.AfAirc) {
 								AfAirc sf = new AfAirc(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//空指部
 								if(isSuccess) {
@@ -429,7 +433,7 @@ public class MouseEventDeal {
 								}
 								return;
 							}
-							if(constName==ConstEnum.AfYard) {
+							if(constName==ConstConfig.AfYard) {
 								AfYard sf = new AfYard(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//船坞
 								if(isSuccess) {
@@ -441,7 +445,7 @@ public class MouseEventDeal {
 								}
 								return;
 							}
-							if(constName==ConstEnum.AfDept) {
+							if(constName==ConstConfig.AfDept) {
 								AfDept sf = new AfDept(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//维修厂
 								if(isSuccess) {
@@ -453,7 +457,7 @@ public class MouseEventDeal {
 								}
 								return;
 							}
-							if(constName==ConstEnum.AfTech) {
+							if(constName==ConstConfig.AfTech) {
 								AfTech sf = new AfTech(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//盟军作战实验室
 								if(isSuccess) {
@@ -465,7 +469,7 @@ public class MouseEventDeal {
 								}
 								return;
 							}
-							if(constName==ConstEnum.AfOrep) {
+							if(constName==ConstConfig.AfOrep) {
 								AfOrep sf = new AfOrep(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//矿石精炼厂
 								if(isSuccess) {
@@ -478,7 +482,7 @@ public class MouseEventDeal {
 								return;
 							}
 							
-							if(constName==ConstEnum.AfPill) {
+							if(constName==ConstConfig.AfPill) {
 								AfPill sf = new AfPill(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//机枪碉堡
 								if(isSuccess) {
@@ -491,7 +495,7 @@ public class MouseEventDeal {
 								return;
 							}
 							
-							if(constName==ConstEnum.AfPris) {
+							if(constName==ConstConfig.AfPris) {
 								AfPris sf = new AfPris(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//光棱塔
 								if(isSuccess) {
@@ -504,7 +508,7 @@ public class MouseEventDeal {
 								return;
 							}
 							
-							if(constName==ConstEnum.AfSam) {
+							if(constName==ConstConfig.AfSam) {
 								AfSam sf = new AfSam(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//爱国者飞弹
 								if(isSuccess) {
@@ -517,7 +521,7 @@ public class MouseEventDeal {
 								return;
 							}
 							
-							if(constName==ConstEnum.AfCsph) {
+							if(constName==ConstConfig.AfCsph) {
 								AfCsph sf = new AfCsph(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//超时空转换器
 								if(isSuccess) {
@@ -529,7 +533,7 @@ public class MouseEventDeal {
 								}
 								return;
 							}
-							if(constName==ConstEnum.AfWeth) {
+							if(constName==ConstConfig.AfWeth) {
 								AfWeth sf = new AfWeth(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//天气控制器
 								if(isSuccess) {
@@ -541,7 +545,7 @@ public class MouseEventDeal {
 								}
 								return;
 							}
-							if(constName==ConstEnum.AfSpst) {
+							if(constName==ConstConfig.AfSpst) {
 								AfSpst sf = new AfSpst(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//间谍卫星
 								if(isSuccess) {
@@ -553,7 +557,7 @@ public class MouseEventDeal {
 								}
 								return;
 							}
-							if(constName==ConstEnum.SfMisl) {
+							if(constName==ConstConfig.SfMisl) {
 								SfMisl sf = new SfMisl(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
 								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//苏军核弹井
 								if(isSuccess) {
@@ -818,7 +822,7 @@ public class MouseEventDeal {
 		if(OptionsPanel.sellLabel.isSelected()) {//用户点击了卖建筑按钮
 			Building building = centerPoint.getBuilding();
 			
-			if(building!=null) {
+			if(building!=null && building.stage!=BuildingStage.Selling) {
 				if(building.getUnitColor()==GlobalConfig.unitColor) {
 					MainTest.mouseStatus = MouseStatus.Sell;
 					return;

@@ -1,6 +1,6 @@
 package redAlert.tabIcon.tab00;
 
-import redAlert.enums.ConstEnum;
+import redAlert.enums.ConstConfig;
 import redAlert.militaryBuildings.AfCnst;
 import redAlert.militaryBuildings.AfPowr;
 import redAlert.militaryBuildings.AfRefn;
@@ -15,7 +15,7 @@ public class AfYardConstBtn extends Tab00ConstIcon {
 	private static final long serialVersionUID = 1L;
 	
 	public AfYardConstBtn() {
-		super(ConstEnum.AfYard);
+		super(ConstConfig.AfYard);
 	}
 	
 	/**

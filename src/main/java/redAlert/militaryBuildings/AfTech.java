@@ -3,7 +3,7 @@ package redAlert.militaryBuildings;
 import java.util.ArrayList;
 import java.util.List;
 
-import redAlert.enums.ConstEnum;
+import redAlert.enums.ConstConfig;
 import redAlert.enums.UnitColor;
 import redAlert.shapeObjects.Building;
 import redAlert.utilBean.CenterPoint;
@@ -40,7 +40,7 @@ public class AfTech extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstEnum.AfTech;
+		super.constConfig = ConstConfig.AfTech;
 		super.height = 190;
 		setCenterOffX(200);
 		setCenterOffY(179);

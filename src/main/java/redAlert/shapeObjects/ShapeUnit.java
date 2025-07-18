@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.UnitColor;
 import redAlert.utilBean.CenterPoint;
@@ -25,7 +27,6 @@ public abstract class ShapeUnit implements Comparable<ShapeUnit>{
 	/**
 	 * 绘制优先级
 	 *   该值越小越优先，且优先使用此变量判定优先级
-	 *   若优先级相同,再使用positionMinX和positionMinY判定
 	 */
 	public int priority = 50;
 	/**
@@ -104,8 +105,8 @@ public abstract class ShapeUnit implements Comparable<ShapeUnit>{
 	
 	
 	/**
-	 * 当一帧绘完  building会被扔入BuildingDrawer的队列中调用此方法算下一帧画面
 	 * 计算下一帧画面
+	 * 当方块的一帧画面展示完毕后,帧计算线程会调用此方法更改curFrame变量,计算出下一帧应展示的画面
 	 */
 	public abstract void calculateNextFrame();
 	

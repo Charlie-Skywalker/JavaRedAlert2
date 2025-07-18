@@ -66,23 +66,33 @@ public class Tab01Label extends JLabel{
 	 * 不选中
 	 */
 	public void setStateUnselected() {
-		this.setIcon(icon1);
 		OptionsPanel.unitPanel01.setVisible(false);
+		if(this.getIcon()!=icon3) {
+			this.setIcon(icon1);
+		}
+		
 		isSelected = false;
 	}
 	
 	public void addEvent() {
 		this.addMouseListener(new MouseAdapter() {
-
+			/**
+			 * 实测红警扳手和贱卖按钮是左键松开时触发
+			 * 松开时,如果鼠标已经不在本按钮上方,也不触发
+			 * Component.getMousePosition获取不到鼠标坐标,则说明鼠标不在本按钮上方
+			 */
 			@Override
-			public void mousePressed(MouseEvent e) {
-				if(!mySelf.getIcon().equals(icon3)) {
-					Constructor.playOneMusic("utab");
-					OptionsPanel.tab00Label.setStateUnselected();
-					OptionsPanel.tab01Label.setStateSelected();
-					OptionsPanel.tab02Label.setStateUnselected();
-					OptionsPanel.tab03Label.setStateUnselected();
+			public void mouseReleased(MouseEvent e) {
+				if(e.getButton()==MouseEvent.BUTTON1 && mySelf.getMousePosition()!=null) {
+					if(!mySelf.getIcon().equals(icon3)) {
+						Constructor.playOneMusic("utab");
+						OptionsPanel.tab00Label.setStateUnselected();
+						OptionsPanel.tab01Label.setStateSelected();
+						OptionsPanel.tab02Label.setStateUnselected();
+						OptionsPanel.tab03Label.setStateUnselected();
+					}
 				}
+				
 			}
 		});
 	}

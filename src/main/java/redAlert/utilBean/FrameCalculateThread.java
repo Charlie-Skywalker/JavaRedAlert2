@@ -13,7 +13,7 @@ import redAlert.shapeObjects.ShapeUnit;
 import redAlert.shapeObjects.vehicle.XiniuTank2;
 
 /**
- * 建筑规划线程
+ * 方块(ShapeUnit)帧计算线程
  */
 public class FrameCalculateThread implements Runnable{
 	
@@ -89,7 +89,7 @@ public class FrameCalculateThread implements Runnable{
 				if(shp.isEnd()) {
 					ShapeUnitResourceCenter.removeOneUnit(shp);
 				}else {
-					//帧率控制  不同的物品有不同的帧率
+					//帧率控制  不同的方块有不同的帧率
 					shp.setFrameNum(shp.getFrameNum()+1);
 					
 					if(shp.getFrameNum()%shp.getFrameSpeed()==0) {				

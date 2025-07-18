@@ -6,7 +6,7 @@ import java.util.List;
 import redAlert.Constructor;
 import redAlert.GameContext;
 import redAlert.ShapeUnitFrame;
-import redAlert.enums.ConstEnum;
+import redAlert.enums.ConstConfig;
 import redAlert.enums.UnitColor;
 import redAlert.other.BuildingBloodBar;
 import redAlert.other.BuildingBone;
@@ -112,7 +112,7 @@ public class AfSam extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstEnum.AfSam;
+		super.constConfig = ConstConfig.AfSam;
 		super.height = 60;
 		setCenterOffX(50);
 		setCenterOffY(50);

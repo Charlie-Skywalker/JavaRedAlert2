@@ -7,7 +7,7 @@ import java.util.List;
 import redAlert.Constructor;
 import redAlert.GameContext;
 import redAlert.ShapeUnitFrame;
-import redAlert.enums.ConstEnum;
+import redAlert.enums.ConstConfig;
 import redAlert.enums.UnitColor;
 import redAlert.other.NuclearBombDown;
 import redAlert.other.NuclearBombUp;
@@ -124,7 +124,7 @@ public class SfMisl extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstEnum.SfMisl;
+		super.constConfig = ConstConfig.SfMisl;
 		setCenterOffX(118);
 		setCenterOffY(145);
 		if(sceneType==SceneType.TEM) {

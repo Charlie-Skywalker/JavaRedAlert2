@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 import redAlert.CustomToolTip;
-import redAlert.enums.ConstEnum;
+import redAlert.enums.ConstConfig;
 import redAlert.militaryBuildings.AfCnst;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
 import redAlert.tabIcon.Tab00ConstIcon;
@@ -22,7 +22,7 @@ public class AfPowrConstBtn extends Tab00ConstIcon{
 	private BufferedImage img;
 	
 	public AfPowrConstBtn() {
-		super(ConstEnum.AfPowr);
+		super(ConstConfig.AfPowr);
 		
 		
 //		 ToolTipManager toolTipManager = ToolTipManager.sharedInstance(); // 获取ToolTipManager实例

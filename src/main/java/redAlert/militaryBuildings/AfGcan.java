@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import redAlert.ShapeUnitFrame;
-import redAlert.enums.ConstEnum;
+import redAlert.enums.ConstConfig;
 import redAlert.enums.UnitColor;
 import redAlert.resourceCenter.ShpResourceCenter;
 import redAlert.shapeObjects.Building;
@@ -100,7 +100,7 @@ public class AfGcan extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstEnum.AfGcan;
+		super.constConfig = ConstConfig.AfGcan;
 		setCenterOffX(10);
 		setCenterOffY(10);
 		if(sceneType==SceneType.TEM) {

@@ -88,6 +88,7 @@ public class MainPanel extends JPanel{
 	private BufferedImage canvasFirst = new BufferedImage(viewportWidth,viewportHeight,BufferedImage.TYPE_INT_ARGB);
 	/**
 	 * 辅助线格
+	 * 早期这个画板用来绘制地形网格,随着后期功能的开发,这个画板改用来绘制地形
 	 */
 	private BufferedImage guidelinesCanvas = new BufferedImage(viewportWidth,viewportHeight,BufferedImage.TYPE_INT_ARGB);
 	
@@ -207,37 +208,47 @@ public class MainPanel extends JPanel{
 		}
 	}
 	
-	public ArrayBlockingQueue<Runnable> threadQueue = new ArrayBlockingQueue<Runnable>(10);
+	/**
+	 * 方块(ShapeUnit)帧计算线程数量
+	 */
+	public int workerNum = 10;
+	/**
+	 * 方块(ShapeUnit)帧计算线程队列
+	 */
+	public ArrayBlockingQueue<Runnable> threadQueue = new ArrayBlockingQueue<Runnable>(workerNum);
 	public ArrayBlockingQueue<Runnable> abq = new ArrayBlockingQueue<>(3);
-    public ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(20,20+5,60, TimeUnit.SECONDS,abq,new ThreadPoolExecutor.CallerRunsPolicy());
-	
-	
+	/**
+	 * 方块(ShapeUnit)帧计算线程池
+	 */
+    public ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(workerNum,workerNum+5,60, TimeUnit.SECONDS,abq,new ThreadPoolExecutor.CallerRunsPolicy());
 	
 	/**
-	 * TODO 负责计算画面的线程,计算所有应绘制的内容的画面,放入队列
-	 * 注意take方法会阻塞
+	 * TODO 启动方块(ShapeUnit)规划线程
 	 */
 	private void startFrameImageCalculate() {
 		
-		for(int i=0;i<10;i++) {
+		/*
+		 * 生成若干个方块(ShapeUnit)帧计算线程
+		 * 这个数量表示了帧计算线程的并发数量,也就是说游戏的方块帧计算逻辑是多线程的
+		 * 这些线程是循环使用,用完后需要再放回线程队列中
+		 */
+		
+		for(int i=0;i<workerNum;i++) {
 			FrameCalculateThread fcThread = new FrameCalculateThread(this,threadQueue);
 			threadQueue.offer(fcThread);
 		}
 		
-		/**
-		 * 建筑规划线程
-		 * 只有一个线程在负责计算下一帧的内容，如果后续有多个线程，性能将大大提升
-		 * 
-		 * 必须明确  建筑规划线程主要职责是计算下一帧和移除   不应该处理其他业务逻辑
-		 * 重工的逻辑  必须改成由重工自己确定状态  计算下一帧
+		/*
+		 * 方块(ShapeUnit)规划线程
+		 * 方块规划线程不停地从SHP方块阻塞队列取出方块(ShapeUnit),调度方块帧计算线程调用方块的calculateNextFrame方法
+		 * 实现帧切换,调用完成后,将方块放入缓存队列,等待画板绘制线程将它画上画板
 		 */
 		Thread thread = new Thread() {
 			public void run() {
 				while(true) {
 					try {
-						ShapeUnit shp = shapeUnitBlockingQueue.take();
-						//多线程规划   
-						FrameCalculateThread fcThread = (FrameCalculateThread)threadQueue.take();
+						ShapeUnit shp = shapeUnitBlockingQueue.take();//当队列为空时,会阻塞,降低CPU占用
+						FrameCalculateThread fcThread = (FrameCalculateThread)threadQueue.take();//当没有空闲的帧计算线程时,会阻塞
 						fcThread.setShp(shp);
 						threadPoolExecutor.execute(fcThread);
 					}catch(Exception e) {
@@ -253,7 +264,10 @@ public class MainPanel extends JPanel{
 	
 	
 	/**
-	 * TODO 负责绘制画面的线程,将队列中计算好的内容,画进画板
+	 * TODO 启动画板绘制线程
+	 * 画板绘制线程将按照指定的时间间隔,定期绘制成员变量中的3个图片对象
+	 * 绘制鼠标、绘制地形、绘制游戏内单位
+	 * 
 	 * 
 	 */
 	private void startPainterThread() {
@@ -298,7 +312,9 @@ public class MainPanel extends JPanel{
 	 * 地形菱形块列表
 	 */
 	public List<BufferedImage> terrainImageList = new ArrayList<>();
-	
+	/**
+	 * 地形菱形块名称列表
+	 */
 	public List<String> terrainNameList = new ArrayList<>();
 	/**
 	 * 初始化辅助线格
@@ -450,8 +466,10 @@ public class MainPanel extends JPanel{
 	
 	
 	/**
-	 * 主类中的TimerTask会不停调用此方法,实现画面的刷新
-	 * 根据建筑队列绘制主画板,每个建筑在绘制完毕后,会返回
+	 * 画板绘制线程会不停调用此方法,从绘制队列中拿取方块(ShapeUnit),绘制到主画板上
+	 * 绘制完毕后,会把方块再放入SHP方块阻塞队列,由方块帧计算线程计算下一帧,从而实现游戏画面循环
+	 * 
+	 * 其中调用repaint方法后,系统SWT线程会稍后更新JPanel中显示的内容
 	 */
 	private void drawMainInterface(int viewportOffX,int viewportOffY) {
 		PriorityQueue<ShapeUnit> drawShapeUnitList  = null;
@@ -460,7 +478,7 @@ public class MainPanel extends JPanel{
 		/**
 		 * 这样保证获取缓存队列与获取绘制队列间不冲突
 		 * 保证在绘制时,其他线程可以向缓存队列中放置内容
-		 * 保证其他线程获取缓存队列后,缓存队列不会突然变成绘制队列,导致线程向绘制队列中放置物品
+		 * 保证其他线程向缓存队列放置方块过程中,缓存队列不会突然变成绘制队列,导致线程向绘制队列中放置方块
 		 */
 		while(true) {
 			if(casLock.compareAndSet(0, 1)) {

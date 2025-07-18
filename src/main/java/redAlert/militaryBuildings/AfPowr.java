@@ -3,7 +3,7 @@ package redAlert.militaryBuildings;
 import java.util.ArrayList;
 import java.util.List;
 
-import redAlert.enums.ConstEnum;
+import redAlert.enums.ConstConfig;
 import redAlert.enums.UnitColor;
 import redAlert.shapeObjects.Building;
 import redAlert.shapeObjects.PowerPlant;
@@ -48,7 +48,7 @@ public class AfPowr extends Building implements PowerPlant{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstEnum.AfPowr;
+		super.constConfig = ConstConfig.AfPowr;
 		setCenterOffX(70);
 		setCenterOffY(69);
 		

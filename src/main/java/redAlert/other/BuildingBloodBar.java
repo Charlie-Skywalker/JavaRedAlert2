@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import redAlert.ShapeUnitFrame;
-import redAlert.enums.ConstEnum;
+import redAlert.enums.ConstConfig;
 import redAlert.shapeObjects.Building;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.CanvasPainter;
@@ -21,7 +21,7 @@ public class BuildingBloodBar extends BloodBar{
 	 * 由于不同建筑物  血条数量都不一样
 	 */
 	public BuildingBloodBar(Building building) {
-		ConstEnum config = building.getConstConfig();
+		ConstConfig config = building.getConstConfig();
 		super.maxHp = config.maxHp;
 		setMaxHp(maxHp);
 		setMaxBloodNum(maxHp/100);

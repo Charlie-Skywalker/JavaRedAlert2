@@ -56,16 +56,23 @@ public class RepairLabel extends JLabel{
 	public void addEvent() {
 		this.addMouseListener(new MouseAdapter() {
 
+			/**
+			 * 实测红警扳手和贱卖按钮是左键松开时触发
+			 * 松开时,如果鼠标已经不在本按钮上方,也不触发
+			 * Component.getMousePosition获取不到鼠标坐标,则说明鼠标不在本按钮上方
+			 */
 			@Override
-			public void mousePressed(MouseEvent e) {
-				
-				if(!isSelected) {
-					setSelected(true);
-					Constructor.playOneMusic("umenucl1");
-				}else {
-					setSelected(false);
-					Constructor.playOneMusic("umenucl1");
+			public void mouseReleased(MouseEvent e) {
+				if(e.getButton()==MouseEvent.BUTTON1 && mySelf.getMousePosition()!=null) {
+					if(!isSelected) {
+						setSelected(true);
+						Constructor.playOneMusic("umenucl1");
+					}else {
+						setSelected(false);
+						Constructor.playOneMusic("umenucl1");
+					}
 				}
+				
 			}
 		});
 	}

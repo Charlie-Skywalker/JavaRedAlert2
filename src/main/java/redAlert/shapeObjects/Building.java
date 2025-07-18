@@ -10,6 +10,7 @@ import redAlert.Constructor;
 import redAlert.GameContext;
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.BuildingAreaType;
+import redAlert.enums.ConstConfig;
 import redAlert.enums.ConstEnum;
 import redAlert.enums.UnitColor;
 import redAlert.militaryBuildings.AfCnst;
@@ -126,7 +127,7 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 	/**
 	 * 建筑的配置信息
 	 */
-	public ConstEnum constConfig = ConstEnum.AfAirc;//给一个默认值
+	public ConstConfig constConfig = null;//给一个默认值
 	/**
 	 * 建筑的虚拟高度
 	 * 这个变量涉及到血条和模型棱的显示位置
@@ -280,7 +281,7 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 				curFrame.setMaxX(maxX);
 				curFrame.setMinY(minY);
 				curFrame.setMaxY(maxY);
-				if(ShapeUnitResourceCenter.isPowerOn) {
+				if(ShapeUnitResourceCenter.isPowerOn || this.constConfig.lowPowerWorkable) {
 					frameIndex++;
 				}
 			}else if(status==BuildingStatus.DEMAGED){
@@ -327,7 +328,7 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 				curFrame.setMaxX(maxX);
 				curFrame.setMinY(minY);
 				curFrame.setMaxY(maxY);
-				if(ShapeUnitResourceCenter.isPowerOn) {
+				if(ShapeUnitResourceCenter.isPowerOn || this.constConfig.lowPowerWorkable) {
 					frameIndex++;
 				}
 			}
@@ -369,12 +370,19 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 				super.positionMinY = curFrame.getMinY()+positionY;
 				frameIndex--;
 			}else if(frameIndex<0){
-				
+				Constructor.playOneMusic("ceva058");
 				this.end = true;
 				setVisible(false);
 				setEnd(true);
 				getCurCenterPoint().setBuilding(null);//上边的物品
 				ShapeUnitResourceCenter.removeOneBuilding(this);
+				this.getBloodBar().setVisible(false);
+				this.getBloodBar().setEnd(true);
+				ShapeUnitResourceCenter.removeOneUnit(bloodBar);
+				this.getBone().setVisible(false);
+				this.getBone().setEnd(true);
+				ShapeUnitResourceCenter.removeOneUnit(bone);
+				
 				getCurCenterPoint().buildingAreaType = BuildingAreaType.None;
 				
 			}
@@ -492,12 +500,6 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 	public void setStage(BuildingStage stage) {
 		this.stage = stage;
 	}
-	public ConstEnum getConstConfig() {
-		return constConfig;
-	}
-	public void setConstConfig(ConstEnum constConfig) {
-		this.constConfig = constConfig;
-	}
 	public int getHeight() {
 		return height;
 	}
@@ -515,6 +517,12 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 	}
 	public void setBone(BuildingBone bone) {
 		this.bone = bone;
+	}
+	public ConstConfig getConstConfig() {
+		return constConfig;
+	}
+	public void setConstConfig(ConstConfig constConfig) {
+		this.constConfig = constConfig;
 	}
 
 	@Override

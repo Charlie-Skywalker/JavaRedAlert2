@@ -1,6 +1,6 @@
 package redAlert.tabIcon.tab01;
 
-import redAlert.enums.ConstEnum;
+import redAlert.enums.ConstConfig;
 import redAlert.tabIcon.Tab01ConstIcon;
 
 /**
@@ -11,6 +11,6 @@ public class AfGcanConstBtn extends Tab01ConstIcon {
 	private static final long serialVersionUID = 1L;
 	
 	public AfGcanConstBtn() {	
-		super(ConstEnum.AfGcan);
+		super(ConstConfig.AfGcan);
 	}
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import redAlert.ShapeUnitFrame;
-import redAlert.enums.ConstEnum;
+import redAlert.enums.ConstConfig;
 import redAlert.enums.UnitColor;
 import redAlert.resourceCenter.ShpResourceCenter;
 import redAlert.shapeObjects.Building;
@@ -618,7 +618,7 @@ public class AfWeap extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstEnum.AfWeap;
+		super.constConfig = ConstConfig.AfWeap;
 		setCenterOffX(160);
 		setCenterOffY(170);
 		if(sceneType==SceneType.TEM) {

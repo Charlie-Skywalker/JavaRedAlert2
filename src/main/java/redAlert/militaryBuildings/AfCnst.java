@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import redAlert.ShapeUnitFrame;
-import redAlert.enums.ConstEnum;
+import redAlert.enums.ConstConfig;
 import redAlert.enums.UnitColor;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
 import redAlert.resourceCenter.ShpResourceCenter;
@@ -52,7 +52,7 @@ public class AfCnst extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstEnum.AfCnst;
+		super.constConfig = ConstConfig.AfCnst;
 		super.height = 70;
 		setCenterOffX(139);
 		setCenterOffY(153);
