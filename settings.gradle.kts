@@ -25,5 +25,6 @@ dependencyResolutionManagement {
 rootProject.name = "JavaRedAlert2"
 
 include("game")
-include("lwjgl3")
 include("awt")
+include("lwjgl3")
+include("libgdx")
