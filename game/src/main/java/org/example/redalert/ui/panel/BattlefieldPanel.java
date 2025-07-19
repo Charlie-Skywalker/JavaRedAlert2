@@ -58,7 +58,7 @@ public class BattlefieldPanel extends JPanel {
     private class InitTask implements Runnable {
         @Override
         public void run() {
-            MapController.createTiles(sWidth, sHeight);
+            MapController.create(sWidth, sHeight);
             GuidelineDrawer drawer = new GuidelineDrawer();
             drawer.draw(mImage);
         }
