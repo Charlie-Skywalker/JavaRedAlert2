@@ -1,6 +1,8 @@
 pluginManagement {
     repositories {
+        mavenLocal()
         mavenCentral()
+        gradlePluginPortal()
         google {
             content {
                 includeGroupByRegex("com\\.android.*")
@@ -8,23 +10,51 @@ pluginManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
-        gradlePluginPortal()
+        maven(uri("https://s01.oss.sonatype.org"))
         maven(uri("https://jitpack.io"))
+        maven(uri("https://oss.sonatype.org/content/repositories/snapshots/"))
+        maven(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
     }
 }
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        mavenLocal()
         mavenCentral()
+        gradlePluginPortal()
         google()
+        maven(uri("https://s01.oss.sonatype.org"))
         maven(uri("https://jitpack.io"))
+        maven(uri("https://oss.sonatype.org/content/repositories/snapshots/"))
+        maven(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
     }
+}
+
+// buildscript {
+//     repositories {
+//         mavenCentral()
+//         maven(uri("https://s01.oss.sonatype.org"))
+//         gradlePluginPortal()
+//         mavenLocal()
+//         google()
+//         maven(uri("https://oss.sonatype.org/content/repositories/snapshots/"))
+//         maven(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+//     }
+//     dependencies {
+//         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0")
+//     }
+// }
+
+plugins {
+    // Applies the foojay-resolver plugin to allow automatic download of JDKs.
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.9.0"
 }
 
 rootProject.name = "JavaRedAlert2"
 
-include("game")
-include("awt")
-include("lwjgl3")
-include("libgdx")
+include(":game")
+include(":awt")
+include(":lwjgl3")
+include(":libgdx")
+include(":libgdx-lwjgl3")
