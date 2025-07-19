@@ -1,14 +1,69 @@
 [versions]
 java = "21"
-junit = "4.13.2"
 kotlin = "2.2.0"
+lwjgl = "3.3.6"
 
 [libraries]
 apache-common-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.18.0" }
 apache-common-io = { module = "commons-io:commons-io", version = "2.14.0" }
-junit = { module = "junit:junit", version.ref = "junit" }
+
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
+
+lwjgl-bom = { module = "org.lwjgl:lwjgl-bom", version.ref = "lwjgl" }
+lwjgl = { module = "org.lwjgl:lwjgl" }
+lwjgl-assimp = { module = "org.lwjgl:lwjgl-assimp" }
+lwjgl-bgfx = { module = "org.lwjgl:lwjgl-bgfx" }
+lwjgl-cuda = { module = "org.lwjgl:lwjgl-cuda" }
+lwjgl-egl = { module = "org.lwjgl:lwjgl-egl" }
+lwjgl-fmod = { module = "org.lwjgl:lwjgl-fmod" }
+lwjgl-freetype = { module = "org.lwjgl:lwjgl-freetype" }
+lwjgl-glfw = { module = "org.lwjgl:lwjgl-glfw" }
+lwjgl-harfbuzz = { module = "org.lwjgl:lwjgl-harfbuzz" }
+lwjgl-hwloc = { module = "org.lwjgl:lwjgl-hwloc" }
+lwjgl-jawt = { module = "org.lwjgl:lwjgl-jawt" }
+lwjgl-jemalloc = { module = "org.lwjgl:lwjgl-jemalloc" }
+lwjgl-ktx = { module = "org.lwjgl:lwjgl-ktx" }
+lwjgl-libdivide = { module = "org.lwjgl:lwjgl-libdivide" }
+lwjgl-llvm = { module = "org.lwjgl:lwjgl-llvm" }
+lwjgl-lmdb = { module = "org.lwjgl:lwjgl-lmdb" }
+lwjgl-lz4 = { module = "org.lwjgl:lwjgl-lz4" }
+lwjgl-meow = { module = "org.lwjgl:lwjgl-meow" }
+lwjgl-meshoptimizer = { module = "org.lwjgl:lwjgl-meshoptimizer" }
+lwjgl-msdfgen = { module = "org.lwjgl:lwjgl-msdfgen" }
+lwjgl-nanovg = { module = "org.lwjgl:lwjgl-nanovg" }
+lwjgl-nfd = { module = "org.lwjgl:lwjgl-nfd" }
+lwjgl-nuklear = { module = "org.lwjgl:lwjgl-nuklear" }
+lwjgl-odbc = { module = "org.lwjgl:lwjgl-odbc" }
+lwjgl-openal = { module = "org.lwjgl:lwjgl-openal" }
+lwjgl-opencl = { module = "org.lwjgl:lwjgl-opencl" }
+lwjgl-opengl = { module = "org.lwjgl:lwjgl-opengl" }
+lwjgl-opengles = { module = "org.lwjgl:lwjgl-opengles" }
+lwjgl-openvr = { module = "org.lwjgl:lwjgl-openvr" }
+lwjgl-openxr = { module = "org.lwjgl:lwjgl-openxr" }
+lwjgl-opus = { module = "org.lwjgl:lwjgl-opus" }
+lwjgl-ovr = { module = "org.lwjgl:lwjgl-ovr" }
+lwjgl-par = { module = "org.lwjgl:lwjgl-par" }
+lwjgl-remotery = { module = "org.lwjgl:lwjgl-remotery" }
+lwjgl-rpmalloc = { module = "org.lwjgl:lwjgl-rpmalloc" }
+lwjgl-shaderc = { module = "org.lwjgl:lwjgl-shaderc" }
+lwjgl-spvc = { module = "org.lwjgl:lwjgl-spvc" }
+lwjgl-sse = { module = "org.lwjgl:lwjgl-sse" }
+lwjgl-stb = { module = "org.lwjgl:lwjgl-stb" }
+lwjgl-tinyexr = { module = "org.lwjgl:lwjgl-tinyexr" }
+lwjgl-tinyfd = { module = "org.lwjgl:lwjgl-tinyfd" }
+lwjgl-tootle = { module = "org.lwjgl:lwjgl-tootle" }
+lwjgl-vma = { module = "org.lwjgl:lwjgl-vma" }
+lwjgl-vulkan = { module = "org.lwjgl:lwjgl-vulkan" }
+lwjgl-xxhash = { module = "org.lwjgl:lwjgl-xxhash" }
+lwjgl-yoga = { module = "org.lwjgl:lwjgl-yoga" }
+lwjgl-zstd = { module = "org.lwjgl:lwjgl-zstd" }
+
+lwjgl-awt = { module = "org.lwjglx:lwjgl3-awt", version = "0.1.8" }
+joml = { module = "org.joml:joml", version = "1.10.8" }
+joml-primitives = { module = "org.joml:joml-primitives", version = "1.10.0" }
+steamworks4j = { module = "com.code-disaster.steamworks4j:steamworks4j", version = "1.9.0" }
+steamworks4j-server = { module = "com.code-disaster.steamworks4j:steamworks4j-server", version = "1.9.0" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
