@@ -15,7 +15,7 @@ data class Cell(
     /**
      * 中心点 Y 坐标
      */
-    val centerY:Int
+    val centerY:Int,
 ) {
     /**
      * 左上角 X 坐标
@@ -115,7 +115,7 @@ data class Cell(
     
     companion object {
         /**
-         * 宽度
+         * 宽度，单位像素
          *
          * 根据经验，在不同的游戏中单元格宽度是不同的
          *
@@ -124,12 +124,26 @@ data class Cell(
         const val WIDTH:Int = 60
         
         /**
-         * 高度
+         * 高度，单位像素
          *
          * 根据经验，在不同的游戏中单元格高度是不同的
          *
          * 参考 [ModEnc 关于 TMP 文件 Block 属性说明](https://modenc.renegadeprojects.com/TMP)
          */
         const val HEIGHT:Int = 30
+        
+        /**
+         * 宽度，单位 Lepton
+         *
+         * 参考 [ModEnc 关于 Lepton 说明](https://modenc.renegadeprojects.com/Lepton)
+         */
+        const val WIDTH_LEPTON:Int = 256
+        
+        /**
+         * 高度，单位 Lepton
+         *
+         * 参考 [ModEnc 关于 Lepton 说明](https://modenc.renegadeprojects.com/Lepton)
+         */
+        const val HEIGHT_LEPTON:Int = 256
     }
 }
