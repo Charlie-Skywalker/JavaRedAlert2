@@ -15,6 +15,9 @@ import javax.swing.SwingUtilities;
 
 import redAlert.MainTest.MouseStatus;
 import redAlert.enums.ConstConfig;
+import redAlert.enums.ConstEnum;
+import redAlert.event.ConstructEvent;
+import redAlert.event.EventHandlerManager;
 import redAlert.militaryBuildings.AfAirc;
 import redAlert.militaryBuildings.AfCnst;
 import redAlert.militaryBuildings.AfCsph;
@@ -108,7 +111,7 @@ public class MouseEventDeal {
 					
 					if(mouseEvent.getButton()==MouseEvent.BUTTON1) {//左键
 						/*
-						 * 单击选中一个单位
+						 * 单击选中一个单位 
 						 */
 						if(MainTest.mouseStatus == MouseStatus.PreSingleSelect) {
 							if(centerPoint.isExistSingleSelectUnit()) {
@@ -356,220 +359,8 @@ public class MouseEventDeal {
 						 */
 						if(MainTest.mouseStatus == MouseStatus.Construct) {
 							
-							CenterPoint center = PointUtil.getCenterPoint(coord.getMapX(), coord.getMapY());
-							
-							if(constName==ConstConfig.AfCnst) {
-								AfCnst sf = new AfCnst(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//基地车
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							if(constName==ConstConfig.AfPowr) {
-								AfPowr sf = new AfPowr(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//发电厂
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab00Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							if(constName==ConstConfig.AfRefn) {
-								AfRefn sf = new AfRefn(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//采矿场
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab00Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							if(constName==ConstConfig.AfPile) {
-								AfPile sf = new AfPile(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//盟军兵营
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab00Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							if(constName==ConstConfig.AfWeap) {
-								AfWeap sf = new AfWeap(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//建设工厂
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab00Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							if(constName==ConstConfig.AfAirc) {
-								AfAirc sf = new AfAirc(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//空指部
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab00Manager.freeAll();
-									if(ShapeUnitResourceCenter.isPowerOn) {
-										OptionsPanel.radarLabel.triggleRadarShow();
-									}
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							if(constName==ConstConfig.AfYard) {
-								AfYard sf = new AfYard(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//船坞
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab00Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							if(constName==ConstConfig.AfDept) {
-								AfDept sf = new AfDept(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//维修厂
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab00Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							if(constName==ConstConfig.AfTech) {
-								AfTech sf = new AfTech(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//盟军作战实验室
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab00Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							if(constName==ConstConfig.AfOrep) {
-								AfOrep sf = new AfOrep(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//矿石精炼厂
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab00Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							
-							if(constName==ConstConfig.AfPill) {
-								AfPill sf = new AfPill(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//机枪碉堡
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab01Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							
-							if(constName==ConstConfig.AfPris) {
-								AfPris sf = new AfPris(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//光棱塔
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab01Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							
-							if(constName==ConstConfig.AfSam) {
-								AfSam sf = new AfSam(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//爱国者飞弹
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab01Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							
-							if(constName==ConstConfig.AfCsph) {
-								AfCsph sf = new AfCsph(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//超时空转换器
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab01Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							if(constName==ConstConfig.AfWeth) {
-								AfWeth sf = new AfWeth(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//天气控制器
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab01Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							if(constName==ConstConfig.AfSpst) {
-								AfSpst sf = new AfSpst(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//间谍卫星
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab01Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							if(constName==ConstConfig.SfMisl) {
-								SfMisl sf = new SfMisl(center,GlobalConfig.sceneType,GlobalConfig.unitColor);
-								boolean isSuccess = Constructor.putOneBuilding(sf,scenePanel);//苏军核弹井
-								if(isSuccess) {
-									MainTest.mouseStatus = MouseStatus.Idle;
-									constName = null;
-									Tab00Manager.freeAll();
-								}else {
-									repaintRhombus(mouseEvent);
-								}
-								return;
-							}
-							
-							return;
+							//发布一个红警建筑建造事件
+							EventHandlerManager.publishOneEvent(new ConstructEvent(mouseEvent, constName));
 						}
 					}
 					
@@ -617,14 +408,14 @@ public class MouseEventDeal {
 			 */
 			@Override
 			public void mouseEntered(MouseEvent e) {
-			
+				
 			}
 			/**
 			 * 鼠标退出
 			 */
 			@Override
 			public void mouseExited(MouseEvent e) {
-			
+				
 			}
 			
 			/**
@@ -647,7 +438,7 @@ public class MouseEventDeal {
 		scenePanel.addMouseMotionListener(new MouseMotionListener() {
 			/**
 			 * 按下鼠标时拖动鼠标触发
-			 *
+			 * 
 			 * 按下鼠标时未拖动则不触发
 			 */
 			@Override
@@ -738,16 +529,16 @@ public class MouseEventDeal {
 								
 								if(mouseBloodable!=null) {
 									if(mouseBloodable.equals(ShapeUnitResourceCenter.selectedBuilding)) {
-									
+										
 									}else {
 										if(ShapeUnitResourceCenter.selectedMovableUnits.contains(mouseBloodable)) {
-										
+											
 										}else {
 											mouseBloodable.getBloodBar().setVisible(false);
 										}
 									}
 								}else {
-								
+									
 								}
 								
 								mouseBloodable = bloodableUnit;
@@ -758,17 +549,17 @@ public class MouseEventDeal {
 					}else {
 						if(mouseBloodable!=null) {
 							if(mouseBloodable.equals(ShapeUnitResourceCenter.selectedBuilding)) {
-							
+								
 							}else {
 								if(ShapeUnitResourceCenter.selectedMovableUnits.contains(mouseBloodable)) {
-								
+									
 								}else {
 									mouseBloodable.getBloodBar().setVisible(false);
 								}
 							}
 							mouseBloodable = null;
 						}else {
-						
+							
 						}
 					}
 					
@@ -807,7 +598,7 @@ public class MouseEventDeal {
 	
 	/**
 	 * 根据外部环境,重新设置鼠标状态变量
-	 *
+	 * 
 	 * 鼠标的状态应该变为怎样  应该不依赖于当前鼠标状态,而是依赖于外部环境
 	 * 外部环境是指:比如点击了修理或卖建筑按钮、当前有选中单位、鼠标下方有单位等等
 	 */

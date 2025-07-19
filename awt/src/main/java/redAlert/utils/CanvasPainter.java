@@ -84,12 +84,16 @@ public class CanvasPainter {
 	 * 
 	 * 
 	 */
-	public static void drawGuidelines(BufferedImage guidelinesCanvas) {
+	public static void drawGuidelines(BufferedImage guidelinesCanvas,int viewportOffX,int viewportOffY) {
 		
 		Graphics2D g2d = guidelinesCanvas.createGraphics();
 		g2d.setColor(Color.gray);
 		g2d.fillRect(0, 0, guidelinesCanvas.getWidth(), guidelinesCanvas.getHeight());
+		g2d.setColor(Color.black);
 		
+		
+		int viewportWidth = MainPanel.viewportWidth;
+		int viewportHeight = MainPanel.viewportHeight;
 		//一类中心点
 		for(int m=0;m<50;m++) {
 			int y = 15+30*m;
@@ -98,28 +102,18 @@ public class CanvasPainter {
 				CenterPoint centerPoint = PointUtil.fetchCenterPoint(x, y);
 				int centerX = centerPoint.getX();
 				int centerY = centerPoint.getY();
-//				if(n%2==0) {
-//					g2d.setColor(new Color(240,240,240,60));
-//				}else {
-//					g2d.setColor(new Color(210,210,210,60));
-//				}
 				
-				g2d.setColor(Color.black);
-				g2d.drawLine(centerX+1, centerY-14, centerX-2, centerY-14);
-				g2d.drawLine(centerX-2, centerY-14, centerX-30, centerY);
-				g2d.drawLine(centerX-30, centerY, centerX-2, centerY+14);
-				g2d.drawLine(centerX-2, centerY+14, centerX+1, centerY+14);
-				g2d.drawLine(centerX+1, centerY+14, centerX+29, centerY);
-				g2d.drawLine(centerX+29, centerY,centerX+1, centerY-14);
-				
-				/*
-				for(int i=0;i<15;i++) {
-					g2d.drawLine(centerX-2-2*i, centerY-14+i, centerX+1+2*i, centerY-14+i);
+				if(centerX>= viewportOffX-100 && centerX<=viewportOffX+viewportWidth+100 && centerY>=viewportOffY-100 && centerY< viewportOffY+viewportHeight+100) {
+					centerX = CoordinateUtil.getViewportX(centerX, viewportOffX);
+					centerY = CoordinateUtil.getViewportX(centerY, viewportOffY);
+					
+					g2d.drawLine(centerX+1, centerY-14, centerX-2, centerY-14);
+					g2d.drawLine(centerX-2, centerY-14, centerX-30, centerY);
+					g2d.drawLine(centerX-30, centerY, centerX-2, centerY+14);
+					g2d.drawLine(centerX-2, centerY+14, centerX+1, centerY+14);
+					g2d.drawLine(centerX+1, centerY+14, centerX+29, centerY);
+					g2d.drawLine(centerX+29, centerY,centerX+1, centerY-14);
 				}
-				for(int i=0;i<14;i++) {
-					g2d.drawLine(centerX-1-29+2+2*i, centerY+1+i, centerX+29-2-2*i, centerY+1+i);
-				}
-				*/
 				
 			}
 		}
@@ -132,26 +126,19 @@ public class CanvasPainter {
 				CenterPoint centerPoint = PointUtil.fetchCenterPoint(x, y);
 				int centerX = centerPoint.getX();
 				int centerY = centerPoint.getY();
-//				if(n%2==0) {
-//					g2d.setColor(new Color(240,240,240,60));
-//				}else {
-//					g2d.setColor(new Color(210,210,210,60));
-//				}
-				g2d.setColor(Color.black);
-				g2d.drawLine(centerX+1, centerY-14, centerX-2, centerY-14);
-				g2d.drawLine(centerX-2, centerY-14, centerX-30, centerY);
-				g2d.drawLine(centerX-30, centerY, centerX-2, centerY+14);
-				g2d.drawLine(centerX-2, centerY+14, centerX+1, centerY+14);
-				g2d.drawLine(centerX+1, centerY+14, centerX+29, centerY);
-				g2d.drawLine(centerX+29, centerY,centerX+1, centerY-14);
-				/*
-				for(int i=0;i<15;i++) {
-					g2d.drawLine(centerX-2-2*i, centerY-14+i, centerX+1+2*i, centerY-14+i);
+				
+				if(centerX>= viewportOffX-100 && centerX<=viewportOffX+viewportWidth+100 && centerY>=viewportOffY-100 && centerY< viewportOffY+viewportHeight+100) {
+					centerX = CoordinateUtil.getViewportX(centerX, viewportOffX);
+					centerY = CoordinateUtil.getViewportX(centerY, viewportOffY);
+					
+					g2d.drawLine(centerX+1, centerY-14, centerX-2, centerY-14);
+					g2d.drawLine(centerX-2, centerY-14, centerX-30, centerY);
+					g2d.drawLine(centerX-30, centerY, centerX-2, centerY+14);
+					g2d.drawLine(centerX-2, centerY+14, centerX+1, centerY+14);
+					g2d.drawLine(centerX+1, centerY+14, centerX+29, centerY);
+					g2d.drawLine(centerX+29, centerY,centerX+1, centerY-14);
 				}
-				for(int i=0;i<14;i++) {
-					g2d.drawLine(centerX-1-29+2+2*i, centerY+1+i, centerX+29-2-2*i, centerY+1+i);
-				}
-				*/
+				
 			}
 		}
 	}

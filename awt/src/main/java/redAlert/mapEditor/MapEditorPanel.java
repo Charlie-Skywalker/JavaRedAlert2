@@ -124,7 +124,7 @@ public class MapEditorPanel extends JPanel{
 	 * 初始化辅助线格
 	 */
 	private void drawGuidelinesCanvas() {
-		CanvasPainter.drawGuidelines(guidelinesCanvas);//辅助线网格
+		CanvasPainter.drawGuidelines(guidelinesCanvas,viewportOffX,viewportOffY);//辅助线网格
 	}
 	
 	/**

@@ -77,10 +77,11 @@ public class MainPanel extends JPanel{
 	 * 为什么用阻塞队列:
 	 *   当队列中的元素处理完毕放入规划队列时，此时会阻塞，避免建筑规划线程不停的轮询，减少CPU占用
 	 */
-	public ArrayBlockingQueue<ShapeUnit> shapeUnitBlockingQueue = new ArrayBlockingQueue<ShapeUnit>(100);
+	public ArrayBlockingQueue<ShapeUnit> shapeUnitBlockingQueue = new ArrayBlockingQueue<ShapeUnit>(150);
 	/**
 	 * 主画板
 	 */
+	@Deprecated
 	private BufferedImage mainInterface = new BufferedImage(viewportWidth,viewportHeight,BufferedImage.TYPE_INT_ARGB);
 	/**
 	 * 用来画鼠标、选择框等主画板层面上的内容
@@ -90,7 +91,13 @@ public class MainPanel extends JPanel{
 	 * 辅助线格
 	 * 早期这个画板用来绘制地形网格,随着后期功能的开发,这个画板改用来绘制地形
 	 */
+	@Deprecated
 	private BufferedImage guidelinesCanvas = new BufferedImage(viewportWidth,viewportHeight,BufferedImage.TYPE_INT_ARGB);
+	/**
+	 * 最终给SWT线程绘制用的画板
+	 */
+	private BufferedImage canvas = new BufferedImage(viewportWidth,viewportHeight,BufferedImage.TYPE_INT_ARGB);
+	
 	
 	
 	/**
@@ -98,14 +105,14 @@ public class MainPanel extends JPanel{
 	 * 当buildingFlag=偶数  此队列为绘制队列
 	 * 当buildingFlag=奇数  此队列为缓存队列
 	 */
-	private PriorityQueue<ShapeUnit> unitList = new PriorityQueue<ShapeUnit>();
+	private PriorityQueue<ShapeUnit> unitList = new PriorityQueue<ShapeUnit>(150);
 	/**
 	 * SHP方块规划队列2
 	 * 两个建筑队列,一个用于绘制画面时，另一个用于缓存下一帧画面
 	 * 当buildingFlag=奇数  此队列为缓存队列
 	 * 当buildingFlag=偶数  此队列为绘制队列
 	 */
-	private PriorityQueue<ShapeUnit> unitList2 = new PriorityQueue<ShapeUnit>();
+	private PriorityQueue<ShapeUnit> unitList2 = new PriorityQueue<ShapeUnit>(150);
 	/**
 	 * SHP方块队列标识
 	 * 用于决定使用1.2哪个队列
@@ -130,8 +137,10 @@ public class MainPanel extends JPanel{
 	 * 帧计数
 	 */
 	public static long frameCount = 0;
-	
-	
+	/**
+	 * 自身引用
+	 */
+	public MainPanel myself;
 	
 	
 	
@@ -139,6 +148,8 @@ public class MainPanel extends JPanel{
 	 * 
 	 */
 	public MainPanel() {
+		setDoubleBuffered(true);//启用双缓冲
+		
 		super.setLocation(locationX, locationY);
 //		super.setLayout(null);//JPanel的布局默认是FlowLayout
 		super.setSize(viewportWidth, viewportHeight);
@@ -146,8 +157,11 @@ public class MainPanel extends JPanel{
 		super.setPreferredSize(new Dimension(viewportWidth,viewportHeight));//首选尺寸
 		
 		GameContext.setMainPanel(this);//暴露一个外部引用
+		this.myself = this;
 		startFrameImageCalculate();//场景物品计算线程启动
-		initGuidelinesCanvas();//初始化辅助线格
+		int theSightOffX = viewportOffX;
+		int theSightOffY = viewportOffY;
+		initGuidelinesCanvas(theSightOffX,theSightOffY);//初始化辅助线格
 		startPainterThread();//启动绘画线程
 	}
 	
@@ -284,19 +298,30 @@ public class MainPanel extends JPanel{
 						prioritySetFlag = true;
 					}
 					
-					//绘制鼠标图片
-					Point mousePoint = GameContext.scenePanel.getMousePosition();
-					drawMouseCursor(mousePoint);
+					
 					
 					//获取视口偏移,由于这两个变量变化频繁,所以需要获取一个快照,否则移动视口内容会抖动
 					int theSightOffX = viewportOffX;
 					int theSightOffY = viewportOffY;
 					
-					//绘制地形
-					drawTerrain(theSightOffX,theSightOffY);
 					
+					//绘制地形（地形的代码块覆盖全图,所以就不用重新清空画板了）
+					drawTerrain(theSightOffX,theSightOffY);
 					//绘制游戏内的ShapeUnit
 					drawMainInterface(theSightOffX,theSightOffY);
+					//画指令（选中框 预建造占地绿框）
+					Graphics g = canvas.getGraphics();
+					g.drawImage(canvasFirst, 0, 0, null);//画指令框和移动线
+					
+					
+					//绘制鼠标图片
+					Point mousePoint = GameContext.scenePanel.getMousePosition();
+					drawMouseCursor(mousePoint);
+					g.drawImage(mouseCursorImage, positionX, positionY, GameContext.scenePanel);//画鼠标
+					g.dispose();
+					
+					myself.repaint();
+					frameCount++;
 					
 				}catch(Exception e) {
 					e.printStackTrace();
@@ -306,7 +331,6 @@ public class MainPanel extends JPanel{
 		timer.schedule(refreshTask, 1L, paintPeriod);
 		
 	}
-	
 	
 	/**
 	 * 地形菱形块列表
@@ -319,8 +343,8 @@ public class MainPanel extends JPanel{
 	/**
 	 * 初始化辅助线格
 	 */
-	private void initGuidelinesCanvas() {
-		CanvasPainter.drawGuidelines(guidelinesCanvas);//辅助线网格
+	private void initGuidelinesCanvas(int theSightOffX,int theSightOffY) {
+		CanvasPainter.drawGuidelines(canvas,theSightOffX,theSightOffY);//辅助线网格
 		
 		//读取地形文件
 		try {
@@ -400,7 +424,7 @@ public class MainPanel extends JPanel{
 				String mapText = FileUtils.readFileToString(new File(GlobalConfig.mapFilePath), "UTF-8");
 				String [] strs = StringUtils.split(mapText,"$");
 				
-				Graphics2D g2d = guidelinesCanvas.createGraphics();
+				Graphics2D g2d = canvas.createGraphics();
 				
 				for(int i=0;i<strs.length;i++) {
 					String info = strs[i];
@@ -427,11 +451,16 @@ public class MainPanel extends JPanel{
 	
 	/**
 	 *  绘制地形terrain
+	 *  
+	 *  有地形画地形
+	 *  没地形画网格
 	 */
 	private void drawTerrain(int viewportOffX,int viewportOffY) {
 		
+		
+		
 		if(!terrainImageList.isEmpty()) {
-			Graphics2D g2d = guidelinesCanvas.createGraphics();
+			Graphics2D g2d = canvas.createGraphics();
 			//一类中心点
 			for(int m=0;m<50;m++) {
 				int y = 15+30*m;
@@ -460,6 +489,8 @@ public class MainPanel extends JPanel{
 				}
 			}
 			g2d.dispose();
+		}else {
+			CanvasPainter.drawGuidelines(canvas, viewportOffX, viewportOffY);//辅助线网格
 		}
 	}
 	
@@ -491,8 +522,7 @@ public class MainPanel extends JPanel{
 			
 		if(!drawShapeUnitList.isEmpty()) {
 			
-			CanvasPainter.clearImage(mainInterface);
-			Graphics2D g2d = mainInterface.createGraphics();
+			Graphics2D g2d = canvas.createGraphics();
 			
 			while(!drawShapeUnitList.isEmpty()) {
 				ShapeUnit shp = drawShapeUnitList.poll();
@@ -549,14 +579,6 @@ public class MainPanel extends JPanel{
 				
 			}
 			g2d.dispose();
-			
-			this.repaint();
-			
-			frameCount++;
-			
-		}else {
-//			防止空屏   这里就不再repaint();
-//			this.repaint();
 		}
 			
 	}
@@ -759,17 +781,14 @@ public class MainPanel extends JPanel{
 	
 	/**
 	 * 重绘方法  将主画板的内容绘制在窗口中
+	 * Swing的组件,应该重写paintComponent方法  这样没有闪屏问题
 	 */
 	@Override
-	public void paint(Graphics g) {
+	public void paintComponent(Graphics g) {
 		try {
-			super.paint(g);
-			g.clearRect(0, 0, gameMapWidth, gameMapHeight);
 			
-			g.drawImage(guidelinesCanvas, 0, 0, this);//画地形
-			g.drawImage(mainInterface, 0, 0, this);//画场景内物品
-			g.drawImage(canvasFirst, 0, 0, this);//画指令框和移动线
-			g.drawImage(mouseCursorImage, positionX, positionY, this);//画鼠标
+			super.paintComponent(g);
+			g.drawImage(canvas, 0, 0, this);
 			g.dispose();
 		} catch (Exception e) {
 			e.printStackTrace();

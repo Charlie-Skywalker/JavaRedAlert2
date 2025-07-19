@@ -16,22 +16,24 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import redAlert.Constructor;
-import redAlert.MainTest;
-import redAlert.MainTest.MouseStatus;
-import redAlert.MouseEventDeal;
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.ConstConfig;
+import redAlert.event.ConstIconClickEvent;
+import redAlert.event.EventHandlerManager;
 import redAlert.resourceCenter.ShpResourceCenter;
 import redAlert.utils.CanvasPainter;
 
 /**
  * 主建筑建造图标的父类
- *
+ * 
  * 防御类建筑图标不能继承这个类
  */
 public class Tab00ConstIcon extends JLabel{
 	
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 图标所代表的建筑
+	 */
 	public ConstConfig constInfo = null;
 	
 
@@ -112,88 +114,11 @@ public class Tab00ConstIcon extends JLabel{
 		this.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mousePressed(MouseEvent e) {
-				if(e.getButton()==MouseEvent.BUTTON1) {//左键
-					/*
-					 * 正常状态下点击,开始建造,并禁用其他建筑
-					 */
-					if(status==STATUS_IDLE) {
-						Tab00Manager.banAllExceptOne(myself);
-						status=Tab00ConstIcon.STATUS_USING;
-						Constructor.playOneMusic("ceva052");//Building
-						isReadyFlag = false;
-						isOnHoldFlag = false;
-						isBanFlag = false;
-						return;
-					}
-					/**
-					 * 建造ing状态下点击,提示语音
-					 */
-					if(status==STATUS_USING) {
-						Constructor.playOneMusic("ceva047");//Unable to comply, building in progress
-						return;
-					}
-					/*
-					 * 就绪状态下点击,更新鼠标状态,将能够建造建筑
-					 */
-					if(status==STATUS_READY) {
-						MainTest.mouseStatus = MouseStatus.Construct;
-						MouseEventDeal.constName = constInfo;
-						return;
-					}
-					/**
-					 * 保持或禁用状态,点击提示语音
-					 */
-					if(status==STATUS_KEEP || status==STATUS_BAN) {
-						if(Tab00Manager.isExistBuilding()) {
-							Constructor.playOneMusic("ceva047");//Unable to comply, building in progress
-						}
-						return;
-					}
-					/**
-					 * 暂停状态下点击,继续建造
-					 */
-					if(status==STATUS_ON_HOLD) {
-						status = STATUS_USING;
-						Constructor.playOneMusic("ceva052");//Building
-						isOnHoldFlag = false;
-						return;
-					}
-					
-				}
-				if(e.getButton()==MouseEvent.BUTTON2) {//中键
-				}
-				if(e.getButton()==MouseEvent.BUTTON3) {//右键
-					/**
-					 * 建造ing状态下右键,切为暂停状态
-					 */
-					if(status==STATUS_USING) {
-						status = STATUS_ON_HOLD;
-						Constructor.playOneMusic("ceva056");//on hold
-						return;
-					}
-					/**
-					 * 暂停状态下右键,取消建造
-					 */
-					if(status==STATUS_ON_HOLD) {
-						status = STATUS_TEMP;
-						isOnHoldFlag = false;
-						Constructor.playOneMusic("ceva051");//cancel
-						Tab00Manager.freeAll();
-						return;
-					}
-					/**
-					 * 就绪状态下右键,取消建造
-					 */
-					if(status==STATUS_READY) {
-						status = STATUS_TEMP;
-						isReadyFlag=false;
-						Constructor.playOneMusic("ceva051");//cancel
-						Tab00Manager.freeAll();
-						return;
-					}
-					
-				}
+			public void mousePressed(MouseEvent mouseEvent) {
+				
+				ConstIconClickEvent clickEvent = new ConstIconClickEvent(mouseEvent,myself);
+				EventHandlerManager.publishOneEvent(clickEvent);
+				
 			}
 			
 		});
@@ -210,7 +135,7 @@ public class Tab00ConstIcon extends JLabel{
 	 */
 	public Color grayMaskColor = new Color(0x1c,0xbc,0xe8,80);
 	/**
-	 *
+	 * 
 	 */
 	public Color color0 = new Color(0,0,0,0);
 	/**
@@ -223,11 +148,19 @@ public class Tab00ConstIcon extends JLabel{
 	 */
 	public BufferedImage grayMaskImage = new BufferedImage(60,48,BufferedImage.TYPE_INT_ARGB);
 	/**
-	 * 表示渲染是否已经做了
-	 * 避免重复刷界面,减少资源消耗
+	 * 是否已渲染为就绪状态 
+	 * 如果已经是就绪状态,且没有发生任何事,则保持就绪,此时不需再做渲染
 	 */
 	public boolean isReadyFlag = false;
+	/**
+	 * 是否已渲染为暂停状态
+	 * 如果已经是暂停状态,且没有发生任何事,则保持暂停,此时不需再做渲染
+	 */
 	public boolean isOnHoldFlag = false;
+	/**
+	 * 是否已渲染为禁用状态(灰色的,点击无效)
+	 * 如果已经是禁用状态,且没有发生任何事,则保持禁用,此时不需再做渲染
+	 */
 	public boolean isBanFlag = false;
 	
 	public Timer timer = null;
@@ -505,12 +438,35 @@ public class Tab00ConstIcon extends JLabel{
 	public int getStatus() {
 		return status;
 	}
-
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
+	public boolean isReadyFlag() {
+		return isReadyFlag;
+	}
+	public void setReadyFlag(boolean isReadyFlag) {
+		this.isReadyFlag = isReadyFlag;
+	}
+	public boolean isOnHoldFlag() {
+		return isOnHoldFlag;
+	}
+	public void setOnHoldFlag(boolean isOnHoldFlag) {
+		this.isOnHoldFlag = isOnHoldFlag;
+	}
+	public boolean isBanFlag() {
+		return isBanFlag;
+	}
+	public void setBanFlag(boolean isBanFlag) {
+		this.isBanFlag = isBanFlag;
+	}
 	public boolean isDisplay() {
 		return false;
 	}
+	public ConstConfig getConstInfo() {
+		return constInfo;
+	}
+	public void setConstInfo(ConstConfig constInfo) {
+		this.constInfo = constInfo;
+	}
+	
 }

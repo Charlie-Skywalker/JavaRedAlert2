@@ -1,5 +1,9 @@
 package redAlert.test;
 
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.image.VolatileImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +63,7 @@ public class Atest1 {
 		 * 平移算法
 		 *
 		 * 假设将单位都整体平移到目标地点，计算最终的移动点集合
-		 *
+		 * 
 		 */
 		List<MovePlan> movePlanLs = new ArrayList<>();
 		for(MovableUnit unit: movableUnits) {
@@ -87,8 +91,8 @@ public class Atest1 {
 		}
 		
 		/**
-		 * 聚合算法
-		 *
+		 * 聚合算法 
+		 * 
 		 * 因为平移到目标地点后,单位未聚合在一起,仍然是分散的,所以需要向中心聚合
 		 */
 		List<CenterPoint> norNeibors = PointUtil.getNorNeighborsCollection(all,targetCp);//未聚合在中心点区域的点集合
@@ -126,11 +130,24 @@ public class Atest1 {
 
 	
 	public static void main(String[] args) throws Exception{
-	
+		
 //		String a = URLDecoder.decode("%e4%b8%ad%e6%96%87", "UTF-8");
 //		System.out.println(a);
-	
-	
-	
+		
+//		long a = 1;
+//		int b = 1;
+//		
+//		long d = -1;
+//		long a1 = a<<32;
+//		long b1 = b;
+//		
+//		System.out.println(Integer.MAX_VALUE);
+//		System.out.println(a1 | b1);
+//		System.out.println(a1);
+		int a = 1;
+		long al = a;
+		long b = al<<32;
+		
+		System.out.println(b);
 	}
 }

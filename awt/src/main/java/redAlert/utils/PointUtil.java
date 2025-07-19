@@ -26,7 +26,7 @@ public class PointUtil {
 	 * 中心点坐标缓存
 	 * 所有的中心点,原则上应该从缓存中获取,避免新建
 	 */
-	public static Map<String,CenterPoint> centerPointMap = new HashMap<>();
+	private static Map<Long,CenterPoint> centerPointMap = new HashMap<>();
 	
 	/**
 	 * 小中心点缓存
@@ -46,7 +46,10 @@ public class PointUtil {
 			int y = 15+30*m;
 			for(int n=0;n<50;n++) {
 				int x = 30+60*n;
-				centerPointMap.put(x+","+y, new CenterPoint(x,y));
+				
+				long key = getKey(x,y);
+				
+				centerPointMap.put(key, new CenterPoint(x,y));
 				
 				littleCenterPointMap.put( (x-16)+","+y, new LittleCenterPoint(x-16,y,Direction.Left));
 				littleCenterPointMap.put( (x+16)+","+y, new LittleCenterPoint(x+16,y,Direction.Right));
@@ -61,7 +64,10 @@ public class PointUtil {
 			int y = 30*m;
 			for(int n=0;n<50;n++) {
 				int x = 60*n;
-				centerPointMap.put(x+","+y, new CenterPoint(x,y));
+				
+				long key = getKey(x,y);
+				
+				centerPointMap.put(key, new CenterPoint(x,y));
 				
 				littleCenterPointMap.put( (x-16)+","+y, new LittleCenterPoint(x-16,y,Direction.Left));
 				littleCenterPointMap.put( (x+16)+","+y, new LittleCenterPoint(x+16,y,Direction.Right));
@@ -70,23 +76,27 @@ public class PointUtil {
 			}
 		}
 	}
+	
+	/**
+	 * 获取中心点缓存的key
+	 */
+	private static long getKey(int x,int y) {
+		long xl = x;
+		long yl = y;
+		return (xl<<32) | yl;
+	}
+	
 	/**
 	 * 是否包含某个点
 	 */
 	public static boolean contains(CenterPoint p) {
-		return centerPointMap.containsKey(p.getX()+","+p.getY());
-	}
-	/**
-	 * 放入,以后可能会更改Key值
-	 */
-	public static void putIntoMap(CenterPoint p) {
-		centerPointMap.put(p.getX()+","+p.getY(), p);
+		return centerPointMap.containsKey(getKey(p.getX(),p.getY()));
 	}
 	/**
 	 * 判断一个坐标点是否是菱形中心点
 	 */
 	public static boolean isCenterPoint(int x,int y) {
-		return centerPointMap.containsKey(x+","+y);
+		return centerPointMap.containsKey(getKey(x,y));
 	}
 	
 	/**
@@ -323,7 +333,7 @@ public class PointUtil {
 	 * 需要确认参数是中心点坐标后才能使用
 	 */
 	public static CenterPoint fetchCenterPoint(int centerX,int centerY) {
-		return centerPointMap.get(centerX+","+centerY);
+		return centerPointMap.get(getKey(centerX,centerY));
 	}
 	/**
 	 * 查询一个建筑是否在阴影中

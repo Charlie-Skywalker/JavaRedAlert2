@@ -1,11 +1,14 @@
 package redAlert;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
 import redAlert.enums.UnitColor;
+import redAlert.event.EventHandlerManager;
 import redAlert.militaryBuildings.AfPill;
+import redAlert.militaryBuildings.AfTech;
 import redAlert.other.Mouse;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
 import redAlert.shapeObjects.Building.SceneType;
@@ -54,7 +57,7 @@ public class MainTest {
 		Select("选中"),
 		/**
 		 * 预选状态  鼠标指针为singleSelect样式
-		 * 当鼠标为空闲状态时,放在单位上进入此状态
+		 * 当鼠标为空闲状态时,放在单位上进入此状态  
 		 * 当鼠标移出单位上时,回到空闲状态
 		 */
 		PreSingleSelect("预单选单位或建筑"),
@@ -119,6 +122,10 @@ public class MainTest {
 		jf.setVisible(true);//JFrame默认不可见,设置为可见
 		jf.pack();
 		
+		/*
+		 * 红警事件管理器
+		 */
+		EventHandlerManager.init();
 		/**
 		 * 鼠标事件的处理
 		 */
@@ -220,7 +227,7 @@ public class MainTest {
 		weap.setMakingVehicle(true);//正在生产坦克
 		XiniuTank xt = new XiniuTank(weap.getPositionX()+weap.getCenterOffX()-64-32,weap.getPositionY()+weap.getCenterOffY()-64-16,"",UnitColor.Blue);
 		Constructor.putOneShapeUnit(xt, scenePanel);//建造坦克
-		xt.move = true;//坦克移动
+		xt.move = true;//坦克移动 
 		xt.moveToTarget( PointUtil.getCenterPoint(xt.positionX+64+32*4, xt.positionY+64+16*4));
 		Thread.sleep(5000);
 		weap.setMakingVehicle(false);//恢复正常状态
@@ -253,7 +260,7 @@ public class MainTest {
 		Thread.sleep(500);
 		GrizTank gtank = new GrizTank(64*2-64,32*3-64,UnitColor.Orange);
 		Constructor.putOneShapeUnit(gtank, scenePanel);//灰熊坦克
-//
+//		
 		CenterPoint cc = PointUtil.getCenterPoint(300, 100);
 		XiniuTank2 xt2 = new XiniuTank2(cc.getX()-64,cc.getY()-64,UnitColor.Orange);
 		Constructor.putOneShapeUnit(xt2, scenePanel);//犀牛坦克
@@ -299,28 +306,28 @@ public class MainTest {
 //		LittleCenterPoint lcp1 = cp4.getDownLittleCenterPoint();
 //		Tany tany = new Tany(lcp1,UnitColor.Red);
 //		Constructor.putOneShapeUnit(tany, scenePanel);//谭雅
-//
+//		
 //		LittleCenterPoint lcp2 = cp4.getLeftLittleCenterPoint();
 //		Tany tany2 = new Tany(lcp2,UnitColor.Blue);
 //		Constructor.putOneShapeUnit(tany2, scenePanel);//谭雅
-//
+//		
 //		LittleCenterPoint lcp3 = cp1.getLeftLittleCenterPoint();
 //		Tany tany3 = new Tany(lcp3,UnitColor.Green);
 //		Constructor.putOneShapeUnit(tany3, scenePanel);//谭雅
-//
+//		
 //		LittleCenterPoint lcp4 = cp2.getLeftLittleCenterPoint();
 //		Tany tany4 = new Tany(lcp4,UnitColor.Orange);
 //		Constructor.putOneShapeUnit(tany4, scenePanel);//谭雅
-
+		
 //		sniper2.status = SoldierStatus.UMove;
 //		sniper3.status = SoldierStatus.UMove;
 //		sniper4.status = SoldierStatus.UMove;
-
+		
 //		LittleCenterPoint endTarget = PointUtil.getCenterPoint(492, 485).getLeftLittleCenterPoint();
 //		sniper.nextTarget = endTarget;
 //		sniper.endTarget = endTarget;
 //		sniper.status = SoldierStatus.UMove;
-
+		
 //		afCnst.setToFetchCrate(true);
 		
 		//简单的攻击效果
@@ -331,6 +338,8 @@ public class MainTest {
 			gtank.attack(targetPill2);
 		}
 		
+//		-Xms1024m
+//		-XX:+UseG1GC -XX:MaxGCPauseMillis=1
 		
 		
 //		TankShell ts = new TankShell(200,200,500,500);

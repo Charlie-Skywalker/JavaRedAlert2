@@ -35,6 +35,7 @@ import redAlert.utilBean.CenterPoint;
 import redAlert.utilBean.LittleCenterPoint;
 import redAlert.utils.LittleCenterPointUtil;
 import redAlert.utils.PointUtil;
+import redAlert.utils.RandomUtil;
 
 /**
  * 管理地图上资源的类
@@ -427,6 +428,7 @@ public class ShapeUnitResourceCenter {
 						while(true) {
 							CenterPoint tankCp = gtank.getCurCenterPoint();
 							Thread.sleep(0);
+							System.out.println("???"+RandomUtil.newUnitNo());
 							if(!tankCp.equals(bornCp) && !tankCp.equals(bornCp.getRightDn()) && !tankCp.equals(bornCp.getRightDn().getRightDn())) {
 								break;
 							}
