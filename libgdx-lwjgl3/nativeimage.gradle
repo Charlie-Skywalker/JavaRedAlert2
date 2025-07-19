@@ -1,5 +1,5 @@
 
-project(":lwjgl3") {
+project(":libgdx-lwjgl3") {
   apply plugin: "org.graalvm.buildtools.native"
 
   graalvmNative {

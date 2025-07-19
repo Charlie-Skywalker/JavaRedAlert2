@@ -1,15 +1,79 @@
 [versions]
 java = "21"
 kotlin = "2.2.0"
+libgdx = "1.13.1"
+libgdx-ktx = "1.13.1-rc1"
 lwjgl = "3.3.6"
 
 [libraries]
+####################
+#                  #
+#      Apache      #
+#                  #
+####################
 apache-common-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.18.0" }
 apache-common-io = { module = "commons-io:commons-io", version = "2.14.0" }
 
-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
+####################
+#                  #
+#      libGDX      #
+#                  #
+####################
+# official libraries
+libgdx = { module = "com.badlogicgames.gdx:gdx", version.ref = "libgdx" }
+libgdx-ai = { module = "com.badlogicgames.gdx:gdx-ai", version = "1.8.2" }
+libgdx-ashley = { module = "com.badlogicgames.ashley:ashley", version = "1.7.4" }
+libgdx-box2d = { module = "com.badlogicgames.gdx:gdx-box2d", version.ref = "libgdx" }
+libgdx-box2dlights = { module = "com.badlogicgames.box2dlights:box2dlights", version = "1.5" }
+libgdx-bullet = { module = "com.badlogicgames.gdx:gdx-bullet", version.ref = "libgdx" }
+libgdx-controllers-core = { module = "com.badlogicgames.gdx-controllers:gdx-controllers-core", version = "2.2.3" }
+libgdx-freetype = { module = "com.badlogicgames.gdx:gdx-freetype", version.ref = "libgdx" }
+# other libraries
+libgdx-artemis-odb = { module = "net.onedaybeard.artemis:artemis-odb", version = "2.3.0" }
+libgdx-graal-helper = { module = "io.github.berstanio:gdx-svmhelper-annotations", version = "2.0.1" }
+libgdx-ktx-actors = { module = "io.github.libktx:ktx-actors", version.ref = "libgdx-ktx" }
+libgdx-ktx-ai = { module = "io.github.libktx:ktx-ai", version.ref = "libgdx-ktx" }
+libgdx-ktx-app = { module = "io.github.libktx:ktx-app", version.ref = "libgdx-ktx" }
+libgdx-ktx-artemis = { module = "io.github.libktx:ktx-artemis", version.ref = "libgdx-ktx" }
+libgdx-ktx-ashley = { module = "io.github.libktx:ktx-ashley", version.ref = "libgdx-ktx" }
+libgdx-ktx-assets = { module = "io.github.libktx:ktx-assets", version.ref = "libgdx-ktx" }
+libgdx-ktx-assets-async = { module = "io.github.libktx:ktx-assets-async", version.ref = "libgdx-ktx" }
+libgdx-ktx-async = { module = "io.github.libktx:ktx-async", version.ref = "libgdx-ktx" }
+libgdx-ktx-box2d = { module = "io.github.libktx:ktx-box2d", version.ref = "libgdx-ktx" }
+libgdx-ktx-collections = { module = "io.github.libktx:ktx-collections", version.ref = "libgdx-ktx" }
+libgdx-ktx-freetype = { module = "io.github.libktx:ktx-freetype", version.ref = "libgdx-ktx" }
+libgdx-ktx-freetype-async = { module = "io.github.libktx:ktx-freetype-async", version.ref = "libgdx-ktx" }
+libgdx-ktx-graphics = { module = "io.github.libktx:ktx-graphics", version.ref = "libgdx-ktx" }
+libgdx-ktx-i18n = { module = "io.github.libktx:ktx-i18n", version.ref = "libgdx-ktx" }
+libgdx-ktx-inject = { module = "io.github.libktx:ktx-inject", version.ref = "libgdx-ktx" }
+libgdx-ktx-json = { module = "io.github.libktx:ktx-json", version.ref = "libgdx-ktx" }
+libgdx-ktx-log = { module = "io.github.libktx:ktx-log", version.ref = "libgdx-ktx" }
+libgdx-ktx-math = { module = "io.github.libktx:ktx-math", version.ref = "libgdx-ktx" }
+libgdx-ktx-preferences = { module = "io.github.libktx:ktx-preferences", version.ref = "libgdx-ktx" }
+libgdx-ktx-reflect = { module = "io.github.libktx:ktx-reflect", version.ref = "libgdx-ktx" }
+libgdx-ktx-scene2d = { module = "io.github.libktx:ktx-scene2d", version.ref = "libgdx-ktx" }
+libgdx-ktx-style = { module = "io.github.libktx:ktx-style", version.ref = "libgdx-ktx" }
+libgdx-ktx-tiled = { module = "io.github.libktx:ktx-tiled", version.ref = "libgdx-ktx" }
+libgdx-ktx-vis = { module = "io.github.libktx:ktx-vis", version.ref = "libgdx-ktx" }
+libgdx-ktx-vis-style = { module = "io.github.libktx:ktx-vis-style", version.ref = "libgdx-ktx" }
+libgdx-vis-ui = { module = "com.kotcrab.vis:vis-ui", version = "1.5.5" }
 
+####################
+#                  #
+#      Kotlin      #
+#                  #
+####################
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.10.2" }
+
+####################
+#                  #
+#      LWJGL3      #
+#                  #
+####################
+# official libraries
 lwjgl-bom = { module = "org.lwjgl:lwjgl-bom", version.ref = "lwjgl" }
 lwjgl = { module = "org.lwjgl:lwjgl" }
 lwjgl-assimp = { module = "org.lwjgl:lwjgl-assimp" }
@@ -58,8 +122,8 @@ lwjgl-vulkan = { module = "org.lwjgl:lwjgl-vulkan" }
 lwjgl-xxhash = { module = "org.lwjgl:lwjgl-xxhash" }
 lwjgl-yoga = { module = "org.lwjgl:lwjgl-yoga" }
 lwjgl-zstd = { module = "org.lwjgl:lwjgl-zstd" }
-
-lwjgl-awt = { module = "org.lwjglx:lwjgl3-awt", version = "0.1.8" }
+# other libraries
+lwjglx-awt = { module = "org.lwjglx:lwjgl3-awt", version = "0.1.8" }
 joml = { module = "org.joml:joml", version = "1.10.8" }
 joml-primitives = { module = "org.joml:joml-primitives", version = "1.10.0" }
 steamworks4j = { module = "com.code-disaster.steamworks4j:steamworks4j", version = "1.9.0" }

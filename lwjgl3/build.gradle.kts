@@ -90,7 +90,7 @@ dependencies {
     implementation(libs.lwjgl.yoga, action)
     implementation(libs.lwjgl.zstd, action)
     
-    implementation(libs.lwjgl.awt)
+    implementation(libs.lwjglx.awt)
     implementation(libs.joml)
     implementation(libs.joml.primitives)
     implementation(libs.steamworks4j)
