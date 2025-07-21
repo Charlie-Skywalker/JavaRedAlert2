@@ -2,6 +2,8 @@ group = "org.example.redalert.libgdx"
 version = "unspecified"
 
 dependencies {
+    api(project(":game"))
+    
     api(libs.libgdx.ashley)
     api(libs.libgdx.box2dlights)
     api(libs.libgdx.controllers.core)
