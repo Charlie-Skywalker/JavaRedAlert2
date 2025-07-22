@@ -43,3 +43,5 @@ include(":awt")
 include(":lwjgl3")
 include(":libgdx")
 include(":libgdx-lwjgl3")
+
+include("base")
