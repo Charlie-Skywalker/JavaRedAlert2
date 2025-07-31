@@ -28,6 +28,7 @@ dependencyResolutionManagement {
         maven(uri("https://s01.oss.sonatype.org"))
         maven(uri("https://oss.sonatype.org/content/repositories/snapshots/"))
         maven(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+        maven(uri("https://jogamp.org/deployment/maven/"))
     }
 }
 

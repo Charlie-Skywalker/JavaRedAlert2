@@ -1,10 +1,10 @@
 package redAlert.other;
 
-import java.awt.image.BufferedImage;
-import java.util.List;
-
 import redAlert.ShapeUnitFrame;
 import redAlert.resourceCenter.ShpResourceCenter;
+
+import java.awt.image.BufferedImage;
+import java.util.List;
 
 /**
  * 建造块形状的SHP
@@ -21,7 +21,7 @@ public class Place {
 	 *
 	 */
 	public static void initPlaceRect() {
-		placeShapeFrames = ShpResourceCenter.loadShpResource("place", "shp/palette");
+		placeShapeFrames = ShpResourceCenter.loadShpResource("place", "../shp/palette");
 		
 		/*
 		 * 右侧红警对战默认指针
