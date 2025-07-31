@@ -4,9 +4,9 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayDeque;
 
 import redAlert.Constructor;
-import redAlert.MainTest;
-import redAlert.MainTest.MouseStatus;
 import redAlert.MouseEventDeal;
+import redAlert.RuntimeParameter;
+import redAlert.enums.MouseStatus;
 import redAlert.tabIcon.Tab00ConstIcon;
 import redAlert.tabIcon.Tab00Manager;
 
@@ -83,7 +83,7 @@ public class ConstIconClickEventHandler extends Thread{
 			 * 就绪状态下点击,更新鼠标状态,将能够建造建筑
 			 */
 			if(status==Tab00ConstIcon.STATUS_READY) {
-				MainTest.mouseStatus = MouseStatus.Construct;
+				RuntimeParameter.mouseStatus = MouseStatus.Construct;
 				MouseEventDeal.constName = constIcon.getConstInfo();
 				return;
 			}

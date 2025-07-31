@@ -3,7 +3,9 @@ package redAlert.utilBean;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
+import redAlert.GameContext;
 import redAlert.MainPanel;
+import redAlert.RuntimeParameter;
 import redAlert.militaryBuildings.AfWeap;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
 import redAlert.shapeObjects.Building;
@@ -17,19 +19,16 @@ public class FrameCalculateThread implements Runnable{
 	
 	public ArrayBlockingQueue<Runnable> threadQueue;
 	public ShapeUnit shp = null;
-	public MainPanel mp = null;
 	public List<ShapeUnit> shapeUnitQueryList;
 	
-	
-	
-	public FrameCalculateThread(MainPanel mp,ArrayBlockingQueue<Runnable> threadQueue) {
-		this.mp = mp;
+	public FrameCalculateThread(ArrayBlockingQueue<Runnable> threadQueue) {
 		this.threadQueue = threadQueue;
 	}
 	
 	public void setShp(ShapeUnit shp) {
 		this.shp = shp;
 	}
+	
 
 	@Override
 	public void run() {
@@ -59,13 +58,13 @@ public class FrameCalculateThread implements Runnable{
 					if(afweap.isMakingVehicle()) {
 						List<Building> ls = afweap.tankChaifen();
 						for(Building building : ls) {
-							mp.addBuildingToQueue(building);
+							RuntimeParameter.addBuildingToQueue(building);
 						}
 						afweap.setPutChildIn(true);
 					}else if(afweap.isMakingFly()){
 						List<Building> ls = afweap.flyChaifen();
 						for(Building building : ls) {
-							mp.addBuildingToQueue(building);
+							RuntimeParameter.addBuildingToQueue(building);
 						}
 						afweap.setPutChildIn(true);
 					}else {
@@ -78,7 +77,7 @@ public class FrameCalculateThread implements Runnable{
 						shp.calculateNextFrame();
 					}
 					
-					mp.addBuildingToQueue(afweap);
+					RuntimeParameter.addBuildingToQueue(afweap);
 				}
 				
 			}else {
@@ -92,7 +91,7 @@ public class FrameCalculateThread implements Runnable{
 					if(shp.getFrameNum()%shp.getFrameSpeed()==0) {
 						shp.calculateNextFrame();
 					}
-					mp.addBuildingToQueue(shp);
+					RuntimeParameter.addBuildingToQueue(shp);
 				}
 			}
 		}catch (Exception e) {

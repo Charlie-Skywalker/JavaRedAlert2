@@ -1,8 +1,7 @@
 package redAlert.shapeObjects.vehicle;
 
 import redAlert.Constructor;
-import redAlert.GameContext;
-import redAlert.MainPanel;
+import redAlert.RuntimeParameter;
 import redAlert.shapeObjects.Building;
 import redAlert.shapeObjects.TankTurret;
 import redAlert.shapeObjects.animation.TankShell;
@@ -27,7 +26,7 @@ public class GrizTankTurret extends TankTurret{
 	 */
 	public TankShell lastShell = null;
 	/**
-	 * 开火帧间隔  
+	 * 开火帧间隔
 	 * 用于控制开火的速度
 	 */
 	public final int fireFrameInterval = 200;
@@ -48,8 +47,8 @@ public class GrizTankTurret extends TankTurret{
 		
 		if(checkFireCondition(targetBuilding)) {
 			lastShell = new TankShell(curCenterPoint.getX(),curCenterPoint.getY(),vehicle,targetBuilding);
-			Constructor.putOneShapeUnit(lastShell, GameContext.scenePanel);//炮弹
-			long curFrameIndex = MainPanel.frameCount;
+			Constructor.putOneShapeUnit(lastShell);//炮弹
+			long curFrameIndex = RuntimeParameter.frameCount;
 			lastFireFrameIndex = curFrameIndex;
 			
 			Constructor.playOneMusic("bgraatta");//巨炮开火声音
@@ -58,12 +57,12 @@ public class GrizTankTurret extends TankTurret{
 	
 	/**
 	 * 是否满足开火条件
-	 * 
+	 *
 	 * 上一发炮弹伤害已结算
 	 * 建筑物未被摧毁
 	 * 建筑物可见
 	 * 开火帧间隔大于设定值
-	 * 
+	 *
 	 */
 	public boolean checkFireCondition(Building targetBuilding) {
 		
@@ -81,7 +80,7 @@ public class GrizTankTurret extends TankTurret{
 			return false;
 		}
 		
-		long curFrameIndex = MainPanel.frameCount;
+		long curFrameIndex = RuntimeParameter.frameCount;
 		if(curFrameIndex-lastFireFrameIndex<fireFrameInterval) {//开火帧间隔太短
 			return false;
 		}

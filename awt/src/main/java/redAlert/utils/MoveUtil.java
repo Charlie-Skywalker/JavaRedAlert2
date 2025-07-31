@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import redAlert.Constructor;
-import redAlert.GameContext;
 import redAlert.other.MoveLine;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
 import redAlert.shapeObjects.MovableUnit;
@@ -27,9 +26,9 @@ public class MoveUtil {
 	 * 控制群体移动的方法，先不解决平移后的位置不可抵达的问题
 	 * movableUnits 选中单位
 	 * targetCp 鼠标点击确定的目标点
-	 * 
+	 *
 	 * 先找到单位群中最靠近中心的单位，以它的中心点作为中心，对其他单位平移至目标中心点
-	 * 
+	 *
 	 */
 	public static void move(List<MovableUnit> movableUnits,int targetX,int targetY) {
 		MovableUnit centerUnit = getCenterMovableUnit(movableUnits);//找到中心的单位
@@ -47,7 +46,7 @@ public class MoveUtil {
 		 * 载具计算载具的CenterPoint
 		 * 步兵计算CenterPoint和LittleCenterPoint
 		 * 如果平移到的地点不能放置步兵或载具  将在附近找可以使用的点
-		 * 
+		 *
 		 */
 		List<MovePlan> movePlanLs = new ArrayList<>();
 		Set <LittleCenterPoint> exceptLcps = new HashSet<>();//步兵不能将这些点作为平移点
@@ -93,10 +92,10 @@ public class MoveUtil {
 		
 		
 		/*
-		 * 聚合算法 
-		 * 
+		 * 聚合算法
+		 *
 		 * 因为平移到目标地点后,单位未聚合在一起,仍然是分散的,所以需要向中心聚合
-		 * 
+		 *
 		 * 这个写的一定有问题   某些特殊情况下可能会使单位重叠
 		 */
 		List<CenterPoint> norNeibors = PointUtil.getNorNeighborsCollection(all,targetCp);//未聚合在中心点区域的点集合
@@ -234,7 +233,7 @@ public class MoveUtil {
 		planList.add(plan);
 		ShapeUnitResourceCenter.removeAllMoveLine();
 		MoveLine moveLine = new MoveLine(planList);
-		Constructor.putOneShapeUnit(moveLine, GameContext.getMainPanel());
+		Constructor.putOneShapeUnit(moveLine);
 	}
 	/**
 	 * 画多条移动线
@@ -242,7 +241,7 @@ public class MoveUtil {
 	public static void createManyMoveLine(List<MovePlan> movePlans) {
 		ShapeUnitResourceCenter.removeAllMoveLine();
 		MoveLine moveLine = new MoveLine(movePlans);
-		Constructor.putOneShapeUnit(moveLine, GameContext.getMainPanel());
+		Constructor.putOneShapeUnit(moveLine);
 	}
 	
 	

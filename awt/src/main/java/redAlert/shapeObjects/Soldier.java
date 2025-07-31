@@ -10,7 +10,6 @@ import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 
 import redAlert.Constructor;
-import redAlert.GameContext;
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.Direction;
 import redAlert.enums.UnitColor;
@@ -195,7 +194,7 @@ public abstract class Soldier extends MovableUnit{
 		//步兵的血条
 		SoldierBloodBar bar = new SoldierBloodBar(this);
 		super.bloodBar = bar;
-		Constructor.putOneShapeUnit(bar, GameContext.scenePanel);
+		Constructor.putOneShapeUnit(bar);
 	}
 	
 	/**
@@ -375,7 +374,7 @@ public abstract class Soldier extends MovableUnit{
 	
 	/**
 	 * 走一步的方法
-	 * 
+	 *
 	 * 对于会游泳的步兵  需要重写这个方法  以设置正确的帧图
 	 */
 	public void moveOneStep() {
@@ -429,12 +428,12 @@ public abstract class Soldier extends MovableUnit{
 		LittleCenterPoint newLCP = PointUtil.getMinDisLCP(positionX+centerOffX, positionY+centerOffY, newCenterPoint);
 		
 		if(newLCP.equals(curLittleCenterPoint)) {
-			
+		
 		}else {
 			if(!newCenterPoint.isSoldierCanOn()) {
-				
+			
 			}if(!movePath.contains(newLCP)) {
-				
+			
 			}else {
 				curCenterPoint.removeUnit(this);
 				curCenterPoint = newCenterPoint;
@@ -607,7 +606,7 @@ public abstract class Soldier extends MovableUnit{
 				standingTime = 0;
 				easeIndex = 0;
 			}else {
-				
+			
 			}
 			
 			transToColorful(frame);//上阵营色

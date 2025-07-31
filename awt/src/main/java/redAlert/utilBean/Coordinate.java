@@ -1,11 +1,11 @@
 package redAlert.utilBean;
 
-import redAlert.MainPanel;
+import redAlert.RuntimeParameter;
 import redAlert.utils.PointUtil;
 
 /**
  * 坐标变量
- * 
+ *
  * 最好能让这个对象逃逸,不制造太多垃圾
  */
 public class Coordinate {
@@ -54,15 +54,15 @@ public class Coordinate {
 		if(coordType==TYPE_VIEW_COORD) {
 			this.viewX = coordX;
 			this.viewY = coordY;
-			this.viewportOffX = MainPanel.viewportOffX;
-			this.viewportOffY = MainPanel.viewportOffY;
+			this.viewportOffX = RuntimeParameter.viewportOffX;
+			this.viewportOffY = RuntimeParameter.viewportOffY;
 			this.mapX = viewportOffX+viewX;
 			this.mapY = viewportOffY+viewY;
 		}else {
 			this.mapX = coordX;
 			this.mapY = coordY;
-			this.viewportOffX = MainPanel.viewportOffX;
-			this.viewportOffY = MainPanel.viewportOffY;
+			this.viewportOffX = RuntimeParameter.viewportOffX;
+			this.viewportOffY = RuntimeParameter.viewportOffY;
 			this.viewX = mapX-viewportOffX;
 			this.viewY = mapY-viewportOffY;
 		}

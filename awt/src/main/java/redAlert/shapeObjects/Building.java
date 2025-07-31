@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import redAlert.Constructor;
-import redAlert.GameContext;
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.BuildingAreaType;
 import redAlert.enums.ConstConfig;
@@ -167,11 +166,11 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 		
 		//初始化血条的信息
 		bloodBar = new BuildingBloodBar(this);
-		Constructor.putOneShapeUnit(bloodBar, GameContext.scenePanel);
+		Constructor.putOneShapeUnit(bloodBar);
 		
 		//初始化骨架的信息
 		bone = new BuildingBone(this);
-		Constructor.putOneShapeUnit(bone, GameContext.scenePanel);
+		Constructor.putOneShapeUnit(bone);
 		
 	}
 	

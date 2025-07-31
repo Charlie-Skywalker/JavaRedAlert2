@@ -16,11 +16,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import redAlert.Constructor;
-import redAlert.MainTest;
-import redAlert.MainTest.MouseStatus;
 import redAlert.MouseEventDeal;
+import redAlert.RuntimeParameter;
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.ConstConfig;
+import redAlert.enums.MouseStatus;
 import redAlert.resourceCenter.ShpResourceCenter;
 import redAlert.utils.CanvasPainter;
 
@@ -142,7 +142,7 @@ public class Tab01ConstIcon extends JLabel{
 					 * 就绪状态下点击,更新鼠标状态,将能够建造建筑
 					 */
 					if(status==STATUS_READY) {
-						MainTest.mouseStatus = MouseStatus.Construct;
+						RuntimeParameter.mouseStatus = MouseStatus.Construct;
 						MouseEventDeal.constName = constInfo;
 						return;
 					}

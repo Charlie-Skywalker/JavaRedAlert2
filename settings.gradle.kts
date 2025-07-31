@@ -10,8 +10,8 @@ pluginManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
-        maven(uri("https://s01.oss.sonatype.org"))
         maven(uri("https://jitpack.io"))
+        maven(uri("https://s01.oss.sonatype.org"))
         maven(uri("https://oss.sonatype.org/content/repositories/snapshots/"))
         maven(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
     }
@@ -24,8 +24,8 @@ dependencyResolutionManagement {
         mavenCentral()
         gradlePluginPortal()
         google()
-        maven(uri("https://s01.oss.sonatype.org"))
         maven(uri("https://jitpack.io"))
+        maven(uri("https://s01.oss.sonatype.org"))
         maven(uri("https://oss.sonatype.org/content/repositories/snapshots/"))
         maven(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
     }
@@ -45,3 +45,4 @@ include(":libgdx")
 include(":libgdx-lwjgl3")
 
 include("base")
+include("common")

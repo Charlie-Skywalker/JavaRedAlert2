@@ -5,9 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.VolatileImage;
 
-import redAlert.MainPanel;
+import redAlert.RuntimeParameter;
+import redAlert.SysConfig;
 import redAlert.enums.UnitColor;
 import redAlert.utilBean.CenterPoint;
 
@@ -32,27 +32,10 @@ public class CanvasPainter {
 	}
 	
 	/**
-	 * 清空画板
+	 * 向画板中增加一个选择框
 	 */
-	public static void clearImage(VolatileImage bufferedImage) {
-		int width = bufferedImage.getWidth();
-		int height = bufferedImage.getHeight();
-		Graphics2D g2d = bufferedImage.createGraphics();
-		g2d.setComposite(AlphaComposite.Clear);//设置为清理模式
-		g2d.fillRect(0, 0, width, height);
-		g2d.dispose();
-	}
-	
-	/**
-	 * 向canvasFirst中增加一个选择框
-	 * 与其他方法不同  这里的坐标本身就应该是视口坐标
-	 * 
-	 */
-	public static void drawSelectRect(int startMouseX,int startMouseY,int endMouseX,int endMouseY,BufferedImage canvasFirst) {
-		
-		clearImage(canvasFirst);
-		
-		Graphics2D g2d = canvasFirst.createGraphics();
+	public static void drawSelectRect(int startMouseX,int startMouseY,int endMouseX,int endMouseY,BufferedImage canvas) {
+		Graphics2D g2d = canvas.createGraphics();
 		int rectWidth = 0;
 		if(endMouseX>startMouseX) {
 			rectWidth = endMouseX-startMouseX+1;
@@ -73,27 +56,20 @@ public class CanvasPainter {
 	}
 	
 	/**
-	 * 移除选择框
+	 * 画板上绘制辅助线网格
+	 *
+	 *
 	 */
-	public static void removeSelectRect(BufferedImage canvasFirst) {
-		clearImage(canvasFirst);
-	}
-	
-	/**
-	 * 画板上绘制辅助线格
-	 * 
-	 * 
-	 */
-	public static void drawGuidelines(BufferedImage guidelinesCanvas,int viewportOffX,int viewportOffY) {
+	public static void drawGuidelines(BufferedImage canvas,int viewportOffX,int viewportOffY) {
 		
-		Graphics2D g2d = guidelinesCanvas.createGraphics();
+		Graphics2D g2d = canvas.createGraphics();
 		g2d.setColor(Color.gray);
-		g2d.fillRect(0, 0, guidelinesCanvas.getWidth(), guidelinesCanvas.getHeight());
+		g2d.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		g2d.setColor(Color.black);
 		
 		
-		int viewportWidth = MainPanel.viewportWidth;
-		int viewportHeight = MainPanel.viewportHeight;
+		int viewportWidth = SysConfig.viewportWidth;
+		int viewportHeight = SysConfig.viewportHeight;
 		//一类中心点
 		for(int m=0;m<50;m++) {
 			int y = 15+30*m;
@@ -163,11 +139,10 @@ public class CanvasPainter {
 	 */
 	public static void drawRhombus(CenterPoint centerPoint,int fxNum,int fyNum,BufferedImage canvas) {
 		
-		//这个清除方法有可能绘制到一半  线程repaint了  应该避免这种情概况
-		clearImage(canvas);
+		//没有中间画板,不需要清除
+//		clearImage(canvas);
 		
 		if(fxNum==1 && fyNum==1) {
-//			check(center);
 			drawRhombus(centerPoint,canvas);
 		}
 		if(fxNum==2 && fyNum==2) {//发电厂 间谍卫星
@@ -264,8 +239,8 @@ public class CanvasPainter {
 		}
 		int centerX = centerPoint.getX();
 		int centerY = centerPoint.getY();
-		int viewportOffX = MainPanel.viewportOffX;
-		int viewportOffY = MainPanel.viewportOffY;
+		int viewportOffX = RuntimeParameter.viewportOffX;
+		int viewportOffY = RuntimeParameter.viewportOffY;
 		int viewX = CoordinateUtil.getViewportX(centerX, viewportOffX);
 		int viewY = CoordinateUtil.getViewportX(centerY, viewportOffY);
 		
@@ -326,7 +301,7 @@ public class CanvasPainter {
 		int d = c<<8;
 		int result = oriColor | d;
 		return result;
-	}									
+	}
 	
 	private static int delAlpha(int oriColor) {return oriColor & 0x00FFFFFF;}
 	private static int addAlpha(int oriColor) {return oriColor | 0xFF000000;}

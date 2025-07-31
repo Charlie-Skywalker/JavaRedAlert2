@@ -7,7 +7,6 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
 import redAlert.Constructor;
-import redAlert.GameContext;
 import redAlert.GlobalConfig;
 import redAlert.OptionsPanel;
 import redAlert.enums.BuildingAreaType;
@@ -39,7 +38,7 @@ import redAlert.utils.RandomUtil;
 
 /**
  * 管理地图上资源的类
- * 
+ *
  * 这个资源不包括渲染相关   只处理对战的业务逻辑
  */
 public class ShapeUnitResourceCenter {
@@ -361,32 +360,32 @@ public class ShapeUnitResourceCenter {
 					
 					if(soldier==SoldierEnum.AfSnip) {
 						Sniper sniper = new Sniper(bornLcp,GlobalConfig.unitColor);
-						Constructor.putOneShapeUnit(sniper, GameContext.scenePanel);
+						Constructor.putOneShapeUnit(sniper);
 						addMovableUnit(sniper);
 						sniper.moveToTarget(target);
 					}
 					if(soldier==SoldierEnum.AfGi) {
 						Gi gi = new Gi(bornLcp,GlobalConfig.unitColor);
-						Constructor.putOneShapeUnit(gi, GameContext.scenePanel);
+						Constructor.putOneShapeUnit(gi);
 						addMovableUnit(gi);
 						gi.moveToTarget(target);
 					}
 					if(soldier==SoldierEnum.Engn) {
 						Engn engn = new Engn(bornLcp,GlobalConfig.unitColor);
-						Constructor.putOneShapeUnit(engn, GameContext.scenePanel);
+						Constructor.putOneShapeUnit(engn);
 						addMovableUnit(engn);
 						engn.moveToTarget(target);
 					}
 					if(soldier==SoldierEnum.AfAdog) {
 						Adog adog = new Adog(bornLcp,GlobalConfig.unitColor);
-						Constructor.putOneShapeUnit(adog, GameContext.scenePanel);
+						Constructor.putOneShapeUnit(adog);
 						addMovableUnit(adog);
 						adog.moveToTarget(target);
 					}
 					if(soldier==SoldierEnum.AfTany) {
 						Tany2 tany = new Tany2(bornLcp,GlobalConfig.unitColor);
 						Constructor.playOneMusic("itanatb");//哈哈哈哈哈哈哈
-						Constructor.putOneShapeUnit(tany, GameContext.scenePanel);
+						Constructor.putOneShapeUnit(tany);
 						addMovableUnit(tany);
 						tany.moveToTarget(target);
 					}
@@ -421,14 +420,14 @@ public class ShapeUnitResourceCenter {
 						weap.setMakingVehicle(true);//正在生产坦克
 						
 						GrizTank gtank = new GrizTank(bornCp.getX()-64,bornCp.getY()-64,GlobalConfig.unitColor);
-						Constructor.putOneShapeUnit(gtank, GameContext.scenePanel);
+						Constructor.putOneShapeUnit(gtank);
 //						addMovableUnit(gtank);
 						gtank.moveToTarget(target);
 						
 						while(true) {
 							CenterPoint tankCp = gtank.getCurCenterPoint();
 							Thread.sleep(0);
-							System.out.println("???"+RandomUtil.newUnitNo());
+//							System.out.println("???"+RandomUtil.newUnitNo());
 							if(!tankCp.equals(bornCp) && !tankCp.equals(bornCp.getRightDn()) && !tankCp.equals(bornCp.getRightDn().getRightDn())) {
 								break;
 							}
@@ -441,7 +440,7 @@ public class ShapeUnitResourceCenter {
 						weap.setMakingVehicle(true);//正在生产坦克
 						
 						Ifv fv = new Ifv(bornCp.getX()-64,bornCp.getY()-64,GlobalConfig.unitColor);
-						Constructor.putOneShapeUnit(fv, GameContext.scenePanel);
+						Constructor.putOneShapeUnit(fv);
 //						addMovableUnit(fv);
 						fv.moveToTarget(target);
 						
@@ -460,7 +459,7 @@ public class ShapeUnitResourceCenter {
 						weap.setMakingVehicle(true);//正在生产坦克
 						
 						Sref sref = new Sref(bornCp.getX()-64,bornCp.getY()-64,GlobalConfig.unitColor);
-						Constructor.putOneShapeUnit(sref, GameContext.scenePanel);
+						Constructor.putOneShapeUnit(sref);
 //						addMovableUnit(sref);
 						sref.moveToTarget(target);
 						Constructor.randomPlayOneMusic(new String[] {"vpristaa","vpristab","vpristac"});
@@ -504,7 +503,7 @@ public class ShapeUnitResourceCenter {
 	/**
 	 * 添加一个单位
 	 */
-	public static void addUnit(ShapeUnit unit) {		
+	public static void addUnit(ShapeUnit unit) {
 		if(unit instanceof MoveLine) {
 			addOneMoveLine((MoveLine)unit);
 		}
@@ -638,9 +637,9 @@ public class ShapeUnitResourceCenter {
 	}
 	
 	/**
-	 * 造成的伤害的阻塞队列  
+	 * 造成的伤害的阻塞队列
 	 * 造成的伤害将放入此队列中   由特定的线程处理伤害
-	 * 
+	 *
 	 */
 	public static ArrayBlockingQueue<OneDamage> damageBlockingQueue = new ArrayBlockingQueue<OneDamage>(50);
 	/**
@@ -651,7 +650,7 @@ public class ShapeUnitResourceCenter {
 		/**
 		 * 建筑规划线程
 		 * 只有一个线程在负责计算下一帧的内容，如果后续有多个线程，性能将大大提升
-		 * 
+		 *
 		 * 必须明确  建筑规划线程主要职责是计算下一帧和移除   不应该处理其他业务逻辑
 		 * 重工的逻辑  必须改成由重工自己确定状态  计算下一帧
 		 */

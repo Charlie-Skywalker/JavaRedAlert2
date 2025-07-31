@@ -10,7 +10,7 @@ import redAlert.utils.CanvasPainter;
  * 表示一帧shp画面
  * 仅仅表示一帧
  * 这个类是用来绘制画面的
- * 
+ *
  * 需要优化此类,图片中阵营颜色应该可以改变,增加一个表示颜色的集合,渲染时使用此集合来设定颜色
  * 这样在一个SHP加载完成后,再次建造此单位,不需要重复从硬盘中加载此资源
  */
@@ -26,12 +26,33 @@ public class ShapeUnitFrame {
 	
 	private List<ColorPoint> colorPointList;//含有队伍颜色信息的像素坐标
 	
+	
+	//=======================使用OpenGL才会用到的变量===============================
+	/**
+	 * 纹理id
+	 */
+	private int textureId;
+	/**
+	 * 是否已初始化纹理id
+	 * 初始化后即认为已经被加载到显存中
+	 */
+	private boolean alreadyInitTexId = false;
+	/**
+	 * 是否应该被载入显存
+	 * 一般常用的静态资源应该被载入显存  而不常用的资源应该用一次就丢弃
+	 */
+	private boolean shouldBeLoadedToGpu = false;
+	
+	
+	//=======================使用OpenGL才会用到的变量===============================
+	
+	
 	public ShapeUnitFrame() {
-		
+	
 	}
 	
 	public ShapeUnitFrame(BufferedImage img,int positionX,int positionY,int minX,int minY,int realPartWidth,int realPartHeight){
-		
+	
 	}
 	
 	/**
@@ -117,6 +138,30 @@ public class ShapeUnitFrame {
 	}
 	public void setColorPointList(List<ColorPoint> colorPointList) {
 		this.colorPointList = colorPointList;
+	}
+
+	public int getTextureId() {
+		return textureId;
+	}
+
+	public void setTextureId(int textureId) {
+		this.textureId = textureId;
+	}
+
+	public boolean isShouldBeLoadedToGpu() {
+		return shouldBeLoadedToGpu;
+	}
+
+	public void setShouldBeLoadedToGpu(boolean shouldBeLoadedToGpu) {
+		this.shouldBeLoadedToGpu = shouldBeLoadedToGpu;
+	}
+
+	public boolean isAlreadyInitTexId() {
+		return alreadyInitTexId;
+	}
+
+	public void setAlreadyInitTexId(boolean alreadyInitTexId) {
+		this.alreadyInitTexId = alreadyInitTexId;
 	}
 	
 }

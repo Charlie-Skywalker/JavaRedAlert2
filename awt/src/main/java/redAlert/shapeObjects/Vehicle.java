@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 import redAlert.Constructor;
-import redAlert.GameContext;
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.BuildingAreaType;
 import redAlert.enums.UnitColor;
@@ -16,9 +15,9 @@ import redAlert.utils.VxlFileReader;
 
 /**
  * 载具的超类
- * 
+ *
  * 载具:能够在地面上行驶的坦克类玩意，特点是单独占据一个中心点，如：犀牛坦克、磁力棒、蜘蛛等， 但暂时不包括运输艇
- * 
+ *
  * 默认可旋转
  * 默认可攻击
  */
@@ -137,7 +136,7 @@ public abstract class Vehicle extends MovableUnit implements Turnable,Attackable
 		}
 		//血条
 		super.bloodBar = new VehicleBloodBar(this);
-		Constructor.putOneShapeUnit(super.bloodBar, GameContext.scenePanel);
+		Constructor.putOneShapeUnit(super.bloodBar);
 	}
 	
 	/**
@@ -150,7 +149,7 @@ public abstract class Vehicle extends MovableUnit implements Turnable,Attackable
 	
 	/**
 	 * 命令载具移动的方法
-	 * 
+	 *
 	 * 当用户通过鼠标命令单位移动时调用
 	 */
 	@Override
@@ -188,7 +187,7 @@ public abstract class Vehicle extends MovableUnit implements Turnable,Attackable
 					/*
 					 * 红警2的奇怪的逻辑：
 					 * 当位置不可达时,会寻找一个与目标单位X坐标相同或Y坐标相同的位置进行移动
-					 * 
+					 *
 					 */
 					System.out.println("指定位置不可达");
 				}
@@ -542,7 +541,7 @@ public abstract class Vehicle extends MovableUnit implements Turnable,Attackable
 	
 	/**
 	 * 载具的开火方法默认调用炮塔的开火方法
-	 * 
+	 *
 	 * 有特殊攻击方法的载具，由载具的实现类重写此方法
 	 */
 	@Override

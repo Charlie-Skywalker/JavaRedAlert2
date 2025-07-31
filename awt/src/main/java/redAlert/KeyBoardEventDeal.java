@@ -4,7 +4,9 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import redAlert.MainTest.MouseStatus;
+import javax.swing.JPanel;
+
+import redAlert.enums.MouseStatus;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utilBean.Coordinate;
 import redAlert.utils.CanvasPainter;
@@ -16,12 +18,12 @@ import redAlert.utils.PointUtil;
  */
 public class KeyBoardEventDeal {
 
-	public static MainPanel scenePanel;
+	public static JPanel scenePanel;
 	
 	public static final int minMovePixel = 3;//移动像素个数
 	
 	
-	public static void init(MainPanel scenePanel) {
+	public static void init(JPanel scenePanel) {
 		
 		KeyBoardEventDeal.scenePanel = scenePanel;
 		
@@ -30,19 +32,19 @@ public class KeyBoardEventDeal {
 		
 		
 		
-		long thisFrame = MainPanel.frameCount;
+		long thisFrame = RuntimeParameter.frameCount;
 		
 		scenePanel.addKeyListener(new KeyListener() {
 			
 			@Override
 			public void keyTyped(KeyEvent e) {
-				
+			
 			}
 			
 			@Override
 			public void keyReleased(KeyEvent e) {
 
-				
+			
 			}
 			
 			@Override
@@ -50,37 +52,37 @@ public class KeyBoardEventDeal {
 				e.isControlDown();//Ctrl按键是否按下
 				
 				if(e.getKeyCode()==KeyEvent.VK_UP){
-					if(thisFrame!=MainPanel.frameCount) {
-						if(MainPanel.viewportOffY>0) {
-							MainPanel.viewportOffY-=minMovePixel;
+					if(thisFrame!=RuntimeParameter.frameCount) {
+						if(RuntimeParameter.viewportOffY>0) {
+							RuntimeParameter.viewportOffY-=minMovePixel;
 						}
 					}
 				}
 				if(e.getKeyCode()==KeyEvent.VK_DOWN){
-					if(thisFrame!=MainPanel.frameCount) {
-						if(MainPanel.viewportOffY<MainPanel.gameMapHeight-MainPanel.viewportHeight) {
-							MainPanel.viewportOffY+=minMovePixel;
+					if(thisFrame!=RuntimeParameter.frameCount) {
+						if(RuntimeParameter.viewportOffY<SysConfig.gameMapHeight-SysConfig.viewportHeight) {
+							RuntimeParameter.viewportOffY+=minMovePixel;
 						}
 					}
 				}
 				
 				if(e.getKeyCode()==KeyEvent.VK_LEFT){
-					if(thisFrame!=MainPanel.frameCount) {
-						if(MainPanel.viewportOffX>0) {
-							MainPanel.viewportOffX-=minMovePixel;
+					if(thisFrame!=RuntimeParameter.frameCount) {
+						if(RuntimeParameter.viewportOffX>0) {
+							RuntimeParameter.viewportOffX-=minMovePixel;
 						}
 					}
 				}
 				if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-					if(thisFrame!=MainPanel.frameCount) {
-						if(MainPanel.viewportOffX<MainPanel.gameMapWidth-MainPanel.viewportWidth) {
-							MainPanel.viewportOffX+=minMovePixel;
+					if(thisFrame!=RuntimeParameter.frameCount) {
+						if(RuntimeParameter.viewportOffX<SysConfig.gameMapWidth-SysConfig.viewportWidth) {
+							RuntimeParameter.viewportOffX+=minMovePixel;
 						}
 					}
 				}
 				
-				if(thisFrame!=MainPanel.frameCount) {
-					Point mousePoint = GameContext.scenePanel.getMousePosition();
+				if(thisFrame!=RuntimeParameter.frameCount) {
+					Point mousePoint = scenePanel.getMousePosition();
 					if(mousePoint!=null) {
 						
 						int mouseX = mousePoint.x;
@@ -92,21 +94,21 @@ public class KeyBoardEventDeal {
 						/**
 						 * 建造状态的判定优先级最高
 						 */
-						if(MainTest.mouseStatus == MouseStatus.Construct) {
-							if(mapX==scenePanel.getLastMoveX() && mapY==scenePanel.getLastMoveY()) {
+						if(RuntimeParameter.mouseStatus == MouseStatus.Construct) {
+							if(mapX==RuntimeParameter.lastMoveX && mapY==RuntimeParameter.lastMoveY) {
 								return;
 							}else {
-								scenePanel.setLastMoveX(mapX);
-								scenePanel.setLastMoveY(mapY);
+								RuntimeParameter.lastMoveX = mapX;
+								RuntimeParameter.lastMoveY = mapY;
 								
 								CenterPoint centerPoint = PointUtil.getCenterPoint(mapX, mapY);
-								CenterPoint lastCenterPoint = scenePanel.getLastMoveCenterPoint();
+								CenterPoint lastCenterPoint = RuntimeParameter.lastMoveCenterPoint;
 								if(centerPoint.equals(lastCenterPoint)) {
 									return;
 								}else {
-									scenePanel.setLastMoveCenterPoint(centerPoint);
+									RuntimeParameter.lastMoveCenterPoint = centerPoint;
 									//这个方法不能调用太频繁   太频繁的绘图会导致程序卡顿
-									CanvasPainter.drawRhombus(centerPoint, MouseEventDeal.constName.fxNum, MouseEventDeal.constName.fyNum, scenePanel.getCanvasFirst());
+//									CanvasPainter.drawRhombus(centerPoint, MouseEventDeal.constName.fxNum, MouseEventDeal.constName.fyNum, scenePanel.getCanvasFirst());
 								}
 								return;
 							}

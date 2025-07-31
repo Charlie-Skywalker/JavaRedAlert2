@@ -23,7 +23,7 @@ fun main() {
         //// useful for testing performance, but can also be very stressful to some hardware.
         //// You may also need to configure GPU drivers to fully disable Vsync; this can cause screen tearing.
         
-        setWindowedMode(600, 300)
+        setWindowedMode(800, 600)
         
         //// You can change these files; they are in lwjgl3/src/main/resources/ .
         //// They can also be loaded from the root of assets/ .

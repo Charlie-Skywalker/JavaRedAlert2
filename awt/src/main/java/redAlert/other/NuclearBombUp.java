@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.Random;
 
 import redAlert.Constructor;
-import redAlert.GameContext;
 import redAlert.ShapeUnitFrame;
 import redAlert.militaryBuildings.SfMisl;
 import redAlert.resourceCenter.ShpResourceCenter;
-import redAlert.shapeObjects.ShapeUnit;
 import redAlert.shapeObjects.Building.SceneType;
+import redAlert.shapeObjects.ShapeUnit;
 
 /**
  * 向上飞的核弹体
@@ -29,7 +28,7 @@ public class NuclearBombUp extends ShapeUnit{
 		//需要在屁股后边用火
 		if(positionY>-800 && flag%5==0) {
 			Nukepuff nuclearBomb = new Nukepuff(positionX+1,positionY+130);
-			Constructor.putOneShapeUnit(nuclearBomb,GameContext.getMainPanel());
+			Constructor.putOneShapeUnit(nuclearBomb);
 		}
 		if(positionY<-800) {
 			end = true;

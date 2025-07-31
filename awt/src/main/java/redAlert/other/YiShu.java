@@ -8,7 +8,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import redAlert.Constructor;
-import redAlert.GameContext;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
 import redAlert.shapeObjects.MovableUnit;
 import redAlert.shapeObjects.ShapeUnit;
@@ -41,9 +40,9 @@ public class YiShu extends TimerTask{
 	public void run() {
 		//前20秒什么也不错
 		if(time<100) {
-			
+		
 		}else if(time==100) {
-			Constructor.putOneShapeUnit(bomb,GameContext.getMainPanel());
+			Constructor.putOneShapeUnit(bomb);
 			System.out.println("下落核弹放入画面");
 		}else if(time>100) {
 			if(bomb.getPositionY()<bomb.getTargetY()-157) {
@@ -59,7 +58,7 @@ public class YiShu extends TimerTask{
 				
 				if(!isNukeballPutIn) {
 					ball = new Nukeball(bomb.getTargetX(),bomb.getTargetY());
-					Constructor.putOneShapeUnit(ball,GameContext.getMainPanel());
+					Constructor.putOneShapeUnit(ball);
 					isNukeballPutIn = true;
 					Constructor.playOneMusic("snukintr");
 					System.out.println("核爆球加入");
@@ -68,7 +67,7 @@ public class YiShu extends TimerTask{
 				
 				if(ball.end && !isNukeAnimPutIn) {
 					anim = new Nukeanim(bomb.getTargetX(),bomb.getTargetY());
-					Constructor.putOneShapeUnit(anim,GameContext.getMainPanel());
+					Constructor.putOneShapeUnit(anim);
 					isNukeAnimPutIn = true;
 					Constructor.playOneMusic("snukexpl");
 					System.out.println("蘑菇云加入");
@@ -87,12 +86,12 @@ public class YiShu extends TimerTask{
 								NuclearDie die = new NuclearDie(su.getPositionX(),su.getPositionY());
 								dieSoldierList.add(die);
 								su.setEnd(true);
-																
+								
 							}
 						}
 						
 						for(NuclearDie die:dieSoldierList) {
-							Constructor.putOneShapeUnit(die,GameContext.getMainPanel());
+							Constructor.putOneShapeUnit(die);
 							Random r = new Random();
 							int m0 = r.nextInt(3);
 							if(m0==0) {
@@ -119,7 +118,7 @@ public class YiShu extends TimerTask{
 						
 					}
 					
-						
+					
 					return;
 				}
 				if(isNukeAnimPutIn && anim.end) {

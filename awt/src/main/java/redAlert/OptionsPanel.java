@@ -76,7 +76,6 @@ public class OptionsPanel extends JPanel{
 		List<ShapeUnitFrame> topFrame = ShpResourceCenter.loadShpResource("top", "sidebar", false);
 		
 		top = topFrame.get(0).getImg();
-		System.out.println(top.getWidth());
 		List<ShapeUnitFrame> side1Frame = ShpResourceCenter.loadShpResource("side1", "sidebar", false);
 		side1 = side1Frame.get(0).getImg();
 		List<ShapeUnitFrame> side2Frame = ShpResourceCenter.loadShpResource("side2", "sidebar", false);

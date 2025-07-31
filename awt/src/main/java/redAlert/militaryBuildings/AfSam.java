@@ -64,11 +64,11 @@ public class AfSam extends Building{
 		
 		//初始化血条的信息
 		bloodBar = new BuildingBloodBar(this);
-		Constructor.putOneShapeUnit(bloodBar, GameContext.scenePanel);
+		Constructor.putOneShapeUnit(bloodBar);
 		
 		//初始化骨架的信息
 		bone = new BuildingBone(this);
-		Constructor.putOneShapeUnit(bone, GameContext.scenePanel);
+		Constructor.putOneShapeUnit(bone);
 		
 	}
 	
@@ -101,11 +101,11 @@ public class AfSam extends Building{
 		
 		//初始化血条的信息
 		bloodBar = new BuildingBloodBar(this);
-		Constructor.putOneShapeUnit(bloodBar, GameContext.scenePanel);
+		Constructor.putOneShapeUnit(bloodBar);
 		
 		//初始化骨架的信息
 		bone = new BuildingBone(this);
-		Constructor.putOneShapeUnit(bone, GameContext.scenePanel);
+		Constructor.putOneShapeUnit(bone);
 	}
 	
 	/**

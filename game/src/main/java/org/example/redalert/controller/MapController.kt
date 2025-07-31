@@ -2,13 +2,16 @@ package org.example.redalert.controller
 
 import org.example.redalert.map.Cell
 import org.example.redalert.map.Map
+import xyz.slkagura.kotlin.getValue
+import xyz.slkagura.kotlin.late
+import xyz.slkagura.kotlin.setValue
 
 object MapController {
     /**
      * 当前地图
      */
     @get:JvmStatic
-    var map:Map? = null
+    var map:Map by late()
     
     /**
      * 根据尺寸创建地图

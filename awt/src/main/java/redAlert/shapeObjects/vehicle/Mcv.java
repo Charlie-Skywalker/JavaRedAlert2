@@ -26,7 +26,7 @@ public class Mcv extends Vehicle implements Expandable{
 	public int status = MCV_STATUS_NORMAL;//正常状态
 	//---------------
 	/**
-	 * 
+	 *
 	 */
 	public Mcv(int positionX,int positionY,UnitColor unitColor) {
 		super.initVehicleParam(positionX,positionY, unitColor, "mcv");
@@ -77,7 +77,7 @@ public class Mcv extends Vehicle implements Expandable{
 				this.setVisible(false);
 				this.setEnd(true);
 				AfCnst afCnst = new AfCnst(cp,GlobalConfig.sceneType, GlobalConfig.unitColor);
-				Constructor.putOneBuilding(afCnst,GameContext.getMainPanel());//盟军基地
+				Constructor.putOneBuilding(afCnst);//盟军基地
 				try {
 					Thread.sleep(50);
 					Constructor.playOneMusic("ceva049");//New construction options
@@ -148,8 +148,8 @@ public class Mcv extends Vehicle implements Expandable{
 	 */
 	@Override
 	public void unexpand() {
-		
-		
+	
+	
 	}
 
 }

@@ -1,15 +1,15 @@
 package redAlert;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import redAlert.enums.UnitColor;
 import redAlert.event.EventHandlerManager;
 import redAlert.militaryBuildings.AfPill;
-import redAlert.militaryBuildings.AfTech;
 import redAlert.other.Mouse;
+import redAlert.other.Place;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
 import redAlert.shapeObjects.Building.SceneType;
 import redAlert.shapeObjects.soldier.Sniper;
@@ -26,75 +26,9 @@ import redAlert.utils.PointUtil;
  */
 public class MainTest {
 	/**
-	 * 游戏窗口的宽高
+	 * 是否使用OpenGL来渲染,默认使用
 	 */
-	public static final int frameWidth = MainPanel.viewportWidth + OptionsPanel.optionWidth;
-	public static final int frameHeight = MainPanel.viewportHeight+32;//32是微软建议的标题栏高度
-	
-	/**
-	 * 鼠标状态
-	 */
-	public static MouseStatus mouseStatus = MouseStatus.Idle;
-	
-	
-	/**
-	 * 鼠标的状态
-	 */
-	public enum MouseStatus{
-		/**
-		 * 空闲状态  鼠标指针为默认样式
-		 */
-		Idle("空闲"),
-		/**
-		 * 建造状态  鼠标指针也是默认样式
-		 * 区别是会显示预建造红绿菱形块   建造状态按右键回到空闲状态
-		 */
-		Construct("建造"),
-		/**
-		 * 选中状态  鼠标指针也是默认样式
-		 * 当鼠标左键按下并拖动时,鼠标进入选中状态  左键松开后回到空闲状态
-		 */
-		Select("选中"),
-		/**
-		 * 预选状态  鼠标指针为singleSelect样式
-		 * 当鼠标为空闲状态时,放在单位上进入此状态  
-		 * 当鼠标移出单位上时,回到空闲状态
-		 */
-		PreSingleSelect("预单选单位或建筑"),
-		/**
-		 * 选中移动单位
-		 */
-		UnitMove("选中可移动单位"),
-		/**
-		 * 允许部署
-		 */
-		UnitExpand("单位部署"),
-		/**
-		 * 不允许部署
-		 */
-		UnitNoExpand("禁止部署"),
-		/**
-		 * 禁止移动
-		 */
-		UnitNoMove("禁止移动"),
-		/**
-		 * 卖建筑
-		 */
-		Sell("卖建筑"),
-		/**
-		 * 禁止卖建筑
-		 */
-		NoSell("禁卖建筑");
-		
-		private final String cnDesc;
-		
-		MouseStatus(String cnDesc){
-			this.cnDesc = cnDesc;
-		}
-	}
-	
-	
-	
+	public static boolean isUseOpenGL = true;
 	
 	public static void main(String[] args) throws Exception{
 		//程序窗口
@@ -103,20 +37,25 @@ public class MainTest {
 		
 		//初始化鼠标指针形状图片
 		Mouse.initMouseCursor();
+		//初始化建造预选块
+		Place.initPlaceRect();
 		
 		//游戏主界面
-		MainPanel scenePanel = new MainPanel();
-		
+		JPanel scenePanel = null;
+		if(isUseOpenGL) {
+			scenePanel = new MainPanel();//基于OpenGL的渲染
+		}else {
+			scenePanel = new MainPanelJava();//基于JavaSwing的渲染
+		}
 		jf.add(BorderLayout.CENTER,scenePanel);//格式布局放中间
-		scenePanel.setCursor(Mouse.getNoneCursor());//设置一个看不见的鼠标
 		
 		//选项卡页面
 		OptionsPanel optionsPanel = new OptionsPanel();
-		jf.add(BorderLayout.EAST,optionsPanel);
+		jf.add(BorderLayout.EAST,optionsPanel);//格式布局放右边
 		
-		jf.setSize(frameWidth,frameHeight);
+		jf.setSize(SysConfig.frameWidth,SysConfig.frameHeight);
 		jf.setResizable(false);//不可调整大小
-		jf.setAlwaysOnTop(false);//总是在最上层
+		jf.setAlwaysOnTop(false);//不置顶
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setLocationRelativeTo(null);//屏幕居中
 		jf.setVisible(true);//JFrame默认不可见,设置为可见
@@ -179,11 +118,11 @@ public class MainTest {
 //		Thread.sleep(time);
 		CenterPoint cp = PointUtil.getCenterPoint(800, 550);
 		AfPill targetPill = new AfPill(cp,SceneType.TEM,UnitColor.Green);
-		Constructor.putOneBuilding(targetPill,scenePanel);//机枪碉堡
+		Constructor.putOneBuilding(targetPill);//机枪碉堡
 		
 		CenterPoint cp2222 = PointUtil.getCenterPoint(200, 550);
 		AfPill targetPill2 = new AfPill(cp2222,SceneType.TEM,UnitColor.Red);
-		Constructor.putOneBuilding(targetPill2,scenePanel);//机枪碉堡
+		Constructor.putOneBuilding(targetPill2);//机枪碉堡
 //		Thread.sleep(time);
 //		Constructor.putOneBuilding(new AfSam(SceneType.TEM,UnitColor.LightBlue,550,550),scenePanel);//爱国者飞弹
 //		Thread.sleep(time);
@@ -227,7 +166,7 @@ public class MainTest {
 		weap.setMakingVehicle(true);//正在生产坦克
 		XiniuTank xt = new XiniuTank(weap.getPositionX()+weap.getCenterOffX()-64-32,weap.getPositionY()+weap.getCenterOffY()-64-16,"",UnitColor.Blue);
 		Constructor.putOneShapeUnit(xt, scenePanel);//建造坦克
-		xt.move = true;//坦克移动 
+		xt.move = true;//坦克移动
 		xt.moveToTarget( PointUtil.getCenterPoint(xt.positionX+64+32*4, xt.positionY+64+16*4));
 		Thread.sleep(5000);
 		weap.setMakingVehicle(false);//恢复正常状态
@@ -259,17 +198,17 @@ public class MainTest {
 		
 		Thread.sleep(500);
 		GrizTank gtank = new GrizTank(64*2-64,32*3-64,UnitColor.Orange);
-		Constructor.putOneShapeUnit(gtank, scenePanel);//灰熊坦克
-//		
+		Constructor.putOneShapeUnit(gtank);//灰熊坦克
+//
 		CenterPoint cc = PointUtil.getCenterPoint(300, 100);
 		XiniuTank2 xt2 = new XiniuTank2(cc.getX()-64,cc.getY()-64,UnitColor.Orange);
-		Constructor.putOneShapeUnit(xt2, scenePanel);//犀牛坦克
+		Constructor.putOneShapeUnit(xt2);//犀牛坦克
 		
 		Thread.sleep(1000);
 		
 		CenterPoint dd = PointUtil.getCenterPoint(600, 450);
 		Mcv mcv = new Mcv(dd.getX()-64,dd.getY()-64,UnitColor.Orange);//基地车
-		Constructor.putOneShapeUnit(mcv, scenePanel);
+		Constructor.putOneShapeUnit(mcv);
 		
 //		Thread.sleep(3000);
 //		mcv.status = Mcv.MCV_STATUS_EXPANDING;
@@ -289,45 +228,45 @@ public class MainTest {
 		Sniper sniper1Lcp1Right = new Sniper(lcp1Right,UnitColor.Red);
 		sniper1Lcp1Right.setUnitName("狙击手2");
 		
-		Constructor.putOneShapeUnit(sniper1Lcp1Up, scenePanel);//狙击手
-		Constructor.putOneShapeUnit(sniper1Lcp1Right, scenePanel);//狙击手
+		Constructor.putOneShapeUnit(sniper1Lcp1Up);//狙击手
+		Constructor.putOneShapeUnit(sniper1Lcp1Right);//狙击手
 		
 		
 		LittleCenterPoint lcpRight = cp2.getRightLittleCenterPoint();
 		Sniper sniper3 = new Sniper(lcpRight,UnitColor.Red);
 		sniper3.setUnitName("狙击手3");
-		Constructor.putOneShapeUnit(sniper3, scenePanel);//狙击手
+		Constructor.putOneShapeUnit(sniper3);//狙击手
 		
 		LittleCenterPoint lcpDown = cp3.getDownLittleCenterPoint();
 		Sniper sniper4 = new Sniper(lcpDown,UnitColor.Red);
 		sniper4.setUnitName("狙击手4");
-		Constructor.putOneShapeUnit(sniper4, scenePanel);//狙击手
+		Constructor.putOneShapeUnit(sniper4);//狙击手
 		
 //		LittleCenterPoint lcp1 = cp4.getDownLittleCenterPoint();
 //		Tany tany = new Tany(lcp1,UnitColor.Red);
 //		Constructor.putOneShapeUnit(tany, scenePanel);//谭雅
-//		
+//
 //		LittleCenterPoint lcp2 = cp4.getLeftLittleCenterPoint();
 //		Tany tany2 = new Tany(lcp2,UnitColor.Blue);
 //		Constructor.putOneShapeUnit(tany2, scenePanel);//谭雅
-//		
+//
 //		LittleCenterPoint lcp3 = cp1.getLeftLittleCenterPoint();
 //		Tany tany3 = new Tany(lcp3,UnitColor.Green);
 //		Constructor.putOneShapeUnit(tany3, scenePanel);//谭雅
-//		
+//
 //		LittleCenterPoint lcp4 = cp2.getLeftLittleCenterPoint();
 //		Tany tany4 = new Tany(lcp4,UnitColor.Orange);
 //		Constructor.putOneShapeUnit(tany4, scenePanel);//谭雅
-		
+
 //		sniper2.status = SoldierStatus.UMove;
 //		sniper3.status = SoldierStatus.UMove;
 //		sniper4.status = SoldierStatus.UMove;
-		
+
 //		LittleCenterPoint endTarget = PointUtil.getCenterPoint(492, 485).getLeftLittleCenterPoint();
 //		sniper.nextTarget = endTarget;
 //		sniper.endTarget = endTarget;
 //		sniper.status = SoldierStatus.UMove;
-		
+
 //		afCnst.setToFetchCrate(true);
 		
 		//简单的攻击效果
@@ -340,8 +279,8 @@ public class MainTest {
 		
 //		-Xms1024m
 //		-XX:+UseG1GC -XX:MaxGCPauseMillis=1
-		
-		
+
+
 //		TankShell ts = new TankShell(200,200,500,500);
 //		Constructor.putOneShapeUnit(ts, scenePanel);//炮弹
 	}

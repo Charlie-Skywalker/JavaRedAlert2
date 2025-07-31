@@ -5,14 +5,14 @@ package redAlert;
  */
 public class GameContext {
 
-	public static MainPanel scenePanel;
+//	public static MainPanel scenePanel;
 	
 	public static OptionsPanel optionPanel;
 	
-	public static MainPanel getMainPanel() {
-		return scenePanel;
-	}
-	public static void setMainPanel(MainPanel scenePanel) {
-		GameContext.scenePanel = scenePanel;
-	}
+//	public static MainPanel getMainPanel() {
+//		return scenePanel;
+//	}
+//	public static void setMainPanel(MainPanel scenePanel) {
+//		GameContext.scenePanel = scenePanel;
+//	}
 }

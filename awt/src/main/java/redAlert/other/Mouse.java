@@ -6,52 +6,42 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import redAlert.MainPanel;
+import redAlert.RuntimeParameter;
 import redAlert.ShapeUnitFrame;
+import redAlert.enums.MouseStatus;
 import redAlert.resourceCenter.ShpResourceCenter;
 
 /**
  * 关于鼠标指针形状的SHP
  */
 public class Mouse {
-
-//	public static List<BufferedImage> mouseCursorLs = new ArrayList<>();
-	
-	
-	public static BufferedImage defaultCursorImage;
 	
 	/**
-	 * 鼠标指针集
+	 * mouse.shp文件中的所有鼠标指针图标集
 	 */
 	public static List<ShapeUnitFrame> mouseShapeFrames;
 	
 	/**
 	 * 红警对战中的默认鼠标
+	 * 用于右侧OptionPanel
+	 * (右侧只有一种鼠标样式,所以使用AWT系统鼠标指针)
 	 */
 	public static Cursor defaultCursor;
-	/**
-	 * 预单选指针集
-	 */
-	public static List<Cursor> singleSelectCursors;
-	/**
-	 * 单位移动指针集
-	 */
-	public static List<Cursor> unitMoveCursors;
 	
 	/**
-	 * 初始化鼠标指针图片
-	 *
-	 * 当鼠标指针图片宽高小于32*32时,将原图片放在32*32图片中间
-	 *
-	 * 当鼠标指针图片宽高大于32*32时，已宽高中较大值，构建正方形图片，再将内容放在中间
+	 * 初始化鼠标指针图标集和红警游戏默认指针
 	 *
 	 */
 	public static void initMouseCursor() {
 		mouseShapeFrames = ShpResourceCenter.loadShpResource("mouse", "mousepal", false);
 		
-		//默认指针可以用
-		defaultCursorImage = mouseShapeFrames.get(0).getImg().getSubimage(0, 0, 32, 32);
-		
+		/*
+		 * 右侧红警对战默认指针
+		 * 使用Cursor设置指针,图片应为32*32大小
+		 */
+		BufferedImage defaultCursorImage = mouseShapeFrames.get(0).getImg().getSubimage(0, 0, 32, 32);
+		Point hotSpot = new Point(0,0);
+		defaultCursor = Toolkit.getDefaultToolkit().createCustomCursor(defaultCursorImage, hotSpot, "defaultCursor");
 	}
 	
 	/**
@@ -60,17 +50,14 @@ public class Mouse {
 	 * 这与左侧MainPanel上有所不同
 	 */
 	public static Cursor getDefaultCursor() {
-		if(defaultCursor==null) {
-			Point hotSpot = new Point(0,0);
-			return defaultCursor = Toolkit.getDefaultToolkit().createCustomCursor(defaultCursorImage, hotSpot, "defaultCursor");
-		}else {
-			return defaultCursor;
-		}
+		return defaultCursor;
 	}
+	
+	
 	
 	/**
 	 * 一个不显示的鼠标
-	 * 提供给启动类用来隐藏系统默认鼠标
+	 * 提供给启动类用来隐藏系统默认鼠标指针
 	 */
 	public static Cursor getNoneCursor() {
 		BufferedImage image = new BufferedImage(1,1,BufferedImage.TYPE_INT_ARGB);
@@ -78,69 +65,132 @@ public class Mouse {
 		return Toolkit.getDefaultToolkit().createCustomCursor(image, hotSpot, "NoneCursor");
 	}
 	
+	
+	public static MouseCursorObject mouseObj = new MouseCursorObject();
+	
+	/**
+	 * 获取鼠标的方法  由此类承包
+	 */
+	public static MouseCursorObject getMouseCursor(MouseStatus mouseStatus) {
+		if(mouseStatus==MouseStatus.Idle) {
+			return getDefaultCursorImage();
+		}else if(mouseStatus==MouseStatus.PreSingleSelect) {
+			return getPreSingleSelectCursorImage();
+		}else if(mouseStatus==MouseStatus.Construct) {
+			return getDefaultCursorImage();
+		}else if(mouseStatus==MouseStatus.Select) {
+			return getDefaultCursorImage();
+		}else if(mouseStatus==MouseStatus.UnitMove) {
+			return getUnitMoveCursorImage();
+		}else if(mouseStatus==MouseStatus.UnitExpand) {
+			return getUnitExpandImage();
+		}else if(mouseStatus==MouseStatus.UnitNoExpand) {
+			return getUnitNoExpandImage();
+		}else if(mouseStatus==MouseStatus.UnitNoMove) {
+			return getUnitNoMoveImage();
+		}else if(mouseStatus==MouseStatus.Sell) {
+			return getSellCursorImage();
+		}else if(mouseStatus==MouseStatus.NoSell) {
+			return getNoSellCursorImage();
+		}
+		return null;
+	}
+	
 	/**
 	 * 获取默认鼠标指针图片
 	 */
-	public static BufferedImage getDefaultCursorImage() {
+	public static MouseCursorObject getDefaultCursorImage() {
 		ShapeUnitFrame suf = mouseShapeFrames.get(0);
-		return suf.getImg();
+		suf.setShouldBeLoadedToGpu(true);
+		mouseObj.setMouse(suf);
+		mouseObj.setOffX(0);
+		mouseObj.setOffY(0);
+		return mouseObj;
 	}
 	
 	/**
 	 * 获取预单选鼠标指针图片
 	 */
-	public static BufferedImage getPreSingleSelectCursorImage() {
-		int index = 18+(int)MainPanel.frameCount/4%13;//除以4目的在于控制帧率
+	public static MouseCursorObject getPreSingleSelectCursorImage() {
+		int index = 18+(int)RuntimeParameter.frameCount/4%13;//除以4目的在于控制帧率
 		ShapeUnitFrame suf = mouseShapeFrames.get(index);
-		return suf.getImg();
+		suf.setShouldBeLoadedToGpu(true);
+		mouseObj.setMouse(suf);
+		mouseObj.setOffX(27);
+		mouseObj.setOffY(21);
+		return mouseObj;
 	}
 	
 	/**
 	 * 获取单位移动指针图片
 	 */
-	public static BufferedImage getUnitMoveCursorImage() {
-		int index = 31+(int)MainPanel.frameCount/4%10;
+	public static MouseCursorObject getUnitMoveCursorImage() {
+		int index = 31+(int)RuntimeParameter.frameCount/4%10;
 		ShapeUnitFrame suf = mouseShapeFrames.get(index);
-		return suf.getImg();
+		suf.setShouldBeLoadedToGpu(true);
+		mouseObj.setMouse(suf);
+		mouseObj.setOffX(27);
+		mouseObj.setOffY(21);
+		return mouseObj;
 	}
 	
 	/**
 	 * 获取单位部署指针图片
 	 */
-	public static BufferedImage getUnitExpandImage() {
-		int index = 110+(int)MainPanel.frameCount/4%9;
+	public static MouseCursorObject getUnitExpandImage() {
+		int index = 110+(int)RuntimeParameter.frameCount/4%9;
 		ShapeUnitFrame suf = mouseShapeFrames.get(index);
-		return suf.getImg();
+		suf.setShouldBeLoadedToGpu(true);
+		mouseObj.setMouse(suf);
+		mouseObj.setOffX(27);
+		mouseObj.setOffY(21);
+		return mouseObj;
 	}
 	
 	/**
 	 * 获取单位禁止部署指针图片
 	 */
-	public static BufferedImage getUnitNoExpandImage() {
+	public static MouseCursorObject getUnitNoExpandImage() {
 		ShapeUnitFrame suf = mouseShapeFrames.get(119);
-		return suf.getImg();
+		suf.setShouldBeLoadedToGpu(true);
+		mouseObj.setMouse(suf);
+		mouseObj.setOffX(27);
+		mouseObj.setOffY(21);
+		return mouseObj;
 	}
 	/**
 	 * 获取单位禁止移动指针图片
 	 */
-	public static BufferedImage getUnitNoMoveImage() {
+	public static MouseCursorObject getUnitNoMoveImage() {
 		ShapeUnitFrame suf = mouseShapeFrames.get(41);
-		return suf.getImg();
+		suf.setShouldBeLoadedToGpu(true);
+		mouseObj.setMouse(suf);
+		mouseObj.setOffX(27);
+		mouseObj.setOffY(21);
+		return mouseObj;
 	}
 	/**
 	 * 获取卖建筑指针图片
 	 */
-	public static BufferedImage getSellCursorImage() {
-		int index = 129+(int)MainPanel.frameCount/4%10;
+	public static MouseCursorObject getSellCursorImage() {
+		int index = 129+(int)RuntimeParameter.frameCount/4%10;
 		ShapeUnitFrame suf = mouseShapeFrames.get(index);
-		return suf.getImg();
+		suf.setShouldBeLoadedToGpu(true);
+		mouseObj.setMouse(suf);
+		mouseObj.setOffX(27);
+		mouseObj.setOffY(21);
+		return mouseObj;
 	}
 	/**
 	 * 获取禁卖建筑指针图片
 	 */
-	public static BufferedImage getNoSellCursorImage() {
+	public static MouseCursorObject getNoSellCursorImage() {
 		ShapeUnitFrame suf = mouseShapeFrames.get(149);
-		return suf.getImg();
+		suf.setShouldBeLoadedToGpu(true);
+		mouseObj.setMouse(suf);
+		mouseObj.setOffX(27);
+		mouseObj.setOffY(21);
+		return mouseObj;
 	}
 	
 }

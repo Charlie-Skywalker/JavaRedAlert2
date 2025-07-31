@@ -37,18 +37,16 @@ public class Constructor {
 	 * @param movableUnit  可移动单位
 	 * @param scenePanel  游戏主面板
 	 */
-	public static void putOneShapeUnit(MovableUnit movableUnit,MainPanel scenePanel) {
-		scenePanel.addBuildingToQueue(movableUnit);
-//		scenePanel.addBuildingToCalQueue(movableUnit);
+	public static void putOneShapeUnit(MovableUnit movableUnit ) {
+		RuntimeParameter.addBuildingToQueue(movableUnit);
 		ShapeUnitResourceCenter.addMovableUnit(movableUnit);
 	}
 	
 	/**
 	 * 添加一个单位
 	 */
-	public static void putOneShapeUnit(ShapeUnit shapeUnit,MainPanel scenePanel) {
-		scenePanel.addBuildingToQueue(shapeUnit);
-//		scenePanel.addBuildingToCalQueue(shapeUnit);
+	public static void putOneShapeUnit(ShapeUnit shapeUnit) {
+		RuntimeParameter.addBuildingToQueue(shapeUnit);
 		ShapeUnitResourceCenter.addUnit(shapeUnit);
 		
 	}
@@ -58,15 +56,15 @@ public class Constructor {
 	 * @param positionX  表示图片的左上角在Panel中的X坐标
 	 * @param positionY  表示图片的左上角在Panel中的Y坐标
 	 * @param buildingName 建筑的名称
-	 * @param scene 表示场景  
+	 * @param scene 表示场景
 	 */
-	public static boolean putOneBuilding(Building building,MainPanel mp) {
+	public static boolean putOneBuilding(Building building) {
 		
 		//占
 		List<CenterPoint> mbuildingAreas = building.getNoConstCpList();//建筑使用中心块列表(建筑占地)
 		List<CenterPoint> noVehicleLs = building.getNoVehicleCpList();//车辆禁止入内用地
 		if(mbuildingAreas==null) {
-			mp.addBuildingToQueue(building);
+			RuntimeParameter.addBuildingToQueue(building);
 			playOneMusic("uplace");
 			return true;
 		}else {
@@ -113,7 +111,7 @@ public class Constructor {
 				}
 				
 				ShapeUnitResourceCenter.addBuilding(building);
-				mp.addBuildingToQueue(building);
+				RuntimeParameter.addBuildingToQueue(building);
 				playOneMusic("uplace");
 				return true;
 			}else {

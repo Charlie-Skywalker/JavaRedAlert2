@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import redAlert.Constructor;
-import redAlert.GameContext;
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.UnitColor;
@@ -24,7 +23,7 @@ import redAlert.utils.PointUtil;
 public class SfMisl extends Building{
 	
 	public SfMisl() {
-		
+	
 	}
 	
 	/**
@@ -435,9 +434,9 @@ public class SfMisl extends Building{
 				//加载核弹的图片  然后把核弹绘制在图片上
 				if(!isNuclearLaunched) {
 					NuclearBombUp nuclearBomb = new NuclearBombUp(this);
-					Constructor.putOneShapeUnit(nuclearBomb,GameContext.getMainPanel());
+					Constructor.putOneShapeUnit(nuclearBomb);
 					Nuketo nuketo = new Nuketo(this.positionX+38,this.positionY+100);
-					Constructor.putOneShapeUnit(nuketo,GameContext.getMainPanel());
+					Constructor.putOneShapeUnit(nuketo);
 					isNuclearLaunched = true;
 					isNuclearLaunching = true;
 					nuclearSiloStatus = 3;
@@ -517,7 +516,7 @@ public class SfMisl extends Building{
 				System.out.println("核弹井当前状态不允许打开");
 			}
 		}catch (Exception e) {
-			
+		
 		}
 	}
 	/**
@@ -536,7 +535,7 @@ public class SfMisl extends Building{
 			}
 			
 		}catch (Exception e) {
-			
+		
 		}
 	}
 	
