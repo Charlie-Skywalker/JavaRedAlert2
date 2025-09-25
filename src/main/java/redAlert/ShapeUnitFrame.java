@@ -1,5 +1,6 @@
 package redAlert;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -54,6 +55,14 @@ public class ShapeUnitFrame {
 	public ShapeUnitFrame(BufferedImage img,int positionX,int positionY,int minX,int minY,int realPartWidth,int realPartHeight){
 		
 	}
+	
+	/**
+	 * 获取中心坐标
+	 */
+	public Point getCenterCoord() {
+		return new Point(img.getWidth()/2,img.getHeight()/2);
+	}
+	
 	
 	/**
 	 * 拷贝一份

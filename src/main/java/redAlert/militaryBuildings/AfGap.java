@@ -22,26 +22,15 @@ public class AfGap extends Building{
 	 */
 	public String team = "g";
 	
-	public AfGap(SceneType sceneType,UnitColor unitColor,int mouseX,int mouseY) {
-		this(PointUtil.getCenterPoint(mouseX, mouseY),sceneType,unitColor);
-	}
 	public AfGap(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
 		initShpSource(sceneType);
-		int positionX = centerPoint.getX()-centerOffX;
-		int positionY = centerPoint.getY()-centerOffY;
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
-	}
-	public AfGap(int positionX,int positionY,SceneType sceneType,UnitColor unitColor) {
-		initShpSource(sceneType);
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
+		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
 	/**
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
 		super.constConfig = ConstConfig.AfGap;
-		setCenterOffX(10);
-		setCenterOffY(10);
 		if(sceneType==SceneType.TEM) {
 			super.constShpFilePrefix = team + temMark + basicName + "mk";
 			super.aniShpPrefixLs.add("gggap");
@@ -64,7 +53,7 @@ public class AfGap extends Building{
 		int centerX = centerOffX + super.getPositionX();
 		int centerY = centerOffY + super.getPositionY();
 		List<CenterPoint> result = new ArrayList<>();
-		CenterPoint center = PointUtil.fetchCenterPoint(centerX, centerY);
+		CenterPoint center = PointUtil.getCenterPoint(centerX, centerY);
 		result.add(center);
 		return result;
 	}

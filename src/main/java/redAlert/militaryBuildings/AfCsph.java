@@ -24,18 +24,9 @@ public class AfCsph extends Building{
 	 */
 	public String team = "g";
 	
-	public AfCsph(SceneType sceneType,UnitColor unitColor,int mouseX,int mouseY) {
-		this(PointUtil.getCenterPoint(mouseX, mouseY),sceneType,unitColor);
-	}
 	public AfCsph(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
 		initShpSource(sceneType);
-		int positionX = centerPoint.getX()-centerOffX;
-		int positionY = centerPoint.getY()-centerOffY;
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
-	}
-	public AfCsph(int positionX,int positionY,SceneType sceneType,UnitColor unitColor) {
-		initShpSource(sceneType);
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
+		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
 	
 	/**
@@ -43,8 +34,6 @@ public class AfCsph extends Building{
 	 */
 	public void initShpSource(SceneType sceneType) {
 		super.constConfig = ConstConfig.AfCsph;
-		setCenterOffX(103);
-		setCenterOffY(139);
 		if(sceneType==SceneType.TEM) {
 			super.constShpFilePrefix = team + temMark + basicName + "mk";
 			super.aniShpPrefixLs.add("ggcsph");
@@ -72,7 +61,7 @@ public class AfCsph extends Building{
 		int centerY = centerOffY + super.getPositionY();
 		List<CenterPoint> result = new ArrayList<>();
 		
-		CenterPoint center = PointUtil.fetchCenterPoint(centerX, centerY);
+		CenterPoint center = PointUtil.getCenterPoint(centerX, centerY);
 		result.add(center);
 		result.add(center.getLeft());
 		result.add(center.getLeftDn());

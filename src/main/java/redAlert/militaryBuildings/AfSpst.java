@@ -22,18 +22,9 @@ public class AfSpst extends Building{
 	 */
 	public String team = "g";
 	
-	public AfSpst(SceneType sceneType,UnitColor unitColor,int mouseX,int mouseY) {
-		this(PointUtil.getCenterPoint(mouseX, mouseY),sceneType,unitColor);
-	}
 	public AfSpst(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
 		initShpSource(sceneType);
-		int positionX = centerPoint.getX()-centerOffX;
-		int positionY = centerPoint.getY()-centerOffY;
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
-	}
-	public AfSpst(int positionX,int positionY,SceneType sceneType,UnitColor unitColor) {
-		initShpSource(sceneType);
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
+		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
 	
 	/**
@@ -42,8 +33,6 @@ public class AfSpst extends Building{
 	public void initShpSource(SceneType sceneType) {
 		super.constConfig = ConstConfig.AfSpst;
 		super.height = 90;
-		setCenterOffX(90);
-		setCenterOffY(66);
 		
 		if(sceneType==SceneType.TEM) {
 			super.constShpFilePrefix = team + temMark + basicName + "mk";
@@ -70,7 +59,7 @@ public class AfSpst extends Building{
 		int centerX = centerOffX + super.getPositionX();
 		int centerY = centerOffY + super.getPositionY();
 		List<CenterPoint> result = new ArrayList<>();
-		CenterPoint center = PointUtil.fetchCenterPoint(centerX, centerY);
+		CenterPoint center = PointUtil.getCenterPoint(centerX, centerY);
 		result.add(center);
 		result.add(center.getLeftDn());
 		result.add(center.getDn());

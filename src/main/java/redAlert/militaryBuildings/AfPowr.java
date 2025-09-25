@@ -28,20 +28,9 @@ public class AfPowr extends Building implements PowerPlant{
 	 */
 	public int powerGeneration = 200;
 	
-	
-	
-	public AfPowr(SceneType sceneType,UnitColor unitColor,int mouseX,int mouseY) {
-		this(PointUtil.getCenterPoint(mouseX, mouseY),sceneType,unitColor);
-	}
 	public AfPowr(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
 		initShpSource(sceneType);
-		int positionX = centerPoint.getX()-centerOffX;
-		int positionY = centerPoint.getY()-centerOffY;
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
-	}
-	public AfPowr(int positionX,int positionY,SceneType sceneType,UnitColor unitColor) {
-		initShpSource(sceneType);
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
+		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
 	
 	/**
@@ -49,8 +38,6 @@ public class AfPowr extends Building implements PowerPlant{
 	 */
 	public void initShpSource(SceneType sceneType) {
 		super.constConfig = ConstConfig.AfPowr;
-		setCenterOffX(70);
-		setCenterOffY(69);
 		
 		if(sceneType==SceneType.TEM) {
 			super.constShpFilePrefix = team + temMark + basicName + "mk";
@@ -79,7 +66,7 @@ public class AfPowr extends Building implements PowerPlant{
 		int centerX = centerOffX + super.getPositionX();
 		int centerY = centerOffY + super.getPositionY();
 		List<CenterPoint> result = new ArrayList<>();
-		CenterPoint center = PointUtil.fetchCenterPoint(centerX, centerY);
+		CenterPoint center = PointUtil.getCenterPoint(centerX, centerY);
 		result.add(center);
 		result.add(center.getLeftDn());
 		result.add(center.getDn());

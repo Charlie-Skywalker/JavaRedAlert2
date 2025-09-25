@@ -26,45 +26,10 @@ public class AfGcan extends Building{
 	 */
 	public String team = "g";
 	
-	public AfGcan(SceneType sceneType,UnitColor unitColor,int mouseX,int mouseY) {
-		this(PointUtil.getCenterPoint(mouseX, mouseY),sceneType,unitColor);
-	}
 	public AfGcan(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
 		initShpSource(sceneType);
 		int positionX = centerPoint.getX()-centerOffX;
 		int positionY = centerPoint.getY()-centerOffY;
-		
-		super.constructFrames = ShpResourceCenter.loadShpResource(constShpFilePrefix, sceneType.getPalPrefix());
-		workingFrames = new ArrayList<List<ShapeUnitFrame>>(5);
-		List<ShapeUnitFrame> list1 = new ArrayList<>();
-		list1.add(constructFrames.get(constructFrames.size()-1));
-		workingFrames.add(list1);
-		
-		damagedFrames = new ArrayList<List<ShapeUnitFrame>>(5);
-		List<ShapeUnitFrame> list2 = new ArrayList<>();
-		list2.add(constructFrames.get(constructFrames.size()-1));
-		damagedFrames.add(list2);
-		
-		
-		super.scene = sceneType;
-		super.unitColor = unitColor;
-		super.positionX = positionX;
-		super.positionY = positionY;
-//		super.constructFrameIndex = 0;
-//		super.workingFrameIndex = 0;
-//		super.damagedFrameIndex = 0;
-		super.status = BuildingStatus.UNDEMAGED;
-		super.stage = BuildingStage.UnderConstruct;
-		curFrame = constructFrames.get(0);
-		super.positionMinX = curFrame.getMinX()+positionX;
-		super.positionMinY = curFrame.getMinY()+positionY;
-		//定义唯一编号
-		Random random = new Random();
-		super.unitNo = random.nextInt();
-		super.unitName = "cnst";
-	}
-	public AfGcan(int positionX,int positionY,SceneType sceneType,UnitColor unitColor) {
-		initShpSource(sceneType);
 		
 		super.constructFrames = ShpResourceCenter.loadShpResource(constShpFilePrefix, sceneType.getPalPrefix());
 		workingFrames = new ArrayList<List<ShapeUnitFrame>>(5);
@@ -101,8 +66,6 @@ public class AfGcan extends Building{
 	 */
 	public void initShpSource(SceneType sceneType) {
 		super.constConfig = ConstConfig.AfGcan;
-		setCenterOffX(10);
-		setCenterOffY(10);
 		if(sceneType==SceneType.TEM) {
 			super.constShpFilePrefix = team + temMark + basicName + "mk";
 			super.aniShpPrefixLs.add("gggcan");
@@ -126,7 +89,7 @@ public class AfGcan extends Building{
 		int centerX = centerOffX + super.getPositionX();
 		int centerY = centerOffY + super.getPositionY();
 		List<CenterPoint> result = new ArrayList<>();
-		CenterPoint center = PointUtil.fetchCenterPoint(centerX, centerY);
+		CenterPoint center = PointUtil.getCenterPoint(centerX, centerY);
 		result.add(center);
 		result.add(center.getLeftDn());
 		result.add(center.getRightDn());

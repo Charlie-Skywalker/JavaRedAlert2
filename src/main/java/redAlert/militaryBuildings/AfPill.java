@@ -22,18 +22,9 @@ public class AfPill extends Building{
 	 */
 	public String team = "g";
 	
-	public AfPill(SceneType sceneType,UnitColor unitColor,int mouseX,int mouseY) {
-		this(PointUtil.getCenterPoint(mouseX, mouseY),sceneType,unitColor);
-	}
 	public AfPill(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
 		initShpSource(sceneType);
-		int positionX = centerPoint.getX()-centerOffX;
-		int positionY = centerPoint.getY()-centerOffY;
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
-	}
-	public AfPill(int positionX,int positionY,SceneType sceneType,UnitColor unitColor) {
-		initShpSource(sceneType);
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
+		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
 	
 	/**
@@ -42,8 +33,6 @@ public class AfPill extends Building{
 	public void initShpSource(SceneType sceneType) {
 		super.constConfig = ConstConfig.AfPill;
 		super.height = 20;
-		setCenterOffX(33);
-		setCenterOffY(46);
 		if(sceneType==SceneType.TEM) {
 			super.constShpFilePrefix = team + temMark + basicName + "mk";
 			super.aniShpPrefixLs.add("ggpill");
@@ -69,7 +58,7 @@ public class AfPill extends Building{
 		int centerX = centerOffX + super.getPositionX();
 		int centerY = centerOffY + super.getPositionY();
 		List<CenterPoint> result = new ArrayList<>();
-		CenterPoint center = PointUtil.fetchCenterPoint(centerX, centerY);
+		CenterPoint center = PointUtil.getCenterPoint(centerX, centerY);
 		result.add(center);
 		return result;
 	}

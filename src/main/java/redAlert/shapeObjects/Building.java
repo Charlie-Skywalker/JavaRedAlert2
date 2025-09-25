@@ -2,6 +2,7 @@ package redAlert.shapeObjects;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -147,15 +148,17 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 	/**
 	 * 由子类调用初始化Building的成员变量
 	 */
-	public void initBuildingValue(int positionX,int positionY,SceneType sceneType,UnitColor unitColor) {
+	public void initBuildingValue(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
 		this.constructFrames = ShpResourceCenter.loadShpResource(constShpFilePrefix, sceneType.getPalPrefix());
 		this.workingFrames = ShpResourceCenter.loadWorkingFrames(aniShpPrefixLs, sceneType);
 		this.damagedFrames = ShpResourceCenter.loadDamagedFrames(aniShpPrefixLs, sceneType);
 		
+		setCenterOffXY(constructFrames);
+		
 		this.scene = sceneType;
 		this.unitColor = unitColor;
-		this.positionX = positionX;
-		this.positionY = positionY;
+		this.positionX = centerPoint.getX()-centerOffX;
+		this.positionY = centerPoint.getY()-centerOffY;
 		this.frameNum = 0;
 		this.status = BuildingStatus.UNDEMAGED;
 		this.stage = BuildingStage.UnderConstruct;
@@ -173,6 +176,42 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 		Constructor.putOneShapeUnit(bone);
 		
 	}
+	
+	/**
+	 * 通过shp的中心点原理计算centerOffX和centerOffY
+	 */
+	private void setCenterOffXY(List <ShapeUnitFrame> constructFrames) {
+		Point imgCenter = constructFrames.get(0).getCenterCoord();
+		if(constConfig.fxNum==2 && constConfig.fyNum==2) {
+			setCenterOffX(imgCenter.x);
+			setCenterOffY(imgCenter.y+14);
+		}
+		if(constConfig.fxNum==1 && constConfig.fyNum==1) {
+			setCenterOffX(imgCenter.x);
+			setCenterOffY(imgCenter.y+14);
+		}
+		if(constConfig.fxNum==2 && constConfig.fyNum==3) {
+			setCenterOffX(imgCenter.x+30);
+			setCenterOffY(imgCenter.y+14+15);
+		}
+		if(constConfig.fxNum==3 && constConfig.fyNum==3) {
+			setCenterOffX(imgCenter.x);
+			setCenterOffY(imgCenter.y+14+30);
+		}
+		if(constConfig.fxNum==4 && constConfig.fyNum==4) {
+			setCenterOffX(imgCenter.x);
+			setCenterOffY(imgCenter.y+14+30);
+		}
+		if(constConfig.fxNum==3 && constConfig.fyNum==4) {
+			setCenterOffX(imgCenter.x);
+			setCenterOffY(imgCenter.y+14+30);
+		}
+		if(constConfig.fxNum==3 && constConfig.fyNum==5) {
+			setCenterOffX(imgCenter.x+30);
+			setCenterOffY(imgCenter.y+14+30+15);
+		}
+	}
+	
 	
 	/**
 	 * 由于新建建筑是直接扔进缓存队列的,所以需要计算好第一帧的颜色

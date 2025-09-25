@@ -22,23 +22,12 @@ public class AfWeth extends Building{
 	 */
 	public String team = "g";
 	
-	public AfWeth(SceneType sceneType,UnitColor unitColor,int mouseX,int mouseY) {
-		this(PointUtil.getCenterPoint(mouseX, mouseY),sceneType,unitColor);
-	}
 	public AfWeth(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
 		initShpSource(sceneType);
-		int positionX = centerPoint.getX()-centerOffX;
-		int positionY = centerPoint.getY()-centerOffY;
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
-		
+		super.initBuildingValue(centerPoint,sceneType,unitColor);
 		
 		super.workingFrames.clear();
 		super.workingFrames.add(super.constructFrames.subList(constructFrames.size()-1, constructFrames.size()));//工作动画展示建造动画的最后一帧
-		
-	}
-	public AfWeth(int positionX,int positionY,SceneType sceneType,UnitColor unitColor) {
-		initShpSource(sceneType);
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
 	}
 	
 	/**
@@ -46,8 +35,6 @@ public class AfWeth extends Building{
 	 */
 	public void initShpSource(SceneType sceneType) {
 		super.constConfig = ConstConfig.AfWeth;
-		setCenterOffX(82);
-		setCenterOffY(120);
 		if(sceneType==SceneType.TEM) {
 			super.constShpFilePrefix = team + temMark + basicName + "mk";
 			super.aniShpPrefixLs.add("ggweth");
@@ -72,7 +59,7 @@ public class AfWeth extends Building{
 		int centerX = centerOffX + super.getPositionX();
 		int centerY = centerOffY + super.getPositionY();
 		List<CenterPoint> result = new ArrayList<>();
-		CenterPoint center = PointUtil.fetchCenterPoint(centerX, centerY);
+		CenterPoint center = PointUtil.getCenterPoint(centerX, centerY);
 		result.add(center);
 		result.add(center.getLeft());
 		result.add(center.getLeftDn());

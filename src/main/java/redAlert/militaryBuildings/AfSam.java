@@ -29,9 +29,6 @@ public class AfSam extends Building{
 	 */
 	public String team = "n";
 	
-	public AfSam(SceneType sceneType,UnitColor unitColor,int mouseX,int mouseY) {
-		this(PointUtil.getCenterPoint(mouseX, mouseY),sceneType,unitColor);
-	}
 	public AfSam(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
 		initShpSource(sceneType);
 		int positionX = centerPoint.getX()-centerOffX;
@@ -70,42 +67,6 @@ public class AfSam extends Building{
 		bone = new BuildingBone(this);
 		Constructor.putOneShapeUnit(bone);
 		
-	}
-	
-	public AfSam(int positionX,int positionY,SceneType sceneType,UnitColor unitColor) {
-		initShpSource(sceneType);
-		super.constructFrames = ShpResourceCenter.loadShpResource(constShpFilePrefix, sceneType.getPalPrefix());
-		
-		workingFrames = new ArrayList<List<ShapeUnitFrame>>(5);
-		List<ShapeUnitFrame> list1 = new ArrayList<>();
-		list1.add(constructFrames.get(constructFrames.size()-1));
-		workingFrames.add(list1);
-		
-		damagedFrames = new ArrayList<List<ShapeUnitFrame>>(5);
-		List<ShapeUnitFrame> list2= new ArrayList<>();
-		list2.add(constructFrames.get(constructFrames.size()-1));
-		damagedFrames.add(list2);
-		
-		
-		super.scene = sceneType;
-		super.unitColor = unitColor;
-		super.positionX = positionX;
-		super.positionY = positionY;
-		super.frameNum = 0;
-		super.status = BuildingStatus.UNDEMAGED;
-		super.stage = BuildingStage.UnderConstruct;
-		this.curFrame = calculateFirstFrame();
-		super.positionMinX = curFrame.getMinX()+positionX;
-		super.positionMinY = curFrame.getMinY()+positionY;
-		this.curCenterPoint = PointUtil.getCenterPoint(super.positionX+super.centerOffX, super.positionY+super.centerOffY);
-		
-		//初始化血条的信息
-		bloodBar = new BuildingBloodBar(this);
-		Constructor.putOneShapeUnit(bloodBar);
-		
-		//初始化骨架的信息
-		bone = new BuildingBone(this);
-		Constructor.putOneShapeUnit(bone);
 	}
 	
 	/**
@@ -154,7 +115,7 @@ public class AfSam extends Building{
 		int centerX = centerOffX + super.getPositionX();
 		int centerY = centerOffY + super.getPositionY();
 		List<CenterPoint> result = new ArrayList<>();
-		CenterPoint center = PointUtil.fetchCenterPoint(centerX, centerY);
+		CenterPoint center = PointUtil.getCenterPoint(centerX, centerY);
 		result.add(center);
 		return result;
 	}

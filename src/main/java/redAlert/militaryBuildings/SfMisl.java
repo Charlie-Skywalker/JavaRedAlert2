@@ -77,14 +77,9 @@ public class SfMisl extends Building{
 	 */
 	public String team = "n";
 	
-	public SfMisl(SceneType sceneType,UnitColor unitColor,int mouseX,int mouseY) {
-		this(PointUtil.getCenterPoint(mouseX, mouseY),sceneType,unitColor);
-	}
 	public SfMisl(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
 		initShpSource(sceneType);
-		int positionX = centerPoint.getX()-centerOffX;
-		int positionY = centerPoint.getY()-centerOffY;
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
+		super.initBuildingValue(centerPoint,sceneType,unitColor);
 		
 		List<String> list = new ArrayList<>();
 		list.add("ngmisl_f");
@@ -98,25 +93,6 @@ public class SfMisl extends Building{
 		list3.add("ngmisl_h");
 		list3.add("ngmisl");
 		this.buildingFrameCloseList = ShpResourceCenter.loadWorkingFrames(list3, sceneType);
-	}
-	
-	public SfMisl(int positionX,int positionY,SceneType sceneType,UnitColor unitColor) {
-		initShpSource(sceneType);
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
-		
-		List<String> list = new ArrayList<>();
-		list.add("ngmisl_f");
-		list.add("ngmisl");
-		this.buildingFrameExpandList = ShpResourceCenter.loadWorkingFrames(list,sceneType);
-		List<String> list2 = new ArrayList<>();
-		list2.add("ngmisl_g");
-		list2.add("ngmisl");
-		this.buildingFrameReadyList = ShpResourceCenter.loadWorkingFrames(list2, sceneType);
-		List<String> list3 = new ArrayList<>();
-		list3.add("ngmisl_h");
-		list3.add("ngmisl");
-		this.buildingFrameCloseList = ShpResourceCenter.loadWorkingFrames(list3, sceneType);
-		
 	}
 	
 	/**
@@ -124,8 +100,6 @@ public class SfMisl extends Building{
 	 */
 	public void initShpSource(SceneType sceneType) {
 		super.constConfig = ConstConfig.SfMisl;
-		setCenterOffX(118);
-		setCenterOffY(145);
 		if(sceneType==SceneType.TEM) {
 			super.constShpFilePrefix = team + temMark + basicName + "mk";
 			super.aniShpPrefixLs.add("ngmisl_e");
@@ -149,7 +123,7 @@ public class SfMisl extends Building{
 		int centerX = centerOffX + super.getPositionX();
 		int centerY = centerOffY + super.getPositionY();
 		List<CenterPoint> result = new ArrayList<>();
-		CenterPoint center = PointUtil.fetchCenterPoint(centerX, centerY);
+		CenterPoint center = PointUtil.getCenterPoint(centerX, centerY);
 		result.add(center);
 		result.add(center.getLeft());
 		result.add(center.getLeftDn());

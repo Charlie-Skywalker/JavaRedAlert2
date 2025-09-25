@@ -549,44 +549,9 @@ public class AfWeap extends Building{
 	 */
 	public String team = "g";
 	
-	public AfWeap(SceneType sceneType,UnitColor unitColor,int mouseX,int mouseY) {
-		this(PointUtil.getCenterPoint(mouseX, mouseY),sceneType,unitColor);
-	}
 	public AfWeap(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
 		initShpSource(sceneType);
-		int positionX = centerPoint.getX()-centerOffX;
-		int positionY = centerPoint.getY()-centerOffY;
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
-		//目前只加载了非雪地的部分   雪地的部分还没有加载  应该加判断！！！
-		List<String> tankMakeShpPreFix = new ArrayList<>();
-		tankMakeShpPreFix.add("gaweap_a");
-		tankMakeShpPreFix.add("gaweap_1");
-		tankMakeShpPreFix.add("gaweap_b");
-		tankMakeShpPreFix.add("gaweapbb");
-		tankFramesWorkingFrames = ShpResourceCenter.loadWorkingFrames(tankMakeShpPreFix, sceneType);
-		tankFramesDamagedFrames = ShpResourceCenter.loadDamagedFrames(tankMakeShpPreFix, sceneType);
-		
-		List<String> tankMakeShpPreFix2 = new ArrayList<>();
-		tankMakeShpPreFix2.add("gaweap_2");
-		tankFramesWorkingFrames2 = ShpResourceCenter.loadWorkingFrames(tankMakeShpPreFix2, sceneType);
-		tankFramesDamagedFrames2 = ShpResourceCenter.loadDamagedFrames(tankMakeShpPreFix2, sceneType);
-		
-		List<String> flysMakeShpPreFix = new ArrayList<>();
-		flysMakeShpPreFix.add("gaweap_4");
-		flysMakeShpPreFix.add("gaweap_b");
-		flysMakeShpPreFix.add("gaweapbb");
-		flysMakeShpPreFix.add("gaweap_a");
-		flyFramesWorkingFrames = ShpResourceCenter.loadWorkingFrames(flysMakeShpPreFix, sceneType);
-		flyFramesDamagedFrames = ShpResourceCenter.loadDamagedFrames(flysMakeShpPreFix, sceneType);
-		List<String> flysMakeShpPreFix2 = new ArrayList<>();
-		flysMakeShpPreFix2.add("gaweap_3");
-		flyFramesWorkingFrames2 = ShpResourceCenter.loadWorkingFrames(flysMakeShpPreFix2, sceneType);
-		flyFramesDamagedFrames2 = ShpResourceCenter.loadDamagedFrames(flysMakeShpPreFix2, sceneType);
-	}
-	
-	public AfWeap(int positionX,int positionY,SceneType sceneType,UnitColor unitColor) {
-		initShpSource(sceneType);
-		super.initBuildingValue(positionX,positionY,sceneType,unitColor);
+		super.initBuildingValue(centerPoint,sceneType,unitColor);
 		//目前只加载了非雪地的部分   雪地的部分还没有加载  应该加判断！！！
 		List<String> tankMakeShpPreFix = new ArrayList<>();
 		tankMakeShpPreFix.add("gaweap_a");
@@ -619,8 +584,6 @@ public class AfWeap extends Building{
 	 */
 	public void initShpSource(SceneType sceneType) {
 		super.constConfig = ConstConfig.AfWeap;
-		setCenterOffX(160);
-		setCenterOffY(170);
 		if(sceneType==SceneType.TEM) {
 			super.constShpFilePrefix = team + temMark + basicName + "mk";
 			super.aniShpPrefixLs.add("ggweap");
@@ -691,7 +654,7 @@ public class AfWeap extends Building{
 		int centerY = centerOffY + super.getPositionY();
 		List<CenterPoint> result = new ArrayList<>();
 		
-		CenterPoint center = PointUtil.fetchCenterPoint(centerX, centerY);
+		CenterPoint center = PointUtil.getCenterPoint(centerX, centerY);
 		result.add(center);
 		result.add(center.getLeft());
 		result.add(center.getLeftDn());
@@ -721,7 +684,7 @@ public class AfWeap extends Building{
 		int centerY = centerOffY + super.getPositionY();
 		List<CenterPoint> result = new ArrayList<>();
 		
-		CenterPoint center = PointUtil.fetchCenterPoint(centerX, centerY);
+		CenterPoint center = PointUtil.getCenterPoint(centerX, centerY);
 		result.add(center.getLeft());
 		result.add(center.getLeftDn());
 		result.add(center.getDn());
