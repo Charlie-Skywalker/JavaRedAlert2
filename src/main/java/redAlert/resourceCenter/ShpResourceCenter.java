@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.net.URL;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.io.FileUtils;
@@ -14,6 +16,7 @@ import org.apache.commons.io.FileUtils;
 import redAlert.ShapeUnitFrame;
 import redAlert.shapeObjects.Building.SceneType;
 import redAlert.utils.ShpFileReader;
+import redAlert.utils.ResourceDir;
 
 /**
  * Shape文件资源管理中心
@@ -38,15 +41,9 @@ public class ShpResourceCenter {
 	 * 加载ClassPath目录下的所有SHP文件名和文件目录
 	 */
 	static {
-		String classPath = ShpResourceCenter.class.getClassLoader().getResource(".").getPath();//当前目录  也就是与classes文件夹所在目录  变量以"/"或"\"结尾
-		try {
-			classPath= URLDecoder.decode(classPath, "UTF-8");
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		File file = new File(classPath+"shp");
+		File file = new File(ResourceDir.getResourceDir("shp"));
 		Iterator <File> files = FileUtils.iterateFiles(file, new String[]{"shp"}, true);
+
 		while(files.hasNext()) {
 			File shpFile = files.next();
 			String name = shpFile.getName();

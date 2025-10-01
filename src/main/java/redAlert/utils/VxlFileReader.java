@@ -37,15 +37,8 @@ public class VxlFileReader {
 	 * 加载ClassPath目录下的所有SHP文件名和文件目录
 	 */
 	static {
-		String classPath = VxlFileReader.class.getClassLoader().getResource(".").getPath();//当前目录  也就是与classes文件夹所在目录  变量以"/"或"\"结尾
 		
-		try {
-			classPath= URLDecoder.decode(classPath, "UTF-8");
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		File file = new File(classPath+"png");
+		File file = new File(ResourceDir.getResourceDir("png"));
 		
 		File [] files = file.listFiles();
 		for(int i=0;i<files.length;i++) {

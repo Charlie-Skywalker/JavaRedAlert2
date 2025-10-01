@@ -16,13 +16,7 @@ public class TmpFileReader {
 	public static String tmpPath = "";
 	
 	static {
-		String classPath = TmpFileReader.class.getClassLoader().getResource(".").getPath();//当前目录  也就是与classes文件夹所在目录  变量以"/"或"\"结尾
-		try {
-			classPath= URLDecoder.decode(classPath, "UTF-8");
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		tmpPath = classPath+"tmp";
+		tmpPath = ResourceDir.getResourceDir("tmp");
 	}
 	
 	/**
