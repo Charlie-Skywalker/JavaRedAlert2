@@ -17,6 +17,7 @@ import redAlert.other.BuildingBloodBar;
 import redAlert.other.BuildingBone;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
 import redAlert.resourceCenter.ShpResourceCenter;
+import redAlert.shapeObjects.vehicle.Mcv;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.CanvasPainter;
 import redAlert.utils.PointUtil;
@@ -333,7 +334,7 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 		}else if(stage==BuildingStage.Selling){//卖掉
 			if(frameIndex>=constructFrames.size()) {
 				frameIndex = constructFrames.size()-1;
-				
+
 				ShapeUnitFrame constFrame = constructFrames.get(frameIndex);
 				BufferedImage curImg = curFrame.getImg();
 				CanvasPainter.clearImage(curImg);
@@ -367,26 +368,43 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 				super.positionMinX = curFrame.getMinX()+positionX;
 				super.positionMinY = curFrame.getMinY()+positionY;
 				frameIndex--;
-			}else if(frameIndex<0){
-				Constructor.playOneMusic("ceva058");
-				this.end = true;
-				setVisible(false);
-				setEnd(true);
-				getCurCenterPoint().setBuilding(null);//上边的物品
-				ShapeUnitResourceCenter.removeOneBuilding(this);
-				this.getBloodBar().setVisible(false);
-				this.getBloodBar().setEnd(true);
-				ShapeUnitResourceCenter.removeOneUnit(bloodBar);
-				this.getBone().setVisible(false);
-				this.getBone().setEnd(true);
-				ShapeUnitResourceCenter.removeOneUnit(bone);
-				
-				getCurCenterPoint().buildingAreaType = BuildingAreaType.None;
-				
+			}else {
+				endBuilding();
 			}
 		}
 	}
-	
+
+	public void endBuilding(){
+		this.end = true;
+		setVisible(false);
+		setEnd(true);
+		getCurCenterPoint().setBuilding(null);//上边的物品
+		ShapeUnitResourceCenter.removeOneBuilding(this);
+		this.getBloodBar().setVisible(false);
+		this.getBloodBar().setEnd(true);
+		ShapeUnitResourceCenter.removeOneUnit(bloodBar);
+		this.getBone().setVisible(false);
+		this.getBone().setEnd(true);
+
+
+		ShapeUnitResourceCenter.removeOneUnit(bone);
+		getCurCenterPoint().buildingAreaType = BuildingAreaType.None;
+
+		afterBuildingDestroy();
+	}
+	/**
+	 * 留给子类重写
+	 * 建筑被摧毁（卖掉）后做一些事情,默认播放语音
+	 * building应该有生命周期的概念
+	 */
+	public void  afterBuildingDestroy() {
+		Constructor.playOneMusic("ceva058");
+	}
+
+
+
+
+
 	//获取最左边的中心块
 	public CenterPoint getLeftFirst() {
 		List<CenterPoint> ls = getNoConstCpList();

@@ -323,6 +323,21 @@ public class ShapeUnitResourceCenter {
 		
 		return selectedMovableUnits;
 	}
+
+	/**
+	 * 选中单位列表是否为空
+	 */
+	public static boolean isSelectedUnitsEmpty() {
+		try {
+			readLock.lock();
+			return selectedMovableUnits.isEmpty();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			readLock.unlock();
+		}
+		return true;
+	}
 	
 	/**
 	 * 添加一个可移动单位
@@ -579,7 +594,9 @@ public class ShapeUnitResourceCenter {
 			Iterator<MovableUnit> iterator = selectedMovableUnits.iterator();
 			while(iterator.hasNext()) {
 				MovableUnit movableUnit = iterator.next();
-				movableUnit.getBloodBar().setVisible(false);
+				if(movableUnit.getBloodBar()!=null){
+					movableUnit.getBloodBar().setVisible(false);
+				}
 				iterator.remove();
 			}
 		}

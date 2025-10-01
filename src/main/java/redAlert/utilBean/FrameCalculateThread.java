@@ -13,11 +13,12 @@ import redAlert.shapeObjects.ShapeUnit;
 
 /**
  * 方块(ShapeUnit)帧计算线程
+ * 决定了下一时刻方块的状态，不决定渲染
  */
 public class FrameCalculateThread implements Runnable{
 	
-	
-	public ArrayBlockingQueue<Runnable> threadQueue;
+
+	public ArrayBlockingQueue<Runnable> threadQueue;// 当前方块(ShapeUnit)帧计算线程所在的阻塞队列
 	public ShapeUnit shp = null;
 	public List<ShapeUnit> shapeUnitQueryList;
 	

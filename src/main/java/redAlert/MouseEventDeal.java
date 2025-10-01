@@ -19,14 +19,8 @@ import redAlert.enums.MouseStatus;
 import redAlert.event.ConstructEvent;
 import redAlert.event.EventHandlerManager;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
-import redAlert.shapeObjects.Bloodable;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.*;
 import redAlert.shapeObjects.Building.BuildingStage;
-import redAlert.shapeObjects.Expandable;
-import redAlert.shapeObjects.MovableUnit;
-import redAlert.shapeObjects.ShapeUnit;
-import redAlert.shapeObjects.Soldier;
-import redAlert.shapeObjects.Vehicle;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utilBean.Coordinate;
 import redAlert.utilBean.LittleCenterPoint;
@@ -84,6 +78,14 @@ public class MouseEventDeal {
 						 * 单击选中一个单位 
 						 */
 						if(RuntimeParameter.mouseStatus == MouseStatus.PreSingleSelect) {
+
+
+							// 清空一下已选择列表
+							ShapeUnitResourceCenter.cancelSelect();
+
+							// 清空一下已选择建筑
+							ShapeUnitResourceCenter.unselectBuilding();
+
 							if(centerPoint.isExistSingleSelectUnit()) {
 								ShapeUnit unit = centerPoint.mouseClickGetUnit();
 								if(unit instanceof MovableUnit) {
@@ -115,6 +117,9 @@ public class MouseEventDeal {
 									ShapeUnitResourceCenter.unselectBuilding();
 									mouseBloodable = selectedBuilding;
 									ShapeUnitResourceCenter.selectOneBuilding(selectedBuilding);
+
+
+
 								}
 							}
 							
@@ -175,19 +180,33 @@ public class MouseEventDeal {
 							int mapStartY = CoordinateUtil.getMapCoordY(starty, coord.getViewportOffY());
 							
 							List<MovableUnit> selectedUnits = ShapeUnitResourceCenter.getMovableUnitFromWarMap(mapStartX, mapStartY, coord.getMapX(), coord.getMapY());
-							
+							Building selectedBuilding = ShapeUnitResourceCenter.selectedBuilding;
 							if(selectedUnits.isEmpty()) {//没选中任何单位
-								if(ShapeUnitResourceCenter.selectedMovableUnits.isEmpty()) {//此前有选中的单位,取消选中
+
+								if(ShapeUnitResourceCenter.selectedMovableUnits.isEmpty()) {//此前没有选中的单位,取消选中
 									RuntimeParameter.mouseStatus = MouseStatus.Idle;
 									return;
 								}else {//控制此前选中的单位移动到指定点
 									RuntimeParameter.mouseStatus = MouseStatus.UnitMove;
-									
+
 									CenterPoint targetCp = PointUtil.getCenterPoint(coord.getMapX(), coord.getMapY());
 									List<MovableUnit> units = ShapeUnitResourceCenter.selectedMovableUnits;
 									if(units.size()==1) {
 										MovableUnit moveUnit = units.get(0);
 										moveUnit.movePlay();
+										
+										// 如果此前选中的单位是从部署建筑变化而来
+										if(moveUnit instanceof TankExpandable && selectedBuilding instanceof TankExpandable
+												&& ((TankExpandable) selectedBuilding).getExpandStatus()==TankExpandable.TANK_STATUS_NORMAL) {
+											//建筑卖掉原地显示载具
+											TankExpandable exBuilding = (TankExpandable) selectedBuilding;
+											exBuilding.unexpandAndTransfer(moveUnit,targetCp);
+											ShapeUnitResourceCenter.unselectBuilding();
+											return;
+										}
+
+
+										
 										
 										//不适用AWT线程来控制移动   不然可能会卡屏
 										//所以在线程池中执行
@@ -219,10 +238,11 @@ public class MouseEventDeal {
 										threadPoolExecutor.execute(thread);
 										
 									}
-									
+
 									return;
 								}
 							}else {
+
 								ShapeUnitResourceCenter.cancelSelect();
 								ShapeUnitResourceCenter.addAll(selectedUnits);
 								RuntimeParameter.mouseStatus = MouseStatus.UnitMove;
@@ -238,6 +258,8 @@ public class MouseEventDeal {
 								}
 								
 							}
+							// 只要此前有选中的建筑,则取消选中
+							ShapeUnitResourceCenter.unselectBuilding();
 							return;
 						}
 						
@@ -246,19 +268,36 @@ public class MouseEventDeal {
 						 * 用户指挥单位进行移动
 						 */
 						if(RuntimeParameter.mouseStatus==MouseStatus.UnitMove) {
+
 							CenterPoint targetCp = PointUtil.getCenterPoint(coord.getMapX(), coord.getMapY());
 							List<MovableUnit> units = ShapeUnitResourceCenter.selectedMovableUnits;
+							Building selectedBuilding = ShapeUnitResourceCenter.selectedBuilding;
+
+
 							if(units.size()==1) {
 								MovableUnit moveUnit = units.get(0);
 								//不适用AWT线程来控制移动   不然可能会卡屏
 								//所以在线程池中执行
+								// 判断一下移动的单位是不是从部署建筑变化而来
+								if(moveUnit instanceof TankExpandable && selectedBuilding instanceof TankExpandable
+										&& ((TankExpandable) selectedBuilding).getExpandStatus()==TankExpandable.TANK_STATUS_NORMAL) {
+									//建筑卖掉原地显示载具
+
+									TankExpandable exBuilding = (TankExpandable) selectedBuilding;
+									exBuilding.unexpandAndTransfer(moveUnit,targetCp);
+									ShapeUnitResourceCenter.unselectBuilding();
+									return;
+
+								}
+
+
 								Thread thread = new Thread() {
 									public void run() {
 										MoveUtil.move(moveUnit, targetCp);
 									}
 								};
 								threadPoolExecutor.execute(thread);
-								
+
 								moveUnit.movePlay();
 							}else {
 								//不适用AWT线程来控制移动   不然可能会卡屏
@@ -269,7 +308,7 @@ public class MouseEventDeal {
 									}
 								};
 								threadPoolExecutor.execute(thread);
-								
+
 								//命令移动时说话
 								int playNum = 0;
 								for(int i=0;i<units.size();i++) {
@@ -279,11 +318,11 @@ public class MouseEventDeal {
 										playNum++;
 									}
 								}
-								
+
 							}
 							return;
 						}
-						
+
 						/**
 						 * 用户对单位进行展开
 						 */
@@ -296,11 +335,15 @@ public class MouseEventDeal {
 									exUnit.expand();
 								}
 							}
-							
+
 							resetMouseStatus(coord);
 							return;
 						}
-						
+
+						/**
+						 * 用户预选
+						 */
+
 						/**
 						 * 贱卖建筑
 						 */
@@ -314,24 +357,24 @@ public class MouseEventDeal {
 									Constructor.playOneMusic("uselbuil");
 								}
 							}
-							
+
 							resetMouseStatus(coord);
 							return;
 						}
-						
-						
-						
+
+
+
 						/**
 						 * 军事建筑建造
 						 */
 						if(RuntimeParameter.mouseStatus == MouseStatus.Construct) {
-							
+
 							//发布一个红警建筑建造事件
 							EventHandlerManager.publishOneEvent(new ConstructEvent(mouseEvent, constName));
 						}
 					}
-					
-					
+
+
 					if(mouseEvent.getButton()==MouseEvent.BUTTON3) {//右键
 						/*
 						 * 已选中的可移动单位取消选中
@@ -354,8 +397,8 @@ public class MouseEventDeal {
 						if(OptionsPanel.repairLabel.isSelected()) {
 							OptionsPanel.repairLabel.setSelected(false);
 						}
-						
-						
+
+
 						resetMouseStatus(coord);
 						//移动一下鼠标  触发一下移动事件
 						Point mousePoint = MouseInfo.getPointerInfo().getLocation();
@@ -363,39 +406,39 @@ public class MouseEventDeal {
 						robot.mouseMove(mousePoint.x, mousePoint.y);
 						return;
 					}
-					
+
 				}catch (Exception e) {
 					e.printStackTrace();
 				}
-				
+
 			}
-			
+
 			/**
 			 * 鼠标进入
 			 */
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				
+
 			}
 			/**
 			 * 鼠标退出
 			 */
 			@Override
 			public void mouseExited(MouseEvent e) {
-				
+
 			}
-			
+
 		});
-		
-		
-		
+
+
+
 		/**
 		 * TODO 鼠标拖动和移动事件
 		 */
 		scenePanel.addMouseMotionListener(new MouseMotionListener() {
 			/**
 			 * 按下鼠标时拖动鼠标触发
-			 * 
+			 *
 			 * 按下鼠标时未拖动则不触发
 			 */
 			@Override
@@ -404,7 +447,7 @@ public class MouseEventDeal {
 					Coordinate coord = CoordinateUtil.getCoordinate(mouseEvent);
 					int mapX = coord.getMapX();
 					int mapY = coord.getMapY();
-					
+
 					if(SwingUtilities.isLeftMouseButton(mouseEvent)){//鼠标左键
 						if(RuntimeParameter.mouseStatus==MouseStatus.Construct) {
 							if(mapX==RuntimeParameter.lastMoveX && mapY==RuntimeParameter.lastMoveY) {
@@ -412,7 +455,7 @@ public class MouseEventDeal {
 							}else {
 								RuntimeParameter.lastMoveX = mapX;
 								RuntimeParameter.lastMoveY = mapY;
-								
+
 								CenterPoint centerPoint = PointUtil.getCenterPoint(mapX, mapY);
 								CenterPoint lastCenterPoint = RuntimeParameter.lastMoveCenterPoint;
 								if(centerPoint.equals(lastCenterPoint)) {
@@ -432,20 +475,20 @@ public class MouseEventDeal {
 					e.printStackTrace();
 				}
 			}
-			
-			
-			
+
+
+
 			/**
 			 * 鼠标移动时(此时没有鼠标按下)
 			 */
 			@Override
 			public void mouseMoved(MouseEvent mouseEvent) {
-				
+
 				try {
 					Coordinate coord = CoordinateUtil.getCoordinate(mouseEvent);
 					int mapX = coord.getMapX();
 					int mapY = coord.getMapY();
-					
+
 					/**
 					 * 建造状态的判定优先级最高
 					 */
@@ -455,7 +498,7 @@ public class MouseEventDeal {
 						}else {
 							RuntimeParameter.lastMoveX = mapX;
 							RuntimeParameter.lastMoveY = mapY;
-							
+
 							CenterPoint centerPoint = PointUtil.getCenterPoint(mapX, mapY);
 							CenterPoint lastCenterPoint = RuntimeParameter.lastMoveCenterPoint;
 							if(centerPoint.equals(lastCenterPoint)) {
@@ -466,68 +509,68 @@ public class MouseEventDeal {
 							return;
 						}
 					}
-					
+
 					//显示鼠标下的单位的血条
 					CenterPoint centerPoint = PointUtil.getCenterPoint(mapX, mapY);
 					if(centerPoint.isExistSingleSelectUnit()) {
 						ShapeUnit unit = centerPoint.mouseClickGetUnit();
-						
+
 						if(unit instanceof Bloodable) {
 							if(unit.equals(mouseBloodable)) {
 								mouseBloodable.getBloodBar().setVisible(true);//有可能被右键取消显示,需要加此行代码
 							}else {
 								Bloodable bloodableUnit = (Bloodable)unit;
 								bloodableUnit.getBloodBar().setVisible(true);
-								
+
 								if(mouseBloodable!=null) {
 									if(mouseBloodable.equals(ShapeUnitResourceCenter.selectedBuilding)) {
-										
+
 									}else {
 										if(ShapeUnitResourceCenter.selectedMovableUnits.contains(mouseBloodable)) {
-											
+
 										}else {
 											mouseBloodable.getBloodBar().setVisible(false);
 										}
 									}
 								}else {
-									
+
 								}
-								
+
 								mouseBloodable = bloodableUnit;
-								
+
 							}
 						}
-						
+
 					}else {
 						if(mouseBloodable!=null) {
 							if(mouseBloodable.equals(ShapeUnitResourceCenter.selectedBuilding)) {
-								
+
 							}else {
 								if(ShapeUnitResourceCenter.selectedMovableUnits.contains(mouseBloodable)) {
-									
+
 								}else {
 									mouseBloodable.getBloodBar().setVisible(false);
 								}
 							}
 							mouseBloodable = null;
 						}else {
-							
+
 						}
 					}
-					
+
 					resetMouseStatus(coord);
-					
+
 				}catch (Exception e) {
 					e.printStackTrace();
 				}
-				
-				
+
+
 			}
-			
+
 		});
-		
+
 	}
-	
+
 	/**
 	 * 根据外部环境,重新设置鼠标状态变量
 	 * 
@@ -565,7 +608,22 @@ public class MouseEventDeal {
 				Building selectedBuilding = ShapeUnitResourceCenter.selectedBuilding;
 				if(selectedBuilding!=null) {//存在已选中的建筑
 					if(selectedBuilding.equals(unit)) {
-						RuntimeParameter.mouseStatus = MouseStatus.Idle;
+						//如果选中的建筑是可部署的,则看是否可以取消部署
+						if(selectedBuilding instanceof TankExpandable) {
+							TankExpandable ex = (TankExpandable) selectedBuilding;
+							if (ex.isUnExpandable()) {
+								RuntimeParameter.mouseStatus = MouseStatus.UnitMove;
+								//创建一个该建筑关联的取消部署的载具
+								MovableUnit movableUnit = ex.getUnexpandUnit();
+
+								ShapeUnitResourceCenter.selectedMovableUnits.add(movableUnit);
+
+							}else{
+								RuntimeParameter.mouseStatus = MouseStatus.Idle;
+							}
+						}else{
+							RuntimeParameter.mouseStatus = MouseStatus.Idle;
+						}
 					}else {
 						RuntimeParameter.mouseStatus = MouseStatus.PreSingleSelect;//单选状态
 					}
@@ -580,6 +638,7 @@ public class MouseEventDeal {
 				RuntimeParameter.mouseStatus = MouseStatus.UnitMove;
 			}else {
 				ShapeUnit unitUnderMouse = centerPoint.mouseClickGetUnit();
+
 				
 				if(unitUnderMouse instanceof Expandable) {//可部署
 					if(ShapeUnitResourceCenter.selectedMovableUnits.size()==1) {

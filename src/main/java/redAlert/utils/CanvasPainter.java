@@ -6,9 +6,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import com.jogamp.opengl.GLAutoDrawable;
 import redAlert.RuntimeParameter;
+import redAlert.ShapeUnitFrame;
 import redAlert.SysConfig;
 import redAlert.enums.UnitColor;
+import redAlert.other.Place;
 import redAlert.utilBean.CenterPoint;
 
 /**
@@ -252,7 +255,114 @@ public class CanvasPainter {
 			g.drawLine(viewX-1-29+2+2*i, viewY+1+i, viewX+29-2-2*i, viewY+1+i);
 		}
 	}
-	
+
+	/**
+	 * 画建筑建造预占地方块
+	 * centerPoint 菱形中心点
+	 * int fxNum 从西南向东北数占几个菱形（此方向即纺射X轴）
+	 * int fyNum 从东南向西北数占几个菱形（此方向即仿射Y轴）
+	 */
+	public static void drawRhombus(GLAutoDrawable drawable, CenterPoint centerPoint, int fxNum, int fyNum, int viewportOffX, int viewportOffY) {
+		if(fxNum==1 && fyNum==1) {
+			drawRhombus(drawable,centerPoint,viewportOffX,viewportOffY);
+		}
+		if(fxNum==2 && fyNum==2) {//发电厂 间谍卫星
+			drawRhombus(drawable,centerPoint,viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeftDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRightDn(),viewportOffX,viewportOffY);
+		}
+		if(fxNum==3 && fyNum==3) {//核弹井 维修厂 天气控制 矿石精炼
+			drawRhombus(drawable,centerPoint,viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeft(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeftDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRightDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRight(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRightUp(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getUp(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeftUp(),viewportOffX,viewportOffY);
+		}
+		if(fxNum==2 && fyNum==3) {//兵营 空指部 实验室
+			drawRhombus(drawable,centerPoint,viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeftUp(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeft(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeftDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRightDn(),viewportOffX,viewportOffY);
+		}
+		if(fxNum==3 && fyNum==4) {//矿场 超时空
+			drawRhombus(drawable,centerPoint,viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeft(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeftDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRightDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRight(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRightUp(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getUp(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeftUp(),viewportOffX,viewportOffY);
+
+			drawRhombus(drawable,centerPoint.getRight().getRightDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRightDn().getRightDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getDn().getRightDn(),viewportOffX,viewportOffY);
+		}
+		if(fxNum==4 && fyNum==4) {//基地  船坞
+			drawRhombus(drawable,centerPoint,viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeft(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeftDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRightDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRight(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRightUp(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getUp(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeftUp(),viewportOffX,viewportOffY);
+
+			drawRhombus(drawable,centerPoint.getLeft().getLeftDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeftDn().getLeftDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeftDn().getDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRight().getRightDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRightDn().getRightDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getDn().getRightDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getDn().getDn(),viewportOffX,viewportOffY);
+		}
+		if(fxNum==3 && fyNum==5) {//建设工厂
+			drawRhombus(drawable,centerPoint,viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeft(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeftDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRightDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRight(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRightUp(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getUp(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeftUp(),viewportOffX,viewportOffY);
+
+			drawRhombus(drawable,centerPoint.getLeft().getLeftUp(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getLeftUp().getLeftUp(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getUp().getLeftUp(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRight().getRightDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getRightDn().getRightDn(),viewportOffX,viewportOffY);
+			drawRhombus(drawable,centerPoint.getDn().getRightDn(),viewportOffX,viewportOffY);
+		}
+	}
+
+	/**
+	 * 画最小单位菱形块
+	 */
+	private static void drawRhombus(GLAutoDrawable drawable,CenterPoint centerPoint,int viewportOffX,int viewportOffY) {
+		ShapeUnitFrame suf = null;
+		if(!centerPoint.isBuildingCanPutOn()) {
+			suf = Place.getRedRect();
+		}else {
+			suf = Place.getGreenRect();
+		}
+
+		int positionX = centerPoint.getX()-30;
+		int positionY = centerPoint.getY()-14;
+
+		DrawableUtil.drawOneSufAtPosition(drawable, suf, positionX, positionY, viewportOffX, viewportOffY);
+	}
+
+
 	/**
 	 * 将一个颜色转成指定颜色
 	 */

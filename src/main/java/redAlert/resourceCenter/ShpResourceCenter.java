@@ -93,10 +93,10 @@ public class ShpResourceCenter {
 		
 		List<ShapeUnitFrame> frames = null;
 		try {
-			String shpFilePath = getShpByPrefix(shpPrefix);
 			if(isLoaded(shpPrefix,palPrefix)) {
 				return loadFromCache(shpPrefix,palPrefix);
 			}else {
+				String shpFilePath = getShpByPrefix(shpPrefix);
 				frames = ShpFileReader.convertShpFileToBuildingFrames(shpFilePath, palPrefix, half);
 				addToCache(shpPrefix,palPrefix,frames);
 				return frames;
