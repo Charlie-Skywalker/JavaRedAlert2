@@ -9,7 +9,7 @@ import redAlert.utilBean.CenterPoint;
  */
 public interface Turnable {
 
-	public int max = 15;
+	public int max = 31;
 	
 	/**
 	 * 顺时针转动
@@ -66,7 +66,7 @@ public interface Turnable {
 		
 //		CenterPoint curCenterPoint = PointUtil.getCenterPoint(curX, curY);
 		CenterPoint curCenterPoint = vehicle.getCurCenterPoint();
-		int targetTurn = VehicleUtil.getTargetTurn2(curCenterPoint, nextTarget);
+		int targetTurn = VehicleUtil.getTargetTurn3(curCenterPoint, nextTarget);
 		if(targetTurn>=0) {
 			setTargetTurn(targetTurn);
 		}

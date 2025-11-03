@@ -124,7 +124,7 @@ public abstract class Vehicle extends MovableUnit implements Turnable,Attackable
 		super.positionX = bornCp.getX()-super.centerOffX;
 		super.positionY = bornCp.getY()-super.centerOffY;
 		super.unitColor = unitColor;
-		this.bodyFrames = VxlFileReader.convertPngFileToBuildingFrames(vxlPrefix,16,1,unitColor);
+		this.bodyFrames = VxlFileReader.convertPngFileToBuildingFrames(vxlPrefix,32,1,unitColor);
 		super.curFrame = bodyFrames.get(curTurn).copy();
 		super.positionMinX = curFrame.getMinX()+positionX;
 		super.positionMinY = curFrame.getMinY()+positionY;

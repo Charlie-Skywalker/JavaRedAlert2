@@ -20,7 +20,7 @@ public class PosFileGenerator {
 			BufferedImage img2 = ImageIO.read(file2);
 			
 			int y = 1;
-			int x = 16;
+			int x = 32;
 			int imageLength = 128;
 			
 			File text = new File("E:/ZTestRADir/"+fileName+".pos");
@@ -92,12 +92,14 @@ public class PosFileGenerator {
 			
 //			test1(new File("E:/ZTestRADir/png/gtnk.png"),new File("E:/ZTestRADir/png/gtnk_r.png"),"gtnk");
 //			test1(new File("E:/ZTestRADir/png/gtnktur.png"),new File("E:/ZTestRADir/png/gtnktur_r.png"),"gtnktur");
-//			test1(new File("E:/ZTestRADir/png/htnk.png"),new File("E:/ZTestRADir/png/htnk_r.png"),"htnk");
-//			test1(new File("E:/ZTestRADir/png/htnktur.png"),new File("E:/ZTestRADir/png/htnktur_r.png"),"htnktur");
-//			test1(new File("E:/ZTestRADir/png/mcv.png"),new File("E:/ZTestRADir/png/mcv_r.png"),"mcv");
-//			test1(new File("E:/ZTestRADir/png/fv.png"),new File("E:/ZTestRADir/png/fv_r.png"),"fv");
-//			test1(new File("E:/ZTestRADir/png/fvtur.png"),new File("E:/ZTestRADir/png/fvtur_r.png"),"fvtur");
-//			test1(new File("E:/ZTestRADir/png/sref.png"),new File("E:/ZTestRADir/png/sref_r.png"),"sref");
-			test1(new File("E:/ZTestRADir/png/sreftur.png"),new File("E:/ZTestRADir/png/sreftur_r.png"),"sreftur");
+			test1(new File("E:/ZTestRADir/tank组合图/htnk.png"),new File("E:/ZTestRADir/tank组合图/htnk_r.png"),"htnk");
+//			test1(new File("E:/ZTestRADir/tur组合图/htnktur.png"),new File("E:/ZTestRADir/tur组合图/htnktur_r.png"),"htnktur");
+//			test1(new File("E:/ZTestRADir/tank组合图/mcv.png"),new File("E:/ZTestRADir/tank组合图/mcv_r.png"),"mcv");
+//			test1(new File("E:/ZTestRADir/tank组合图/fv.png"),new File("E:/ZTestRADir/tank组合图/fv_r.png"),"fv");
+//			test1(new File("E:/ZTestRADir/tur组合图/fvtur.png"),new File("E:/ZTestRADir/tur组合图/fvtur_r.png"),"fvtur");
+//			test1(new File("E:/ZTestRADir/tank组合图/sref.png"),new File("E:/ZTestRADir/tank组合图/sref_r.png"),"sref");
+//			test1(new File("E:/ZTestRADir/tur组合图/sreftur.png"),new File("E:/ZTestRADir/tur组合图/sreftur_r.png"),"sreftur");
+//			test1(new File("E:/ZTestRADir/tank组合图/gtnk.png"),new File("E:/ZTestRADir/tank组合图/gtnk_r.png"),"gtnk");
+//			test1(new File("E:/ZTestRADir/tur组合图/gtnktur.png"),new File("E:/ZTestRADir/tur组合图/gtnktur_r.png"),"gtnktur");
 		}
 }

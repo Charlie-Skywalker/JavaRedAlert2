@@ -7,6 +7,18 @@ import redAlert.utilBean.CenterPoint;
  */
 public class VehicleUtil {
 
+	public static double xtable [] = new double [32];
+	public static double ytable [] = new double [32]; 
+	/**
+	 * 获取32个单位向量
+	 * 顺时针方向排列
+	 */
+	 static{
+		for(int i=0;i<32;i++) {
+			xtable[i] = Math.cos(i*2*Math.PI/32);
+			ytable[i] = Math.sin(i*2*Math.PI/32);
+		}
+	}
 	
 	/**
 	 * 计算目标转向
@@ -66,7 +78,7 @@ public class VehicleUtil {
 		int curTurnCw = curTurn;
 		while(true) {
 			if(curTurnCw!=targetTurn) {
-				if(curTurnCw==15) {
+				if(curTurnCw==31) {
 					curTurnCw = 0;
 				}else {
 					curTurnCw+=1;
@@ -83,7 +95,7 @@ public class VehicleUtil {
 		while(true) {
 			if(curTurnAcw!=targetTurn) {
 				if(curTurnAcw==0) {
-					curTurnAcw = 15;
+					curTurnAcw = 31;
 				}else {
 					curTurnAcw-=1;
 				}
@@ -105,76 +117,106 @@ public class VehicleUtil {
 	 * 
 	 * 更加精准的版本  可以更加精准  16个方向都能用上
 	 */
-	public static int getTargetTurn2(CenterPoint startCp, CenterPoint endCp) {
+//	public static int getTargetTurn2(CenterPoint startCp, CenterPoint endCp) {
+//		int targetX = endCp.getX();
+//		int targetY = endCp.getY();
+//		
+//		int startX = startCp.getX();
+//		int startY = startCp.getY();
+//		
+//		int targetTurn = 0;
+//		//确定使用车身角度
+//		if( startX-targetX<0 && startY-targetY==0 ) {//右运动
+//			targetTurn = 0;
+//		}
+//		else if( startX-targetX<0 && startY-targetY<0 ) {//右下运动
+//			
+//			float deltaX = targetX-startX;
+//			if((targetY-startY)/deltaX<0.45) {
+//				targetTurn = 1;
+//			}else if((targetY-startY)/deltaX>0.55) {
+//				targetTurn = 3;
+//			}else {
+//				targetTurn = 2;
+//			}
+//			
+//		}
+//		else if( startX-targetX==0 && startY-targetY<0 ) {//下运动
+//			targetTurn = 4;
+//		}
+//		else if( startX-targetX>0 && startY-targetY<0 ) {//左下运动
+//			
+//			float deltaX = Math.abs(targetX-startX);
+//			if((targetY-startY)/deltaX<0.45) {
+//				targetTurn = 7;
+//			}else if((targetY-startY)/deltaX>0.55) {
+//				targetTurn = 5;
+//			}else {
+//				targetTurn = 6;
+//			}
+//		}
+//		else if( startX-targetX>0 && startY-targetY==0 ) {//左运动
+//			targetTurn = 8;
+//		}
+//		else if( startX-targetX>0 && startY-targetY>0 ) {//左上运动
+//			
+//			float deltaX = Math.abs(targetX-startX);
+//			if((startY-targetY)/deltaX<0.45) {
+//				targetTurn = 9;
+//			}else if((startY-targetY)/deltaX>0.55) {
+//				targetTurn = 11;
+//			}else {
+//				targetTurn = 10;
+//			}
+//		}
+//		else if( startX-targetX==0 && startY-targetY>0 ) {//上运动
+//			targetTurn = 12;
+//		}
+//		else if( startX-targetX<0 &&  startY-targetY>0 ) {//右上运动
+//			float deltaX = Math.abs(targetX-startX);
+//			if((startY-targetY)/deltaX<0.45) {
+//				targetTurn = 15;
+//			}else if((startY-targetY)/deltaX>0.55) {
+//				targetTurn = 13;
+//			}else {
+//				targetTurn = 14;
+//			}
+//			
+//		}else {
+//			targetTurn = -1;//不需要旋转,使用时应该startCp与endCp不是一个点
+//		}
+//		
+//		return targetTurn;
+//	}
+	
+	
+	/**
+	 * 计算炮塔转向
+	 * 
+	 * 更加精准的支持32向的版本
+	 */
+	public static int getTargetTurn3(CenterPoint startCp, CenterPoint endCp) {
 		int targetX = endCp.getX();
 		int targetY = endCp.getY();
 		
 		int startX = startCp.getX();
 		int startY = startCp.getY();
 		
-		int targetTurn = 0;
-		//确定使用车身角度
-		if( startX-targetX<0 && startY-targetY==0 ) {//右运动
-			targetTurn = 0;
-		}
-		else if( startX-targetX<0 && startY-targetY<0 ) {//右下运动
-			
-			float deltaX = targetX-startX;
-			if((targetY-startY)/deltaX<0.45) {
-				targetTurn = 1;
-			}else if((targetY-startY)/deltaX>0.55) {
-				targetTurn = 3;
-			}else {
-				targetTurn = 2;
-			}
-			
-		}
-		else if( startX-targetX==0 && startY-targetY<0 ) {//下运动
-			targetTurn = 4;
-		}
-		else if( startX-targetX>0 && startY-targetY<0 ) {//左下运动
-			
-			float deltaX = Math.abs(targetX-startX);
-			if((targetY-startY)/deltaX<0.45) {
-				targetTurn = 7;
-			}else if((targetY-startY)/deltaX>0.55) {
-				targetTurn = 5;
-			}else {
-				targetTurn = 6;
-			}
-		}
-		else if( startX-targetX>0 && startY-targetY==0 ) {//左运动
-			targetTurn = 8;
-		}
-		else if( startX-targetX>0 && startY-targetY>0 ) {//左上运动
-			
-			float deltaX = Math.abs(targetX-startX);
-			if((startY-targetY)/deltaX<0.45) {
-				targetTurn = 9;
-			}else if((startY-targetY)/deltaX>0.55) {
-				targetTurn = 11;
-			}else {
-				targetTurn = 10;
-			}
-		}
-		else if( startX-targetX==0 && startY-targetY>0 ) {//上运动
-			targetTurn = 12;
-		}
-		else if( startX-targetX<0 &&  startY-targetY>0 ) {//右上运动
-			float deltaX = Math.abs(targetX-startX);
-			if((startY-targetY)/deltaX<0.45) {
-				targetTurn = 15;
-			}else if((startY-targetY)/deltaX>0.55) {
-				targetTurn = 13;
-			}else {
-				targetTurn = 14;
-			}
-			
-		}else {
-			targetTurn = -1;//不需要旋转,使用时应该startCp与endCp不是一个点
-		}
+		int x = targetX - startX;
+		int y = targetY - startY;
 		
-		return targetTurn;
+		double maxDot = 0;//最大点积
+		int maxIndex = -1;//对应了方向
+		for(int i=0;i<32;i++) {
+			double dotValue = x*xtable[i]+(y*2)*ytable[i];
+			if(dotValue>0) {
+				if(dotValue>maxDot) {
+					maxDot = dotValue;
+					maxIndex = i;
+				}
+			}
+		}
+		return maxIndex;
 	}
 	
 }

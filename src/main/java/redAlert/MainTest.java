@@ -15,6 +15,7 @@ import redAlert.shapeObjects.Building.SceneType;
 import redAlert.shapeObjects.soldier.Sniper;
 import redAlert.shapeObjects.vehicle.GrizTank;
 import redAlert.shapeObjects.vehicle.Mcv;
+import redAlert.shapeObjects.vehicle.Sref;
 import redAlert.shapeObjects.vehicle.XiniuTank2;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utilBean.LittleCenterPoint;
@@ -200,9 +201,17 @@ public class MainTest {
 		GrizTank gtank = new GrizTank(64*2-64,32*3-64,UnitColor.Orange);
 		Constructor.putOneShapeUnit(gtank);//灰熊坦克
 //		
+		CenterPoint cc1 = PointUtil.getCenterPoint(450, 100);
+		XiniuTank2 xnTank = new XiniuTank2(cc1.getX()-64,cc1.getY()-64,UnitColor.Orange);
+		Constructor.putOneShapeUnit(xnTank);//犀牛坦克
+		
+//		CenterPoint cc = PointUtil.getCenterPoint(300, 100);
+//		Ifv xt2 = new Ifv(cc.getX()-64,cc.getY()-64,UnitColor.Orange);
+//		Constructor.putOneShapeUnit(xt2);//多功能步兵车
+		
 		CenterPoint cc = PointUtil.getCenterPoint(300, 100);
-		XiniuTank2 xt2 = new XiniuTank2(cc.getX()-64,cc.getY()-64,UnitColor.Orange);
-		Constructor.putOneShapeUnit(xt2);//犀牛坦克
+		Sref xt2 = new Sref(cc.getX()-64,cc.getY()-64,UnitColor.Orange);
+		Constructor.putOneShapeUnit(xt2);//光棱坦克
 		
 		Thread.sleep(1000);
 		

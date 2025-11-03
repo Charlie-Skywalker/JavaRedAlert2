@@ -53,7 +53,7 @@ public abstract class TankTurret implements Turnable{
 	public TankTurret(Vehicle vehicle,String vxlPrefix) {
 		this.vehicle = vehicle;
 		this.unitColor = vehicle.getUnitColor();
-		this.frames = VxlFileReader.convertPngFileToBuildingFrames(vxlPrefix,16,1,vehicle.getUnitColor());
+		this.frames = VxlFileReader.convertPngFileToBuildingFrames(vxlPrefix,32,1,vehicle.getUnitColor());
 		this.curTurn = vehicle.getCurTurn();
 		this.targetTurn = vehicle.getTargetTurn();
 		this.curFrame = frames.get(curTurn);
