@@ -117,8 +117,17 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 	public SceneType scene;
 	/**
 	 * SHP帧下标
+	 * 将frameIndex拆分为建造时和工作时  这样分工更明确
 	 */
-	public int frameIndex = 0;
+//	public int frameIndex = 0;
+	/**
+	 * 建造时shp帧下标
+	 */
+	public int constIndex = 0;
+	/**
+	 * 工作时shp帧下标
+	 */
+	public int workingIndex = 0;
 	/**
 	 * 血条对象
 	 */
@@ -240,22 +249,10 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 			super.end = true;
 		}
 		
-		if(stage==BuildingStage.UnderConstruct) {//建造动画
-//			frameIndex++;
-			if(frameIndex> (constructFrames.size()-1)) {
-				stage = BuildingStage.ConstructComplete;
-				frameIndex=0;
-				
-				//找到基地并展示夹箱子动画
-				if(!this.getClass().equals(AfCnst.class)) {
-					ShapeUnitResourceCenter.exeCnstFetchAni();
-				}
-				
-				
-				//....展示第一幅画面
-				calculateNextFrame();
-			}else {
-				ShapeUnitFrame constFrame = constructFrames.get(frameIndex);
+		if(this.stage==BuildingStage.UnderConstruct) {//建造动画
+			
+			if(constIndex<constructFrames.size()) {
+				ShapeUnitFrame constFrame = constructFrames.get(constIndex);
 				BufferedImage curImg = curFrame.getImg();
 				CanvasPainter.clearImage(curImg);
 				curFrame.setMinX(constFrame.getMinX());
@@ -270,8 +267,17 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 				giveFrameUnitColor(curImg,constFrame);//上阵营色
 				super.positionMinX = curFrame.getMinX()+positionX;
 				super.positionMinY = curFrame.getMinY()+positionY;
-				frameIndex++;
+				constIndex++;
+			}else {
+				this.stage = BuildingStage.ConstructComplete;
+				//找到基地并展示夹箱子动画
+				if(!this.getClass().equals(AfCnst.class)) {
+					ShapeUnitResourceCenter.exeCnstFetchAni();
+				}
+				//展示第一幅工作画面
+				calculateNextFrame();
 			}
+			
 		}else if(stage==BuildingStage.ConstructComplete) {//建设完成
 			
 			if(status==BuildingStatus.UNDEMAGED){
@@ -285,7 +291,7 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 				int maxY = 0;
 				for(int i=0;i<workingFrames.size();i++) {
 					List<ShapeUnitFrame> workingFrameLs = workingFrames.get(i);
-					ShapeUnitFrame frame = workingFrameLs.get( frameIndex%workingFrameLs.size());
+					ShapeUnitFrame frame = workingFrameLs.get(workingIndex%workingFrameLs.size());
 					BufferedImage oriImage = frame.getImg();
 					curG2d.drawImage(oriImage, 0, 0, null);
 					
@@ -319,7 +325,10 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 				curFrame.setMinY(minY);
 				curFrame.setMaxY(maxY);
 				if(ShapeUnitResourceCenter.isPowerOn || this.constConfig.lowPowerWorkable) {
-					frameIndex++;
+					workingIndex++;
+					if(workingIndex>=Integer.MAX_VALUE) {
+						workingIndex = 0;
+					}
 				}
 			}else if(status==BuildingStatus.DEMAGED){
 				BufferedImage curImg = curFrame.getImg();
@@ -332,7 +341,7 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 				int maxY = 0;
 				for(int i=0;i<damagedFrames.size();i++) {
 					List<ShapeUnitFrame> damagedFrameLs = damagedFrames.get(i);
-					ShapeUnitFrame frame = damagedFrameLs.get(frameIndex%damagedFrameLs.size());
+					ShapeUnitFrame frame = damagedFrameLs.get(workingIndex%damagedFrameLs.size());
 					BufferedImage oriImage = frame.getImg();
 					curG2d.drawImage(oriImage, 0, 0, null);
 					
@@ -366,14 +375,17 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 				curFrame.setMinY(minY);
 				curFrame.setMaxY(maxY);
 				if(ShapeUnitResourceCenter.isPowerOn || this.constConfig.lowPowerWorkable) {
-					frameIndex++;
+					workingIndex++;
+					if(workingIndex>=Integer.MAX_VALUE) {
+						workingIndex = 0;
+					}
 				}
 			}
 		}else if(stage==BuildingStage.Selling){//卖掉
-			if(frameIndex>=constructFrames.size()) {
-				frameIndex = constructFrames.size()-1;
+			if(constIndex>=constructFrames.size()) {
+				constIndex = constructFrames.size()-1;
 				
-				ShapeUnitFrame constFrame = constructFrames.get(frameIndex);
+				ShapeUnitFrame constFrame = constructFrames.get(constIndex);
 				BufferedImage curImg = curFrame.getImg();
 				CanvasPainter.clearImage(curImg);
 				curFrame.setMinX(constFrame.getMinX());
@@ -388,9 +400,9 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 				giveFrameUnitColor(curImg,constFrame);//上阵营色
 				super.positionMinX = curFrame.getMinX()+positionX;
 				super.positionMinY = curFrame.getMinY()+positionY;
-				frameIndex--;
-			}else if(frameIndex>=0 && frameIndex<constructFrames.size()) {
-				ShapeUnitFrame constFrame = constructFrames.get(frameIndex);
+				constIndex--;
+			}else if(constIndex>=0 && constIndex<constructFrames.size()) {
+				ShapeUnitFrame constFrame = constructFrames.get(constIndex);
 				BufferedImage curImg = curFrame.getImg();
 				CanvasPainter.clearImage(curImg);
 				curFrame.setMinX(constFrame.getMinX());
@@ -405,8 +417,8 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 				giveFrameUnitColor(curImg,constFrame);//上阵营色
 				super.positionMinX = curFrame.getMinX()+positionX;
 				super.positionMinY = curFrame.getMinY()+positionY;
-				frameIndex--;
-			}else if(frameIndex<0){
+				constIndex--;
+			}else if(constIndex<0){
 				Constructor.playOneMusic("ceva058");
 				this.end = true;
 				setVisible(false);

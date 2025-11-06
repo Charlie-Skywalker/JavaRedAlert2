@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import redAlert.enums.UnitColor;
 import redAlert.event.EventHandlerManager;
 import redAlert.militaryBuildings.AfPill;
+import redAlert.militaryBuildings.SfMisl;
 import redAlert.other.Mouse;
 import redAlert.other.Place;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
@@ -19,6 +20,7 @@ import redAlert.shapeObjects.vehicle.Sref;
 import redAlert.shapeObjects.vehicle.XiniuTank2;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utilBean.LittleCenterPoint;
+import redAlert.utils.LittleCenterPointUtil;
 import redAlert.utils.PointUtil;
 
 /**
@@ -145,20 +147,17 @@ public class MainTest {
 		
 		
 		//核弹打小人
-		/*
-		CenterPoint cp5 = PointUtil.getCenterPoint(500, 500);
-		Constructor.putOneShapeUnit(new Sniper(cp5.getX(),cp5.getY(),UnitColor.Red), scenePanel);//狙击手
+//		Constructor.putOneShapeUnit(new Sniper(LittleCenterPointUtil.getLittleCenterPoint(500, 500),UnitColor.Red));//狙击手
+//		CenterPoint cpMisl = PointUtil.getCenterPoint(100, 300);
+//		SfMisl mislSilo = new SfMisl(cpMisl,SceneType.TEM,UnitColor.Blue);
+//		Constructor.putOneBuilding(mislSilo);//苏军核弹井
+//		Thread.sleep(2000);
+//		Constructor.playOneMusic("ceva001");//warning nuclear silo detected
+//		Thread.sleep(3000);
+//		mislSilo.nuclearSiloExpand();//展开核弹井
+//		Thread.sleep(5000);
+//		mislSilo.nuclearSiloLaunch();//发射核弹
 		
-		CenterPoint cpMisl = PointUtil.getCenterPoint(100, 300);
-		SfMisl mislSilo = new SfMisl(cpMisl,SceneType.TEM,UnitColor.Blue);
-		Constructor.putOneBuilding(mislSilo,scenePanel);//苏军核弹井
-		Thread.sleep(2000);
-		Constructor.playOneMusic("ceva001");//warning nuclear silo detected
-		Thread.sleep(3000);
-		mislSilo.nuclearSiloExpand();//展开核弹井
-		Thread.sleep(5000);
-		mislSilo.nuclearSiloLaunch();//发射核弹
-		*/
 		
 		
 		//重工生产坦克和基洛夫

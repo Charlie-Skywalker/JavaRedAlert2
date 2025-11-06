@@ -151,19 +151,19 @@ public class SfMisl extends Building{
 	public void calculateNextFrame() {
 		
 		if(stage==BuildingStage.UnderConstruct) {
-			frameIndex++;
-			if(frameIndex> constructFrames.size()-1  ) {
+			
+			if(constIndex>constructFrames.size()-1) {
 				stage = BuildingStage.ConstructComplete;
-				frameIndex=0;
 				//....展示第一幅画面
 				calculateNextFrame();
 			}else {
-				curFrame = constructFrames.get(frameIndex);
+				curFrame = constructFrames.get(constIndex);
 				
 				ShapeUnitFrame newFrame = curFrame.copy();
 				BufferedImage image = newFrame.getImg();
 				giveFrameUnitColor(image,newFrame);//上阵营色
 				super.curFrame = newFrame;
+				constIndex++;
 			}
 		}else if(status==BuildingStatus.UNDEMAGED) {
 			if(nuclearSiloStatus==0) {//核弹井关闭状态
@@ -176,7 +176,7 @@ public class SfMisl extends Building{
 				int maxY = 0;
 				for(int i=0;i<workingFrames.size();i++) {
 					List<ShapeUnitFrame> workingFrameLs = workingFrames.get(i);
-					ShapeUnitFrame frame = workingFrameLs.get(frameIndex%workingFrameLs.size());
+					ShapeUnitFrame frame = workingFrameLs.get(workingIndex%workingFrameLs.size());
 					BufferedImage oriImage = frame.getImg();
 					for(int w=0;w<width;w++) {
 						for(int h=0;h<height;h++) {
@@ -216,7 +216,7 @@ public class SfMisl extends Building{
 				bf.setMinY(minY);
 				bf.setMaxY(maxY);
 				super.curFrame = bf;
-				frameIndex++;
+				workingIndex++;
 			}else if(nuclearSiloStatus==1){//需要展开的状态
 				int width = curFrame.getImg().getWidth();
 				int height = curFrame.getImg().getHeight();
@@ -434,7 +434,7 @@ public class SfMisl extends Building{
 			int maxY = 0;
 			for(int i=0;i<damagedFrames.size();i++) {
 				List<ShapeUnitFrame> ls = damagedFrames.get(i);
-				ShapeUnitFrame bf = ls.get(frameIndex%damagedFrames.size());
+				ShapeUnitFrame bf = ls.get(workingIndex%damagedFrames.size());
 				BufferedImage bi1 = bf.getImg();
 				for(int w=0;w<width;w++) {
 					for(int h=0;h<height;h++) {
@@ -471,7 +471,7 @@ public class SfMisl extends Building{
 			bf.setMinY(minY);
 			bf.setMaxY(maxY);
 			curFrame = bf;
-			frameIndex++;
+			workingIndex++;
 		}
 	}
 	
