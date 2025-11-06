@@ -58,7 +58,7 @@ public class PowerPanel extends JPanel{
 		singleBackground = side2.getSubimage(0, 0, width, side2.getHeight());//截取属于电力线背板的部分
 		
 		Graphics2D g2d =  background.createGraphics();
-		for(int i=0;i<12;i++) {
+		for(int i=0;i<OptionsPanel.side2Num;i++) {
 			g2d.drawImage(side2, 0, i*50, null);
 		}
 		g2d.dispose();
@@ -155,8 +155,10 @@ public class PowerPanel extends JPanel{
 		//计算电力线总个数
 		int total = powerGeneration/10;
 		//12个双人位 最多展示200格电力  2*12/3+48/3*12=200
-		if(total>200) {
-			total = 200;
+		//side2Num*2/3+side2Num*48/3是最大展示电力格数(3格电力像素表示10点电力)
+		int maxShowNum = OptionsPanel.side2Num*2/3+OptionsPanel.side2Num*48/3;
+		if(total>maxShowNum) {
+			total = maxShowNum;
 		}
 		
 		//计算红黄绿电力线个数

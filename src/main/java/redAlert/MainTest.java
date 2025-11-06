@@ -35,6 +35,7 @@ public class MainTest {
 		//程序窗口
 		JFrame jf = new JFrame("红色警戒");
 		
+		SysConfig.initSysConfig();//初始化系统参数
 		
 		//初始化鼠标指针形状图片
 		Mouse.initMouseCursor();
@@ -58,7 +59,8 @@ public class MainTest {
 		jf.setResizable(false);//不可调整大小
 		jf.setAlwaysOnTop(false);//不置顶
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jf.setLocationRelativeTo(null);//屏幕居中
+//		jf.setLocationRelativeTo(null);//屏幕居中
+		jf.setLocation( (SysConfig.screenWidth-SysConfig.frameWidth)/2 , (SysConfig.screenHeight-SysConfig.frameHeight)/2);
 		jf.setVisible(true);//JFrame默认不可见,设置为可见
 		jf.pack();
 		

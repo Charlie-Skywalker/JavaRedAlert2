@@ -10,7 +10,7 @@ public enum Country {
 	 * 苏军： 苏联、利比亚、古巴、伊拉克
 	 * 
 	 */
-	USA("美帝"),France("法鸡"),UK("英吉利"),Germany("德意志"),Korea("北朝鲜"),
+	USA("美帝"),France("法鸡"),UK("英吉利"),Germany("德意志"),Korea("南朝鲜"),
 	CCCP("苏联"),Libya("利比亚"),Iraq("伊拉克"),Cuba("古巴");
 	
 	public final String desc;

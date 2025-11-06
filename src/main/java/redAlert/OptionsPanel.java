@@ -47,7 +47,7 @@ public class OptionsPanel extends JPanel{
 	 * 选项卡页面宽高
 	 */
 	public static final int optionWidth = 168;
-	public static final int optionHeight = 900;
+	public static final int optionHeight = SysConfig.viewportHeight;
 	
 	public OptionsPanel() {
 		GameContext.optionPanel = this;
@@ -62,7 +62,7 @@ public class OptionsPanel extends JPanel{
 		tab00Label.setStateSelected();//默认主基按钮是选中的
 	}
 	
-	public BufferedImage top = null;//顶上的
+	public BufferedImage top = null;//顶板
 	public BufferedImage side1 = null;//大背板
 	public BufferedImage side2 = null;//双人位
 	public BufferedImage side3 = null;//下选板
@@ -99,9 +99,10 @@ public class OptionsPanel extends JPanel{
 		
 	}
 	
-	public static CreditsLabel creditsLabel;//钱
-	public static DiploLabel diploLabel;//顶端左按钮
-	public static OptLabel optLabel; //顶端右按钮
+	public static CreditsLabel creditsLabel;//钱板
+	public static JLabel topLabel;//顶板(放置两个系统按钮的板子)
+	public static DiploLabel diploLabel;//顶端左系统按钮
+	public static OptLabel optLabel; //顶端右系统按钮
 	public static RadarLabel radarLabel;//雷达图
 	public static RepairLabel repairLabel; //扳手
 	public static SellLabel sellLabel;  //卖基地
@@ -125,7 +126,7 @@ public class OptionsPanel extends JPanel{
 	 * 本身这个值应该是按照分辨率计算出来的
 	 * 但是现在来不及进行计算,先固定写死
 	 */
-	public static final int side2Num = 12;
+	public static int side2Num = 12;
 	
 	/**
 	 * 初始化选项卡
@@ -141,7 +142,7 @@ public class OptionsPanel extends JPanel{
 		creditsLabel = new CreditsLabel();
 		add(creditsLabel);
 		//两个系统按钮的背板
-		JLabel topLabel = new JLabel();
+		topLabel = new JLabel();
 		topLabel.setBounds(0,16,top.getWidth(), top.getHeight());
 		Icon topIcon = new ImageIcon(top);
 		topLabel.setOpaque(true);

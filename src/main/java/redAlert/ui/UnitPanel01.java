@@ -89,7 +89,7 @@ public class UnitPanel01 extends JPanel{
 			}
 		}
 		
-		int supEmptyItem1 = 12-unit01LabelLs.size()/2-unit01LabelLs.size()%2;
+		int supEmptyItem1 = OptionsPanel.side2Num - unit01LabelLs.size()/2-unit01LabelLs.size()%2;
 		//补足多个空白双人位
 		for(int i=0;i<supEmptyItem1;i++) {
 			//新建一个双人位
@@ -152,7 +152,7 @@ public class UnitPanel01 extends JPanel{
 			}
 		}
 		
-		int supEmptyItem1 = 12-unit01LabelLs.size()/2-unit01LabelLs.size()%2;
+		int supEmptyItem1 = OptionsPanel.side2Num - unit01LabelLs.size()/2-unit01LabelLs.size()%2;
 		//补足多个空白双人位
 		for(int i=0;i<supEmptyItem1;i++) {
 			//新建一个双人位
