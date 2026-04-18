@@ -36,7 +36,6 @@ public class Tab00Label extends JLabel{
 	public static Icon icon4;//未选中时的暗
 	public static Icon icon5;//未选中时的亮
 	
-	
 	public Tab00Label mySelf;
 	
 	public Tab00Label() {
@@ -47,10 +46,10 @@ public class Tab00Label extends JLabel{
 		icon4 = new ImageIcon(tab00Frame.get(3).getImg());
 		icon5 = new ImageIcon(tab00Frame.get(4).getImg());
 		this.setBounds(26,38,icon1.getIconWidth(), icon1.getIconHeight());
-		this.setOpaque(true);
+		this.setOpaque(false);//因为图标只显示背景图片,可以设置成透明的,解决出现顶部白线问题
 		this.setIcon(icon2);
-		addEvent();
 		
+		addEvent();
 		mySelf = this;
 		addTimer();
 	}

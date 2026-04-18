@@ -43,9 +43,8 @@ public class Tab01Label extends JLabel{
 		icon3 = new ImageIcon(tab01Frame.get(2).getImg());
 		icon4 = new ImageIcon(tab01Frame.get(3).getImg());
 		icon5 = new ImageIcon(tab01Frame.get(4).getImg());
-		
 		this.setBounds(26+28+1,38,icon1.getIconWidth(), icon1.getIconHeight());
-		this.setOpaque(true);
+		this.setOpaque(false);//因为图标只显示背景图片,可以设置成透明的,解决出现顶部白线问题
 		this.setIcon(icon1);
 		
 		addEvent();

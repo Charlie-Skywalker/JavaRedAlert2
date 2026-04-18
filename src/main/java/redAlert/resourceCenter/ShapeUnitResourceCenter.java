@@ -35,7 +35,6 @@ import redAlert.utilBean.CenterPoint;
 import redAlert.utilBean.LittleCenterPoint;
 import redAlert.utils.LittleCenterPointUtil;
 import redAlert.utils.PointUtil;
-import redAlert.utils.RandomUtil;
 
 /**
  * 管理地图上资源的类

@@ -21,8 +21,8 @@ import redAlert.resourceCenter.ShpResourceCenter;
  * 兵按钮
  */
 public class Tab02Label extends JLabel{
+	
 	private static final long serialVersionUID = 1L;
-
 	
 	/**
 	 * 选中时展示icon1   未选中时展示icon2
@@ -45,7 +45,7 @@ public class Tab02Label extends JLabel{
 		icon4 = new ImageIcon(tab02Frame.get(3).getImg());
 		icon5 = new ImageIcon(tab02Frame.get(4).getImg());
 		this.setBounds(26+28+1+28+1,38,icon1.getIconWidth(), icon1.getIconWidth());
-		this.setOpaque(true);
+		this.setOpaque(false);//因为图标只显示背景图片,可以设置成透明的,解决出现顶部白线问题
 		this.setIcon(icon1);
 		
 		addEvent();
@@ -103,11 +103,18 @@ public class Tab02Label extends JLabel{
 				//判断是否有兵营(不分阵营)
 				if(!ShapeUnitResourceCenter.containsBuildingClass(AfPile.class)) {
 					mySelf.setIcon(icon3);
+//					mySelf.repaint();
 				}else {
 					if(isSelected) {
-						mySelf.setIcon(icon2);
+						if(!mySelf.getIcon().equals(icon2)) {
+							mySelf.setIcon(icon2);
+							mySelf.repaint();
+						}
 					}else {
-						mySelf.setIcon(icon1);
+						if(!mySelf.getIcon().equals(icon1)) {//重复设置会有一条白线的Bug
+							mySelf.setIcon(icon1);
+							mySelf.repaint();
+						}
 					}
 				}
 			}
