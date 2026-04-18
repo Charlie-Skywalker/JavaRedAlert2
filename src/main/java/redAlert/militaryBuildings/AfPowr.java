@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import redAlert.enums.ConstConfig;
+import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
 import redAlert.shapeObjects.Building;
 import redAlert.shapeObjects.PowerPlant;

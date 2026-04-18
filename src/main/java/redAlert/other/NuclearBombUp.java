@@ -5,9 +5,9 @@ import java.util.Random;
 
 import redAlert.Constructor;
 import redAlert.ShapeUnitFrame;
+import redAlert.enums.SceneType;
 import redAlert.militaryBuildings.SfMisl;
 import redAlert.resourceCenter.ShpResourceCenter;
-import redAlert.shapeObjects.Building.SceneType;
 import redAlert.shapeObjects.ShapeUnit;
 
 /**

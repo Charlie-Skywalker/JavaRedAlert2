@@ -40,6 +40,12 @@ public class ConstConfig {
 	public static ConstConfig SfPsis;public static ConstConfig SfIron;
 	public static ConstConfig SfMisl;
 	
+	/**
+	 * 民用建筑物
+	 */
+	public static ConstConfig CityNewy10;
+	
+	
 	static {
 		AfCnst = new ConstConfig("盟军建造场",4,4,3000,"",3000,0,true);
 		AfPowr = new ConstConfig("发电厂",2,2,800,"powricon",1500,0,true);
@@ -81,6 +87,8 @@ public class ConstConfig {
 		SfPsis = new ConstConfig("心灵探测器",2,2,1000,"psisicon",1500,50,false);
 		SfIron = new ConstConfig("铁幕装置",3,3,2500,"ironicon",2200,200,false);
 		SfMisl = new ConstConfig("核弹发射井",3,3,5000,"msslicon",2200,200,false);
+		
+		CityNewy10 = new ConstConfig("建筑物",2,3,0,"",1500,0,true);
 	}
 	
 	

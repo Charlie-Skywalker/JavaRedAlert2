@@ -6,6 +6,7 @@ import java.util.Random;
 
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.ConstConfig;
+import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
 import redAlert.resourceCenter.ShpResourceCenter;
 import redAlert.shapeObjects.Building;

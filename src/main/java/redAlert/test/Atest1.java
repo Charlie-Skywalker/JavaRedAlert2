@@ -149,5 +149,11 @@ public class Atest1 {
 		long b = al<<32;
 		
 		System.out.println(b);
+		
+		List<String> list = new ArrayList();
+		list.add("a");
+		list.add("b");
+		System.out.println(list.subList(0, 1));
+		System.out.println(list.subList(1, 2));
 	}
 }

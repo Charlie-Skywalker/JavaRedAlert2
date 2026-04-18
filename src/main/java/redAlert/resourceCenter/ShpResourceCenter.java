@@ -3,7 +3,6 @@ package redAlert.resourceCenter;
 import java.io.File;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.io.FileUtils;
 
 import redAlert.ShapeUnitFrame;
-import redAlert.shapeObjects.Building.SceneType;
+import redAlert.enums.SceneType;
 import redAlert.utils.ShpFileReader;
 
 /**

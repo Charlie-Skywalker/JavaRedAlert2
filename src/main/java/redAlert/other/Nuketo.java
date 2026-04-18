@@ -4,10 +4,9 @@ import java.util.List;
 import java.util.Random;
 
 import redAlert.ShapeUnitFrame;
+import redAlert.enums.SceneType;
 import redAlert.resourceCenter.ShpResourceCenter;
 import redAlert.shapeObjects.ShapeUnit;
-import redAlert.shapeObjects.Building.SceneType;
-import redAlert.utils.ShpFileReader;
 
 /**
  * 发射瞬间喷射火焰

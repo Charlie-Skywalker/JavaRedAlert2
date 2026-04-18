@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import redAlert.ShapeUnitFrame;
+import redAlert.enums.SceneType;
 import redAlert.other.OneDamage;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
 import redAlert.resourceCenter.ShpResourceCenter;
-import redAlert.shapeObjects.Attackable;
 import redAlert.shapeObjects.Building;
-import redAlert.shapeObjects.Building.SceneType;
 import redAlert.shapeObjects.ShapeUnit;
 import redAlert.shapeObjects.Vehicle;
 import redAlert.utilBean.CenterPoint;

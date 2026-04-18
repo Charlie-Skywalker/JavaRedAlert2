@@ -5,14 +5,14 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import redAlert.civilBuilding.CityNewy10;
+import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
 import redAlert.event.EventHandlerManager;
 import redAlert.militaryBuildings.AfPill;
-import redAlert.militaryBuildings.SfMisl;
 import redAlert.other.Mouse;
 import redAlert.other.Place;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
-import redAlert.shapeObjects.Building.SceneType;
 import redAlert.shapeObjects.soldier.Sniper;
 import redAlert.shapeObjects.vehicle.GrizTank;
 import redAlert.shapeObjects.vehicle.Mcv;
@@ -20,7 +20,6 @@ import redAlert.shapeObjects.vehicle.Sref;
 import redAlert.shapeObjects.vehicle.XiniuTank2;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utilBean.LittleCenterPoint;
-import redAlert.utils.LittleCenterPointUtil;
 import redAlert.utils.PointUtil;
 
 /**
@@ -128,6 +127,11 @@ public class MainTest {
 		CenterPoint cp2222 = PointUtil.getCenterPoint(200, 550);
 		AfPill targetPill2 = new AfPill(cp2222,SceneType.TEM,UnitColor.Red);
 		Constructor.putOneBuilding(targetPill2);//机枪碉堡
+		
+		CenterPoint cp3333 = PointUtil.getCenterPoint(500, 550);
+		CityNewy10 build = new CityNewy10(cp3333,SceneType.TEM,UnitColor.Red);
+		Constructor.putOneBuilding(build);//民用建筑
+		
 //		Thread.sleep(time);
 //		Constructor.putOneBuilding(new AfSam(SceneType.TEM,UnitColor.LightBlue,550,550),scenePanel);//爱国者飞弹
 //		Thread.sleep(time);

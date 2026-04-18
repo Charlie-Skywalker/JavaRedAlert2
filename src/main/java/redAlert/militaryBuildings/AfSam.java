@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import redAlert.Constructor;
-import redAlert.GameContext;
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.ConstConfig;
+import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
 import redAlert.other.BuildingBloodBar;
 import redAlert.other.BuildingBone;

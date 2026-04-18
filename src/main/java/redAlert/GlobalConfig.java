@@ -1,8 +1,8 @@
 package redAlert;
 
 import redAlert.enums.Country;
+import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
-import redAlert.shapeObjects.Building.SceneType;
 
 /**
  * 对于玩家来说的全局配置

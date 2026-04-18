@@ -7,6 +7,7 @@ import java.util.List;
 import redAlert.Constructor;
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.ConstConfig;
+import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
 import redAlert.other.NuclearBombDown;
 import redAlert.other.NuclearBombUp;

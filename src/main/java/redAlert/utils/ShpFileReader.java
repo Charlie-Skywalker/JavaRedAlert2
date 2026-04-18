@@ -10,8 +10,8 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import redAlert.ShapeUnitFrame;
+import redAlert.enums.SceneType;
 import redAlert.resourceCenter.ShpResourceCenter;
-import redAlert.shapeObjects.Building.SceneType;
 import redAlert.utilBean.ColorPoint;
 
 /**

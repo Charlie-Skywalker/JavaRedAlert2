@@ -11,6 +11,7 @@ import redAlert.Constructor;
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.BuildingAreaType;
 import redAlert.enums.ConstConfig;
+import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
 import redAlert.militaryBuildings.AfCnst;
 import redAlert.other.BloodBar;
@@ -28,25 +29,7 @@ import redAlert.utils.PointUtil;
  */
 public abstract class Building extends ShapeUnit implements Bloodable{
 	
-	/**
-	 * 建筑风格
-	 */
-	public enum SceneType{
-		URBAN("城市","uniturb"),SNOW("雪地","unitsno"),TEM("野外","unittem"),ANIM("动画","anim");
-		
-		private final String cnDesc;
-		private final String palPrefix;
-		SceneType(String cnDesc,String palPrefix){
-			this.cnDesc = cnDesc;
-			this.palPrefix = palPrefix;
-		}
-		public String getCnDesc() {
-			return cnDesc;
-		}
-		public String getPalPrefix() {
-			return palPrefix;
-		}
-	}
+	
 	
 	/**
 	 * 建筑状态
@@ -189,7 +172,7 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 	/**
 	 * 通过shp的中心点原理计算centerOffX和centerOffY
 	 */
-	private void setCenterOffXY(List <ShapeUnitFrame> constructFrames) {
+	public void setCenterOffXY(List <ShapeUnitFrame> constructFrames) {
 		Point imgCenter = constructFrames.get(0).getCenterCoord();
 		if(constConfig.fxNum==2 && constConfig.fyNum==2) {
 			setCenterOffX(imgCenter.x);
