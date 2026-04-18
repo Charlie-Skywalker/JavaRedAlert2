@@ -34,17 +34,17 @@ public class AfOrep extends Building{
 	public void initShpSource(SceneType sceneType) {
 		super.constConfig = ConstConfig.AfOrep;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggorep");
 			super.aniShpPrefixLs.add("ggorep_a");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggorep");
 			super.aniShpPrefixLs.add("ggorep_a");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + snoMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gaorep");
 			super.aniShpPrefixLs.add("gaorep_a");
 		}

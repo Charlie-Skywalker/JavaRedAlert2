@@ -46,17 +46,17 @@ public class AfCnst extends Building{
 		super.constConfig = ConstConfig.AfCnst;
 		super.height = 70;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark()  + basicName + "mk";
 			super.aniShpPrefixLs.add("ggcnst");
 			super.aniShpPrefixLs.add("ggcnst_a");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark()  + basicName + "mk";
 			super.aniShpPrefixLs.add("ggcnst");
 			super.aniShpPrefixLs.add("ggcnst_a");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + snoMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark()  + basicName + "mk";
 			super.aniShpPrefixLs.add("gacnst");
 			super.aniShpPrefixLs.add("gacnst_a");
 		}

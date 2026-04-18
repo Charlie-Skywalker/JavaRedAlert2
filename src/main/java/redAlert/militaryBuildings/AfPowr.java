@@ -41,17 +41,17 @@ public class AfPowr extends Building implements PowerPlant{
 		super.constConfig = ConstConfig.AfPowr;
 		
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggpowr");
 			super.aniShpPrefixLs.add("ggpowr_a");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggpowr");
 			super.aniShpPrefixLs.add("ggpowr_a");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + snoMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gapowr");
 			super.aniShpPrefixLs.add("gapowr_a");
 		}

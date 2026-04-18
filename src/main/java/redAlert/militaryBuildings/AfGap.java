@@ -33,15 +33,15 @@ public class AfGap extends Building{
 	public void initShpSource(SceneType sceneType) {
 		super.constConfig = ConstConfig.AfGap;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gggap");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gggap");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + snoMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gagap");
 		}
 	}

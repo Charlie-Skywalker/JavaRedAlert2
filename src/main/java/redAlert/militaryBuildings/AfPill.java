@@ -35,15 +35,15 @@ public class AfPill extends Building{
 		super.constConfig = ConstConfig.AfPill;
 		super.height = 20;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggpill");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggpill");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + snoMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gapill");
 		}
 		//定义显示名称

@@ -10,6 +10,7 @@ import java.util.List;
 import redAlert.Constructor;
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.BuildingAreaType;
+import redAlert.enums.BuildingStatus;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
@@ -31,17 +32,7 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 	
 	
 	
-	/**
-	 * 建筑状态
-	 */
-	public enum BuildingStatus{
-		DEMAGED("受损"),UNDEMAGED("完好");
-		private final String cnDesc;
-		
-		BuildingStatus(String cnDesc){
-			this.cnDesc = cnDesc;
-		}
-	}
+	
 	/**
 	 * 建设阶段
 	 */
@@ -59,9 +50,9 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 	 * 建造名称的规律
 	 * ga**mk gt**mk gu**mk
 	 */
-	public String snoMark = "a";
-	public String temMark = "t";
-	public String urbMark = "u";
+	//public String snoMark = "a";
+	//public String temMark = "t";
+	//public String urbMark = "u";
 	
 	/**
 	 * 建造动画SHP文件前缀

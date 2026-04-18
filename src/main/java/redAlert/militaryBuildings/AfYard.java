@@ -35,19 +35,19 @@ public class AfYard extends Building{
 		super.constConfig = ConstConfig.AfYard;
 		super.height = 130;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggyard");
 			super.aniShpPrefixLs.add("ggyard_c");
 			super.aniShpPrefixLs.add("ggyard_d");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggyard");
 			super.aniShpPrefixLs.add("ggyard_c");
 			super.aniShpPrefixLs.add("ggyard_d");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + snoMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gayard");
 			super.aniShpPrefixLs.add("ggyard_c");
 			super.aniShpPrefixLs.add("ggyard_d");

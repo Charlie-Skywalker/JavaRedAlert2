@@ -37,7 +37,7 @@ public class AfAirc extends Building{
 		super.constConfig = ConstConfig.AfAirc;
 		super.height = 100;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggairc");
 			super.aniShpPrefixLs.add("ggairc_c");
 			super.aniShpPrefixLs.add("ggaircbb");
@@ -45,7 +45,7 @@ public class AfAirc extends Building{
 			super.aniShpPrefixLs.add("ggairc_a");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark()  + basicName + "mk";
 			super.aniShpPrefixLs.add("ggairc");
 			super.aniShpPrefixLs.add("ggairc_c");
 			super.aniShpPrefixLs.add("ggaircbb");
@@ -53,7 +53,7 @@ public class AfAirc extends Building{
 			super.aniShpPrefixLs.add("ggairc_a");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + snoMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark()  + basicName + "mk";
 			super.aniShpPrefixLs.add("gaairc");
 			super.aniShpPrefixLs.add("gaairc_c");
 			super.aniShpPrefixLs.add("gaaircbb");

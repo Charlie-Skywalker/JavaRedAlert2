@@ -36,7 +36,7 @@ public class AfRefn extends Building{
 		super.constConfig = ConstConfig.AfRefn;
 		
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggrefn");
 			super.aniShpPrefixLs.add("ggrefnbb");
 			super.aniShpPrefixLs.add("ggrefnl3");
@@ -44,7 +44,7 @@ public class AfRefn extends Building{
 			super.aniShpPrefixLs.add("ggrefnl1");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggrefn");
 			super.aniShpPrefixLs.add("ggrefnbb");
 			super.aniShpPrefixLs.add("ggrefnl3");
@@ -52,7 +52,7 @@ public class AfRefn extends Building{
 			super.aniShpPrefixLs.add("ggrefnl1");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + snoMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("garefn");
 			super.aniShpPrefixLs.add("garefnbb");
 			super.aniShpPrefixLs.add("garefnl3");

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import redAlert.ShapeUnitFrame;
+import redAlert.enums.BuildingStatus;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
 import redAlert.resourceCenter.ShpResourceCenter;
@@ -64,12 +65,12 @@ public class AfComm extends Building{
 		super.unitName = "comm";
 	}
 	
-	public AfComm(int positionX,int positionY,SceneType scene,UnitColor unitColor) {
+	public AfComm(int positionX,int positionY,SceneType sceneType,UnitColor unitColor) {
 		if(scene==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark()  + basicName + "mk";
 		}
 		if(scene==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark()  + basicName + "mk";
 		}
 		
 		super.constructFrames = ShpResourceCenter.loadShpResource(constShpFilePrefix, scene.getPalPrefix());
@@ -106,10 +107,10 @@ public class AfComm extends Building{
 		setCenterOffX(10);
 		setCenterOffY(10);
 		if(scene==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 		}
 		if(scene==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 		}
 	}
 	

@@ -5,6 +5,7 @@ import java.util.List;
 
 import redAlert.Constructor;
 import redAlert.ShapeUnitFrame;
+import redAlert.enums.BuildingStatus;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
@@ -26,9 +27,9 @@ public class CityNewy10 extends Building{
 	 */
 	public String basicName = "newy10";
 	/**
-	 * 阵营 城市建筑
+	 * 阵营：城市建筑
 	 */
-	public String team = "c";
+	public String teamMark = "c";
 	
 	public CityNewy10(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
 		initShpSource(sceneType);
@@ -80,15 +81,15 @@ public class CityNewy10 extends Building{
 		super.constConfig = ConstConfig.CityNewy10;
 		super.height = 200;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName;
+			super.constShpFilePrefix = teamMark + sceneType.getSceneMark() + basicName;
 			super.aniShpPrefixLs.add("ctnewy10");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName;
+			super.constShpFilePrefix = teamMark + sceneType.getSceneMark() + basicName;
 			super.aniShpPrefixLs.add("ctnewy10");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + snoMark + basicName;
+			super.constShpFilePrefix = teamMark + sceneType.getSceneMark() + basicName;
 			super.aniShpPrefixLs.add("canewy10");
 		}
 	}

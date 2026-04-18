@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import redAlert.ShapeUnitFrame;
+import redAlert.enums.BuildingStatus;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
@@ -68,15 +69,15 @@ public class AfGcan extends Building{
 	public void initShpSource(SceneType sceneType) {
 		super.constConfig = ConstConfig.AfGcan;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gggcan");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gggcan");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + snoMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gagcan");
 		}
 	}

@@ -35,19 +35,19 @@ public class AfDept extends Building{
 		super.constConfig = ConstConfig.AfDept;
 		super.height = 40;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggdept");
 			super.aniShpPrefixLs.add("ggdeptbb");
 			super.aniShpPrefixLs.add("ggdept_d");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggdept");
 			super.aniShpPrefixLs.add("ggdeptbb");
 			super.aniShpPrefixLs.add("ggdept_d");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + snoMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gadept");
 			super.aniShpPrefixLs.add("gadeptbb");
 			super.aniShpPrefixLs.add("gadept_d");

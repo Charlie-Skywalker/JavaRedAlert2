@@ -36,17 +36,17 @@ public class AfCsph extends Building{
 	public void initShpSource(SceneType sceneType) {
 		super.constConfig = ConstConfig.AfCsph;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggcsph");
 			super.aniShpPrefixLs.add("ggcsph_e");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggcsph");
 			super.aniShpPrefixLs.add("ggcsph_e");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + snoMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gacsph");
 			super.aniShpPrefixLs.add("gacsph_e");
 		}

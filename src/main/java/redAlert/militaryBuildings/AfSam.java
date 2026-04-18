@@ -5,6 +5,7 @@ import java.util.List;
 
 import redAlert.Constructor;
 import redAlert.ShapeUnitFrame;
+import redAlert.enums.BuildingStatus;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
@@ -78,7 +79,7 @@ public class AfSam extends Building{
 		setCenterOffX(50);
 		setCenterOffY(50);
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + temMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggairc");
 			super.aniShpPrefixLs.add("ggairc_c");
 			super.aniShpPrefixLs.add("ggaircbb");
@@ -86,7 +87,7 @@ public class AfSam extends Building{
 			super.aniShpPrefixLs.add("ggairc_a");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + urbMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggairc");
 			super.aniShpPrefixLs.add("ggairc_c");
 			super.aniShpPrefixLs.add("ggaircbb");
@@ -94,7 +95,7 @@ public class AfSam extends Building{
 			super.aniShpPrefixLs.add("ggairc_a");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + snoMark + basicName + "mk";
+			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gaairc");
 			super.aniShpPrefixLs.add("gaairc_c");
 			super.aniShpPrefixLs.add("gaaircbb");
