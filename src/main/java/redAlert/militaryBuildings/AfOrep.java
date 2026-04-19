@@ -6,24 +6,17 @@ import java.util.List;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.MilitaryBuilding;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
 /**
  * 盟军矿石精炼厂
  */
-public class AfOrep extends Building{
-	/**
-	 * shp文件基础名
-	 */
-	public String basicName = "orep";
-	/**
-	 * 阵营 盟军
-	 */
-	public String team = "g";
+public class AfOrep extends MilitaryBuilding{
 	
 	public AfOrep(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.AfOrep);
 		initShpSource(sceneType);
 		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
@@ -32,19 +25,15 @@ public class AfOrep extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstConfig.AfOrep;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggorep");
 			super.aniShpPrefixLs.add("ggorep_a");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggorep");
 			super.aniShpPrefixLs.add("ggorep_a");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gaorep");
 			super.aniShpPrefixLs.add("gaorep_a");
 		}

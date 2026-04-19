@@ -80,6 +80,12 @@ public class ShpResourceCenter {
 	private static List<ShapeUnitFrame> addToCache(String shpPrefix,String palPrefix,List<ShapeUnitFrame> frames){
 		return shpCache.put(shpPrefix+"__"+palPrefix, frames);
 	}
+	/**
+	 * 将shp帧数据移出缓存
+	 */
+	public static List<ShapeUnitFrame> removeCache(String shpPrefix,String palPrefix){
+		return shpCache.remove(shpPrefix+"__"+palPrefix);
+	}
 	
 	/**
 	 * 加载SHP文件的工作由此类来完成,避免重复加载资源

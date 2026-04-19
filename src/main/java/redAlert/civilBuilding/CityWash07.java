@@ -3,17 +3,10 @@ package redAlert.civilBuilding;
 import java.util.ArrayList;
 import java.util.List;
 
-import redAlert.Constructor;
-import redAlert.ShapeUnitFrame;
-import redAlert.enums.BuildingStatus;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
-import redAlert.other.BuildingBloodBar;
-import redAlert.other.BuildingBone;
-import redAlert.resourceCenter.ShpResourceCenter;
 import redAlert.shapeObjects.building.CivilBuilding;
-import redAlert.shapeObjects.building.MilitaryBuilding.BuildingStage;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
@@ -21,10 +14,10 @@ import redAlert.utils.PointUtil;
  * 美国电报电话大厦(原AT&T总部大楼)
  * 
  */
-public class CityNewy10 extends CivilBuilding{
-	
-	public CityNewy10(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
-		super(sceneType,ConstConfig.CityNewy10);
+public class CityWash07 extends CivilBuilding{
+
+	public CityWash07(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.CityWash07);
 		initShpSource(sceneType);
 		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
@@ -33,7 +26,7 @@ public class CityNewy10 extends CivilBuilding{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.height = 200;
+		super.height = 115;
 	}
 	
 	@Override
@@ -43,11 +36,15 @@ public class CityNewy10 extends CivilBuilding{
 		List<CenterPoint> result = new ArrayList<>();
 		CenterPoint center = PointUtil.getCenterPoint(centerX, centerY);
 		result.add(center);
-		result.add(center.getLeftUp());
 		result.add(center.getLeft());
 		result.add(center.getLeftDn());
 		result.add(center.getDn());
 		result.add(center.getRightDn());
+		result.add(center.getRight());
+		result.add(center.getRightUp());
+		result.add(center.getUp());
+		result.add(center.getLeftUp());
+		
 		return result;
 	}
 
@@ -55,5 +52,4 @@ public class CityNewy10 extends CivilBuilding{
 	public List<CenterPoint> getNoVehicleCpList() {
 		return getNoConstCpList();
 	}
-
 }

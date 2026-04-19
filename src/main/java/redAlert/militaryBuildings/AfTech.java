@@ -6,24 +6,17 @@ import java.util.List;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.MilitaryBuilding;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
 /**
  * 盟军作战实验室
  */
-public class AfTech extends Building{
-	/**
-	 * shp文件基础名
-	 */
-	public String basicName = "tech";
-	/**
-	 * 阵营 盟军
-	 */
-	public String team = "g";
+public class AfTech extends MilitaryBuilding{
 	
 	public AfTech(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.AfTech);
 		initShpSource(sceneType);
 		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
@@ -32,21 +25,17 @@ public class AfTech extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstConfig.AfTech;
 		super.height = 190;
 		
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggtech");
 			super.aniShpPrefixLs.add("ggtech_a");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggtech");
 			super.aniShpPrefixLs.add("ggtech_a");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gatech");
 			super.aniShpPrefixLs.add("gatech_a");
 		}

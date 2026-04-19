@@ -3,13 +3,11 @@ package redAlert.utilBean;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
-import redAlert.GameContext;
-import redAlert.MainPanel;
 import redAlert.RuntimeParameter;
 import redAlert.militaryBuildings.AfWeap;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
-import redAlert.shapeObjects.Building;
 import redAlert.shapeObjects.ShapeUnit;
+import redAlert.shapeObjects.building.Building;
 
 /**
  * 方块(ShapeUnit)帧计算线程

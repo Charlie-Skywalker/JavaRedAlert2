@@ -5,13 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import redAlert.Constructor;
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.BuildingStatus;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
+import redAlert.other.BuildingBloodBar;
+import redAlert.other.BuildingBone;
 import redAlert.resourceCenter.ShpResourceCenter;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.Building;
+import redAlert.shapeObjects.building.MilitaryBuilding;
+import redAlert.shapeObjects.building.MilitaryBuilding.BuildingStage;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
@@ -19,7 +24,7 @@ import redAlert.utils.PointUtil;
  * 盟军 建设工厂
  *
  */
-public class AfWeap extends Building{
+public class AfWeap extends MilitaryBuilding{
 	/**
 	 * 有坦克生产时需要的SHP图
 	 */
@@ -62,15 +67,7 @@ public class AfWeap extends Building{
 	public List<Building> tankChaifen() {
 		List<Building> chaifenLs = new ArrayList<>();
 		
-		AfWeap afweap1 = new AfWeap();//工厂身体部分
-		afweap1.setScene(this.scene);
-		afweap1.setPositionX(this.positionX);
-		afweap1.setPositionY(this.positionY);
-		afweap1.setStatus(this.status);
-		afweap1.setStage(this.stage);
-		afweap1.setPriority(40);//设置优先级  这行代码很重要  afweap2的优先级应低于战车
-		afweap1.setPartOfWeap(true);
-		afweap1.setMakingVehicle(true);
+		AfWeap afweap1 = getInstanceWithoutLoadShp(40,true,false);//工厂的基座部分  //设置优先级  这行代码很重要  afweap1的优先级应高于战车
 		afweap1.setUnitNo(new Random().nextInt());
 		afweap1.setUnitName("weapPart1");
 		
@@ -178,15 +175,7 @@ public class AfWeap extends Building{
 		
 		
 		
-		AfWeap afweap2 = new AfWeap();//工厂的顶棚部分
-		afweap2.setScene(this.scene);
-		afweap2.setPositionX(this.positionX);
-		afweap2.setPositionY(this.positionY);
-		afweap2.setStatus(this.status);
-		afweap2.setStage(this.stage);
-		afweap2.setPriority(60);//设置优先级  这行代码很重要  afweap2的优先级应低于战车
-		afweap2.setPartOfWeap(true);
-		afweap2.setMakingVehicle(true);
+		AfWeap afweap2 = getInstanceWithoutLoadShp(60,true,false);//工厂的顶棚部分  //设置优先级  这行代码很重要  afweap2的优先级应低于战车
 		afweap2.setUnitNo(new Random().nextInt());
 		afweap2.setUnitName("weapPart2");
 		
@@ -305,15 +294,7 @@ public class AfWeap extends Building{
 	public List<Building> flyChaifen() {
 		List<Building> chaifenLs = new ArrayList<>();
 		
-		AfWeap afweap1 = new AfWeap();//工厂的一部分
-		afweap1.setScene(this.scene);
-		afweap1.setPositionX(this.positionX);
-		afweap1.setPositionY(this.positionY);
-		afweap1.setStatus(this.status);
-		afweap1.setStage(this.stage);
-		afweap1.setPriority(40);//设置优先级  这行代码很重要  afweap2的优先级应低于飞行物
-		afweap1.setPartOfWeap(true);
-		afweap1.setMakingVehicle(true);
+		AfWeap afweap1 = getInstanceWithoutLoadShp(40,true,false);//工厂的基座部分  //设置优先级  这行代码很重要  afweap1的优先级应高于飞行物
 		afweap1.setUnitNo(new Random().nextInt());
 		afweap1.setUnitName("weapPart1");
 		
@@ -421,15 +402,7 @@ public class AfWeap extends Building{
 		
 		
 		
-		AfWeap afweap2 = new AfWeap();//工厂的一部分
-		afweap2.setScene(this.scene);
-		afweap2.setPositionX(this.positionX);
-		afweap2.setPositionY(this.positionY);
-		afweap2.setStatus(this.status);
-		afweap2.setStage(this.stage);
-		afweap2.setPriority(60);//设置优先级  这行代码很重要  afweap2的优先级应低于战车
-		afweap2.setPartOfWeap(true);
-		afweap2.setMakingVehicle(true);
+		AfWeap afweap2 = getInstanceWithoutLoadShp(60,false,true);//工厂的顶棚部分  //设置优先级  这行代码很重要  afweap1的优先级应低于飞行物
 		afweap2.setUnitNo(new Random().nextInt());
 		afweap2.setUnitName("weapPart2");
 		
@@ -542,18 +515,47 @@ public class AfWeap extends Building{
 	public AfWeap() {
 		
 	}
+	
 	/**
-	 * shp文件基础名
+	 * 获取一个AfWeap对象  但是不再重新加载资源
+	 * @return
 	 */
-	public String basicName = "weap";
-	/**
-	 * 阵营 盟军
-	 */
-	public String team = "g";
+	public AfWeap getInstanceWithoutLoadShp(int priority,boolean isMakingVehicle,boolean isMakingFly) {
+		AfWeap afWeap = new AfWeap();
+		afWeap.sceneType = super.sceneType;
+		afWeap.constConfig = super.constConfig;
+		afWeap.unitName = super.constConfig.constName;
+		super.frameSpeed = 4;	
+		
+		super.setCenterOffXY(constructFrames);
+		
+		afWeap.unitColor = super.unitColor;
+		afWeap.positionX = super.positionX;
+		afWeap.positionY = super.positionY;
+		afWeap.status = super.status;
+		afWeap.stage = super.stage;
+		afWeap.priority = priority;
+		afWeap.setPartOfWeap(true);
+		afWeap.setMakingVehicle(isMakingVehicle);
+		afWeap.setMakingFly(isMakingFly);
+		
+		afWeap.curCenterPoint = super.curCenterPoint;
+		
+		//初始化血条的信息
+		afWeap.bloodBar = super.bloodBar;
+		
+		//初始化骨架的信息
+		afWeap.bone = super.bone;
+		return afWeap;
+	}
+	
 	
 	public AfWeap(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.AfWeap);
 		initShpSource(sceneType);
 		super.initBuildingValue(centerPoint,sceneType,unitColor);
+		
+		
 		//目前只加载了非雪地的部分   雪地的部分还没有加载  应该加判断！！！
 		List<String> tankMakeShpPreFix = new ArrayList<>();
 		tankMakeShpPreFix.add("gaweap_a");
@@ -585,9 +587,7 @@ public class AfWeap extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstConfig.AfWeap;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggweap");
 			super.aniShpPrefixLs.add("ggweap_2");
 			super.aniShpPrefixLs.add("ggweap_1");
@@ -597,7 +597,6 @@ public class AfWeap extends Building{
 			
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggweap");
 			super.aniShpPrefixLs.add("ggweap_2");
 			super.aniShpPrefixLs.add("ggweap_1");
@@ -606,7 +605,6 @@ public class AfWeap extends Building{
 			super.aniShpPrefixLs.add("ggweapbb");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gaweap");
 			super.aniShpPrefixLs.add("gaweap_2");
 			super.aniShpPrefixLs.add("gaweap_1");

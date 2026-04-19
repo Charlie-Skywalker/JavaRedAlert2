@@ -6,7 +6,7 @@ import java.util.List;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.MilitaryBuilding;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
@@ -14,17 +14,10 @@ import redAlert.utils.PointUtil;
  * 盟军兵营
  *
  */
-public class AfPile extends Building{
-	/**
-	 * shp文件基础名
-	 */
-	public String basicName = "pile";
-	/**
-	 * 阵营 盟军
-	 */
-	public String team = "g";
+public class AfPile extends MilitaryBuilding{
 	
 	public AfPile(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.AfPile);
 		initShpSource(sceneType);
 		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
@@ -33,19 +26,15 @@ public class AfPile extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstConfig.AfPile;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggpile");
 			super.aniShpPrefixLs.add("ggpile_a");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggpile");
 			super.aniShpPrefixLs.add("ggpile_a");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gapile");
 			super.aniShpPrefixLs.add("gapile_a");
 		}

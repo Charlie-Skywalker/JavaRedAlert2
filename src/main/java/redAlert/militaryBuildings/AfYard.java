@@ -6,24 +6,17 @@ import java.util.List;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.MilitaryBuilding;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
 /**
  * 盟军船厂
  */
-public class AfYard extends Building{
-	/**
-	 * shp文件基础名
-	 */
-	public String basicName = "yard";
-	/**
-	 * 阵营 盟军
-	 */
-	public String team = "g";
+public class AfYard extends MilitaryBuilding{
 	
 	public AfYard(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.AfYard);
 		initShpSource(sceneType);
 		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
@@ -32,22 +25,18 @@ public class AfYard extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstConfig.AfYard;
 		super.height = 130;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggyard");
 			super.aniShpPrefixLs.add("ggyard_c");
 			super.aniShpPrefixLs.add("ggyard_d");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggyard");
 			super.aniShpPrefixLs.add("ggyard_c");
 			super.aniShpPrefixLs.add("ggyard_d");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gayard");
 			super.aniShpPrefixLs.add("ggyard_c");
 			super.aniShpPrefixLs.add("ggyard_d");

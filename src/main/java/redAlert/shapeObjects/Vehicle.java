@@ -8,6 +8,7 @@ import redAlert.ShapeUnitFrame;
 import redAlert.enums.BuildingAreaType;
 import redAlert.enums.UnitColor;
 import redAlert.other.VehicleBloodBar;
+import redAlert.shapeObjects.building.Building;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utilBean.XunLuBeanAdapter;
 import redAlert.utils.PointUtil;

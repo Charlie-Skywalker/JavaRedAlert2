@@ -6,24 +6,17 @@ import java.util.List;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.MilitaryBuilding;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
 /**
  * 盟军维修厂
  */
-public class AfDept extends Building{
-	/**
-	 * shp文件基础名
-	 */
-	public String basicName = "dept";
-	/**
-	 * 阵营 盟军
-	 */
-	public String team = "g";
+public class AfDept extends MilitaryBuilding{
 	
 	public AfDept(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.AfDept);
 		initShpSource(sceneType);
 		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
@@ -32,22 +25,18 @@ public class AfDept extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstConfig.AfDept;
 		super.height = 40;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggdept");
 			super.aniShpPrefixLs.add("ggdeptbb");
 			super.aniShpPrefixLs.add("ggdept_d");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggdept");
 			super.aniShpPrefixLs.add("ggdeptbb");
 			super.aniShpPrefixLs.add("ggdept_d");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gadept");
 			super.aniShpPrefixLs.add("gadeptbb");
 			super.aniShpPrefixLs.add("gadept_d");

@@ -7,8 +7,8 @@ import java.awt.image.BufferedImage;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import redAlert.ShapeUnitFrame;
-import redAlert.shapeObjects.Building;
 import redAlert.shapeObjects.ShapeUnit;
+import redAlert.shapeObjects.building.Building;
 
 /**
  * 点击建筑后显示的立体结构图（骨架）
@@ -16,7 +16,7 @@ import redAlert.shapeObjects.ShapeUnit;
 public class BuildingBone extends ShapeUnit{
 
 	
-	public BuildingBone(Building building) {
+	public <T extends Building> BuildingBone(T building) {
 		super.setPriority(55);//骨架的优先级高于血条   高于三星标志  高于飞行兵   
 		super.setVisible(false);
 		

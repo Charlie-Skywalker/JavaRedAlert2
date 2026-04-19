@@ -13,7 +13,7 @@ import java.util.Set;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import redAlert.enums.Direction;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.Building;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utilBean.LittleCenterPoint;
 

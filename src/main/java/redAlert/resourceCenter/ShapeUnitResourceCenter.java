@@ -18,11 +18,11 @@ import redAlert.militaryBuildings.AfPile;
 import redAlert.militaryBuildings.AfWeap;
 import redAlert.other.MoveLine;
 import redAlert.other.OneDamage;
-import redAlert.shapeObjects.Building;
 import redAlert.shapeObjects.MovableUnit;
 import redAlert.shapeObjects.PowerPlant;
 import redAlert.shapeObjects.ShapeUnit;
 import redAlert.shapeObjects.Vehicle.EngineStatus;
+import redAlert.shapeObjects.building.Building;
 import redAlert.shapeObjects.soldier.Adog;
 import redAlert.shapeObjects.soldier.Engn;
 import redAlert.shapeObjects.soldier.Gi;
@@ -142,7 +142,8 @@ public class ShapeUnitResourceCenter {
 	/**
 	 * 移除一个军事建筑
 	 */
-	public static void removeOneBuilding(Building building) {
+	//public static void removeOneBuilding(    Building building) {
+	public static <T extends Building> void removeOneBuilding(T building) {
 		try {
 			buildingLock.lock();
 			if(buildingList.contains(building)) {

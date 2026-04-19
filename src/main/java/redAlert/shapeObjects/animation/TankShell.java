@@ -8,9 +8,9 @@ import redAlert.enums.SceneType;
 import redAlert.other.OneDamage;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
 import redAlert.resourceCenter.ShpResourceCenter;
-import redAlert.shapeObjects.Building;
 import redAlert.shapeObjects.ShapeUnit;
 import redAlert.shapeObjects.Vehicle;
+import redAlert.shapeObjects.building.Building;
 import redAlert.utilBean.CenterPoint;
 
 /**

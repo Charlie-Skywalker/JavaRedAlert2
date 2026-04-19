@@ -6,7 +6,7 @@ import java.util.List;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.MilitaryBuilding;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
@@ -14,17 +14,10 @@ import redAlert.utils.PointUtil;
  * 盟军矿场
  *
  */
-public class AfRefn extends Building{
-	/**
-	 * shp文件基础名
-	 */
-	public String basicName = "refn";
-	/**
-	 * 阵营 盟军
-	 */
-	public String team = "g";
+public class AfRefn extends MilitaryBuilding{
 	
 	public AfRefn(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.AfRefn);
 		initShpSource(sceneType);
 		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
@@ -33,10 +26,7 @@ public class AfRefn extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstConfig.AfRefn;
-		
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggrefn");
 			super.aniShpPrefixLs.add("ggrefnbb");
 			super.aniShpPrefixLs.add("ggrefnl3");
@@ -44,7 +34,6 @@ public class AfRefn extends Building{
 			super.aniShpPrefixLs.add("ggrefnl1");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggrefn");
 			super.aniShpPrefixLs.add("ggrefnbb");
 			super.aniShpPrefixLs.add("ggrefnl3");
@@ -52,7 +41,6 @@ public class AfRefn extends Building{
 			super.aniShpPrefixLs.add("ggrefnl1");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("garefn");
 			super.aniShpPrefixLs.add("garefnbb");
 			super.aniShpPrefixLs.add("garefnl3");

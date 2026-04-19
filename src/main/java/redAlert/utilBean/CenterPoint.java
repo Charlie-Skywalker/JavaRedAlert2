@@ -9,11 +9,11 @@ import redAlert.enums.BuildingAreaType;
 import redAlert.enums.OverlayType;
 import redAlert.enums.RampType;
 import redAlert.enums.TerrainType;
-import redAlert.shapeObjects.Building;
 import redAlert.shapeObjects.ShapeUnit;
 import redAlert.shapeObjects.Soldier;
 import redAlert.shapeObjects.Vehicle;
 import redAlert.shapeObjects.Vehicle.EngineStatus;
+import redAlert.shapeObjects.building.Building;
 import redAlert.utils.PointUtil;
 
 /**

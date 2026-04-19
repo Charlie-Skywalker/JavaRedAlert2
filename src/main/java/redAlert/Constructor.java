@@ -14,11 +14,11 @@ import javax.sound.sampled.LineListener;
 
 import redAlert.enums.BuildingAreaType;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
-import redAlert.shapeObjects.Building;
 import redAlert.shapeObjects.MovableUnit;
 import redAlert.shapeObjects.ShapeUnit;
 import redAlert.shapeObjects.Soldier;
 import redAlert.shapeObjects.Vehicle;
+import redAlert.shapeObjects.building.Building;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 import redAlert.utils.WavFileReader;
@@ -58,7 +58,7 @@ public class Constructor {
 	 * @param buildingName 建筑的名称
 	 * @param scene 表示场景  
 	 */
-	public static boolean putOneBuilding(Building building) {
+	public static <T extends Building> boolean putOneBuilding(T building) {
 		
 		//占
 		List<CenterPoint> mbuildingAreas = building.getNoConstCpList();//建筑使用中心块列表(建筑占地)

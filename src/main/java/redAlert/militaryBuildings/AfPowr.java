@@ -6,8 +6,8 @@ import java.util.List;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
-import redAlert.shapeObjects.Building;
 import redAlert.shapeObjects.PowerPlant;
+import redAlert.shapeObjects.building.MilitaryBuilding;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
@@ -15,21 +15,14 @@ import redAlert.utils.PointUtil;
  * 盟军发电场
  *
  */
-public class AfPowr extends Building implements PowerPlant{
-	/**
-	 * shp文件基础名
-	 */
-	public String basicName = "powr";
-	/**
-	 * 阵营 盟军
-	 */
-	public String team = "g";
+public class AfPowr extends MilitaryBuilding implements PowerPlant{
 	/**
 	 * 发电量
 	 */
 	public int powerGeneration = 200;
 	
 	public AfPowr(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.AfPowr);
 		initShpSource(sceneType);
 		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
@@ -38,25 +31,18 @@ public class AfPowr extends Building implements PowerPlant{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstConfig.AfPowr;
-		
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggpowr");
 			super.aniShpPrefixLs.add("ggpowr_a");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggpowr");
 			super.aniShpPrefixLs.add("ggpowr_a");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gapowr");
 			super.aniShpPrefixLs.add("gapowr_a");
 		}
-		//定义唯一编号
-		super.unitName = "盟军发电厂";
 	}
 	
 	/**

@@ -1,7 +1,7 @@
 package redAlert.shapeObjects.vehicle;
 
-import redAlert.shapeObjects.Building;
 import redAlert.shapeObjects.TankTurret;
+import redAlert.shapeObjects.building.Building;
 
 /**
  * 多功能步兵车炮塔

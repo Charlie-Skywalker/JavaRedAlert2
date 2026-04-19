@@ -2,9 +2,9 @@ package redAlert.shapeObjects.vehicle;
 
 import redAlert.Constructor;
 import redAlert.RuntimeParameter;
-import redAlert.shapeObjects.Building;
 import redAlert.shapeObjects.TankTurret;
 import redAlert.shapeObjects.animation.TankShell;
+import redAlert.shapeObjects.building.Building;
 import redAlert.utilBean.CenterPoint;
 
 /**

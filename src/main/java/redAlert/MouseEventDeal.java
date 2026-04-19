@@ -20,13 +20,14 @@ import redAlert.event.ConstructEvent;
 import redAlert.event.EventHandlerManager;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
 import redAlert.shapeObjects.Bloodable;
-import redAlert.shapeObjects.Building;
-import redAlert.shapeObjects.Building.BuildingStage;
 import redAlert.shapeObjects.Expandable;
 import redAlert.shapeObjects.MovableUnit;
 import redAlert.shapeObjects.ShapeUnit;
 import redAlert.shapeObjects.Soldier;
 import redAlert.shapeObjects.Vehicle;
+import redAlert.shapeObjects.building.Building;
+import redAlert.shapeObjects.building.MilitaryBuilding;
+import redAlert.shapeObjects.building.MilitaryBuilding.BuildingStage;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utilBean.Coordinate;
 import redAlert.utilBean.LittleCenterPoint;
@@ -307,8 +308,8 @@ public class MouseEventDeal {
 						if(RuntimeParameter.mouseStatus==MouseStatus.Sell) {
 							CenterPoint targetCp = PointUtil.getCenterPoint(coord.getMapX(), coord.getMapY());
 							ShapeUnit shapeUnit = targetCp.mouseClickGetUnit();
-							if(shapeUnit instanceof Building) {
-								Building unit = (Building)shapeUnit;
+							if(shapeUnit instanceof MilitaryBuilding) {
+								MilitaryBuilding unit = (MilitaryBuilding)shapeUnit;
 								if(unit.stage!=BuildingStage.Selling) {
 									unit.setStage(BuildingStage.Selling);
 									Constructor.playOneMusic("uselbuil");
@@ -544,14 +545,14 @@ public class MouseEventDeal {
 		if(OptionsPanel.sellLabel.isSelected()) {//用户点击了卖建筑按钮
 			Building building = centerPoint.getBuilding();
 			
-			if(building!=null && building.stage!=BuildingStage.Selling) {
-				if(building.getUnitColor()==GlobalConfig.unitColor) {
+			if(building!=null && building instanceof MilitaryBuilding) {
+				MilitaryBuilding militaryBuilding = (MilitaryBuilding)building;
+				if(militaryBuilding.getStage()!=BuildingStage.Selling && building.getUnitColor()==GlobalConfig.unitColor) {
 					RuntimeParameter.mouseStatus = MouseStatus.Sell;
 					return;
 				}
 			}
 			RuntimeParameter.mouseStatus = MouseStatus.NoSell;
-			
 			return;
 		}
 		

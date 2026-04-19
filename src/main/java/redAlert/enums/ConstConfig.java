@@ -44,54 +44,62 @@ public class ConstConfig {
 	 * 民用建筑物
 	 */
 	public static ConstConfig CityNewy10;
-	
+	public static ConstConfig CityWash07;
 	
 	static {
-		AfCnst = new ConstConfig("盟军建造场",4,4,3000,"",3000,0,true);
-		AfPowr = new ConstConfig("发电厂",2,2,800,"powricon",1500,0,true);
-		AfPile = new ConstConfig("盟军兵营",2,3,500,"brrkicon",1500,10,true);
-		AfRefn = new ConstConfig("盟军矿石精炼厂",3,4,2000,"reficon",2200,50,true);
-		AfWeap = new ConstConfig("盟军战车工厂",3,5,2000,"gwepicon",2200,25,true);
-		AfAirc = new ConstConfig("空指部",2,3,1000,"heliicon",1500,50,true);
-		AfYard = new ConstConfig("盟军造船厂",4,4,1000,"ayaricon",3000,25,true);
-		AfDept = new ConstConfig("盟军修理厂",3,3,800,"fixicon",2200,25,true);
-		AfTech = new ConstConfig("盟军作战实验室",2,3,2000,"techicon",1500,100,true);
-		AfOrep = new ConstConfig("矿石精炼器",3,3,2500,"gorep",2200,200,true);
+		AfCnst = new ConstConfig("g","cnst","盟军建造场",4,4,3000,"",3000,0,true);
+		AfPowr = new ConstConfig("g","powr","发电厂",2,2,800,"powricon",1500,0,true);
+		AfPile = new ConstConfig("g","pile","盟军兵营",2,3,500,"brrkicon",1500,10,true);
+		AfRefn = new ConstConfig("g","refn","盟军矿石精炼厂",3,4,2000,"reficon",2200,50,true);
+		AfWeap = new ConstConfig("g","weap","盟军战车工厂",3,5,2000,"gwepicon",2200,25,true);
+		AfAirc = new ConstConfig("g","airc","空指部",2,3,1000,"heliicon",1500,50,true);
+		AfYard = new ConstConfig("g","yard","盟军造船厂",4,4,1000,"ayaricon",3000,25,true);
+		AfDept = new ConstConfig("g","dept","盟军修理厂",3,3,800,"fixicon",2200,25,true);
+		AfTech = new ConstConfig("g","tech","盟军作战实验室",2,3,2000,"techicon",1500,100,true);
+		AfOrep = new ConstConfig("g","orep","矿石精炼器",3,3,2500,"gorep",2200,200,true);
 		
-		AfWall = new ConstConfig("盟军围墙",1,1,100,"wallicon",700,0,true);
-		AfPill = new ConstConfig("机枪碉堡",1,1,500,"pillicon",700,0,true);
-		AfSam = new ConstConfig("爱国者导弹",1,1,1000,"samicon",700,50,true);
-		AfPris = new ConstConfig("光棱塔",1,1,1500,"prisicon",700,75,false);
-		AfGcan = new ConstConfig("巨炮",2,2,1500,"gcanicon",1500,100,true);
-		AfGap = new ConstConfig("裂缝产生器",1,1,1000,"gapicon",700,100,true);
-		AfSpst = new ConstConfig("间谍卫星",2,2,1500,"asaticon",1500,100,false);
-		AfCsph = new ConstConfig("超时空转换器",3,4,2500,"csphicon",2200,200,false);
-		AfWeth = new ConstConfig("天气控制器",3,3,5000,"wethicon",2200,200,false);
+		AfWall = new ConstConfig("g","Noooo","盟军围墙",1,1,100,"wallicon",700,0,true);
+		AfPill = new ConstConfig("g","pill","机枪碉堡",1,1,500,"pillicon",700,0,true);
+		AfSam = new ConstConfig("n","sam","爱国者导弹",1,1,1000,"samicon",700,50,true);
+		AfPris = new ConstConfig("g","pris","光棱塔",1,1,1500,"prisicon",700,75,false);
+		AfGcan = new ConstConfig("g","gcan","巨炮",2,2,1500,"gcanicon",1500,100,true);
+		AfGap = new ConstConfig("g","gap","裂缝产生器",1,1,1000,"gapicon",700,100,true);
+		AfSpst = new ConstConfig("g","spst","间谍卫星",2,2,1500,"asaticon",1500,100,false);
+		AfCsph = new ConstConfig("g","csph","超时空转换器",3,4,2500,"csphicon",2200,200,false);
+		AfWeth = new ConstConfig("g","weth","天气控制器",3,3,5000,"wethicon",2200,200,false);
 		
-		SfCnst = new ConstConfig("苏联建造场",4,4,3000,"",3000,0,true);
-		SfNpwr = new ConstConfig("磁能反应炉",2,3,600,"npwricon",1500,0,true);
-		SfHand = new ConstConfig("苏联兵营",2,2,500,"handicon",1500,10,true);
-		SfNref = new ConstConfig("苏联矿石精炼厂",3,4,2000,"nreficon",2200,50,true);
-		SfNwep = new ConstConfig("苏联战车工厂",3,5,2000,"nwepicon",2200,25,true);
-		SfNrad = new ConstConfig("雷达",2,2,600,"nradicon",1500,50,false);
-		SfYard = new ConstConfig("船坞",4,4,1000,"yardicon",3000,20,true);
-		SfRfix = new ConstConfig("苏联维修厂",3,4,800,"rfixicon",2200,20,true);
-		SfNtch = new ConstConfig("苏联作战实验室",3,3,600,"ntchicon",2200,100,true);
-		SfNrct = new ConstConfig("核子反应炉",4,4,1000,"nrcticon",3000,0,true);
-		SfClon = new ConstConfig("复制中心",2,2,2500,"clonicon",1500,200,true);
+		SfCnst = new ConstConfig("n","Noooo","苏联建造场",4,4,3000,"",3000,0,true);
+		SfNpwr = new ConstConfig("n","Noooo","磁能反应炉",2,3,600,"npwricon",1500,0,true);
+		SfHand = new ConstConfig("n","Noooo","苏联兵营",2,2,500,"handicon",1500,10,true);
+		SfNref = new ConstConfig("n","Noooo","苏联矿石精炼厂",3,4,2000,"nreficon",2200,50,true);
+		SfNwep = new ConstConfig("n","Noooo","苏联战车工厂",3,5,2000,"nwepicon",2200,25,true);
+		SfNrad = new ConstConfig("n","Noooo","雷达",2,2,600,"nradicon",1500,50,false);
+		SfYard = new ConstConfig("n","Noooo","船坞",4,4,1000,"yardicon",3000,20,true);
+		SfRfix = new ConstConfig("n","Noooo","苏联维修厂",3,4,800,"rfixicon",2200,20,true);
+		SfNtch = new ConstConfig("n","Noooo","苏联作战实验室",3,3,600,"ntchicon",2200,100,true);
+		SfNrct = new ConstConfig("n","Noooo","核子反应炉",4,4,1000,"nrcticon",3000,0,true);
+		SfClon = new ConstConfig("n","Noooo","复制中心",2,2,2500,"clonicon",1500,200,true);
 		
-		SfNwal = new ConstConfig("苏联围墙",1,1,100,"nwalicon",700,0,true);
-		SfPlt = new ConstConfig("哨界砲",1,1,500,"plticon",700,0,true);
-		SfFlak = new ConstConfig("防空砲",1,1,1000,"flakicon",700,50,true);
-		SfTlsa = new ConstConfig("磁暴线圈",1,1,1500,"tlsaicon",700,75,false);
-		SfPsis = new ConstConfig("心灵探测器",2,2,1000,"psisicon",1500,50,false);
-		SfIron = new ConstConfig("铁幕装置",3,3,2500,"ironicon",2200,200,false);
-		SfMisl = new ConstConfig("核弹发射井",3,3,5000,"msslicon",2200,200,false);
+		SfNwal = new ConstConfig("n","Noooo","苏联围墙",1,1,100,"nwalicon",700,0,true);
+		SfPlt = new ConstConfig("n","Noooo","哨界砲",1,1,500,"plticon",700,0,true);
+		SfFlak = new ConstConfig("n","Noooo","防空砲",1,1,1000,"flakicon",700,50,true);
+		SfTlsa = new ConstConfig("n","Noooo","磁暴线圈",1,1,1500,"tlsaicon",700,75,false);
+		SfPsis = new ConstConfig("n","Noooo","心灵探测器",2,2,1000,"psisicon",1500,50,false);
+		SfIron = new ConstConfig("n","Noooo","铁幕装置",3,3,2500,"ironicon",2200,200,false);
+		SfMisl = new ConstConfig("n","Noooo","核弹发射井",3,3,5000,"msslicon",2200,200,false);
 		
-		CityNewy10 = new ConstConfig("建筑物",2,3,0,"",1500,0,true);
+		CityNewy10 = new ConstConfig("c","newy10","美国电报电话大厦",2,3,0,"",1500,0,true);
+		CityWash07 = new ConstConfig("c","wash07","美国电报电话大厦",3,3,0,"",2200,0,true);
 	}
 	
-	
+	/**
+	 * 阵营   g表示盟军   n表示苏军   c表示中立建筑
+	 */
+	public String faction;
+	/**
+	 * shp文件对应的基础名称
+	 */
+	public String shpBasicName;
 	/**
 	 * 显示名称
 	 * 右侧Icon上鼠标停留显示名称与左侧建筑上鼠标停留显示名称一致
@@ -128,7 +136,9 @@ public class ConstConfig {
 	public boolean lowPowerWorkable = true;
 	
 	
-	public ConstConfig(String constName,int fxNum,int fyNum,int price,String shpIconPrefix,int maxHp,int powerLoad,boolean lowPowerWorkable){
+	public ConstConfig(String faction,String shpBasicName,String constName,int fxNum,int fyNum,int price,String shpIconPrefix,int maxHp,int powerLoad,boolean lowPowerWorkable){
+		this.faction = faction;
+		this.shpBasicName = shpBasicName;
 		this.constName = constName;
 		this.fxNum = fxNum;
 		this.fyNum = fyNum;

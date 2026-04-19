@@ -11,7 +11,7 @@ import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
 import redAlert.resourceCenter.ShpResourceCenter;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.MilitaryBuilding;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
@@ -19,22 +19,14 @@ import redAlert.utils.PointUtil;
  * 盟军基地车
  * 
  */
-public class AfCnst extends Building{
-	/**
-	 * shp文件基础名
-	 */
-	public String basicName = "cnst";
-	/**
-	 * 阵营 盟军
-	 */
-	public String team = "g";
-	
+public class AfCnst extends MilitaryBuilding{
 	/**
 	 * 夹箱子动画帧
 	 */
 	public List<ShapeUnitFrame> fetchCrateFrames;
 	
 	public AfCnst(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.AfCnst);
 		initShpSource(sceneType);
 		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
@@ -43,25 +35,19 @@ public class AfCnst extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstConfig.AfCnst;
 		super.height = 70;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark()  + basicName + "mk";
 			super.aniShpPrefixLs.add("ggcnst");
 			super.aniShpPrefixLs.add("ggcnst_a");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark()  + basicName + "mk";
 			super.aniShpPrefixLs.add("ggcnst");
 			super.aniShpPrefixLs.add("ggcnst_a");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark()  + basicName + "mk";
 			super.aniShpPrefixLs.add("gacnst");
 			super.aniShpPrefixLs.add("gacnst_a");
 		}
-		//定义显示名称
-		super.unitName = "盟军基地车";
 		//夹箱子动画
 		if(sceneType==SceneType.TEM || sceneType==SceneType.URBAN) {
 			this.fetchCrateFrames = ShpResourceCenter.loadShpResource("ggcnst_b", sceneType.getPalPrefix()).subList(0, 19);

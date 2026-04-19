@@ -1,5 +1,7 @@
 package redAlert.shapeObjects;
 
+import redAlert.shapeObjects.building.Building;
+
 /**
  * 可开火的单位
  */

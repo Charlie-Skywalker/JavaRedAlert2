@@ -2,15 +2,13 @@ package redAlert.militaryBuildings;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import redAlert.ShapeUnitFrame;
-import redAlert.enums.BuildingStatus;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
 import redAlert.resourceCenter.ShpResourceCenter;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.MilitaryBuilding;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
@@ -18,20 +16,12 @@ import redAlert.utils.PointUtil;
  * 盟军巨炮
  * 巨炮的gg和ga文件只有一个底座
  */
-public class AfGcan extends Building{
-	/**
-	 * shp文件基础名
-	 */
-	public String basicName = "gcan";
-	/**
-	 * 阵营 盟军
-	 */
-	public String team = "g";
+public class AfGcan extends MilitaryBuilding{
 	
 	public AfGcan(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.AfGcan);
 		initShpSource(sceneType);
-		int positionX = centerPoint.getX()-centerOffX;
-		int positionY = centerPoint.getY()-centerOffY;
+		super.initBuildingValue(centerPoint,sceneType,unitColor);
 		
 		super.constructFrames = ShpResourceCenter.loadShpResource(constShpFilePrefix, sceneType.getPalPrefix());
 		workingFrames = new ArrayList<List<ShapeUnitFrame>>(5);
@@ -44,40 +34,19 @@ public class AfGcan extends Building{
 		list2.add(constructFrames.get(constructFrames.size()-1));
 		damagedFrames.add(list2);
 		
-		
-		super.scene = sceneType;
-		super.unitColor = unitColor;
-		super.positionX = positionX;
-		super.positionY = positionY;
-//		super.constructFrameIndex = 0;
-//		super.workingFrameIndex = 0;
-//		super.damagedFrameIndex = 0;
-		super.status = BuildingStatus.UNDEMAGED;
-		super.stage = BuildingStage.UnderConstruct;
-		curFrame = constructFrames.get(0);
-		super.positionMinX = curFrame.getMinX()+positionX;
-		super.positionMinY = curFrame.getMinY()+positionY;
-		//定义唯一编号
-		Random random = new Random();
-		super.unitNo = random.nextInt();
-		super.unitName = "cnst";
 	}
 	
 	/**
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstConfig.AfGcan;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gggcan");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gggcan");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gagcan");
 		}
 	}

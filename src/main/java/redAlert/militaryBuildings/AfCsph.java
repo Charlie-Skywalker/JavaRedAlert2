@@ -6,7 +6,7 @@ import java.util.List;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.MilitaryBuilding;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
@@ -14,18 +14,10 @@ import redAlert.utils.PointUtil;
  * 盟军超时空转换器
  * 
  */
-public class AfCsph extends Building{
-	
-	/**
-	 * shp文件基础名
-	 */
-	public String basicName = "csph";
-	/**
-	 * 阵营 盟军
-	 */
-	public String team = "g";
+public class AfCsph extends MilitaryBuilding{
 	
 	public AfCsph(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.AfCsph);
 		initShpSource(sceneType);
 		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
@@ -34,19 +26,15 @@ public class AfCsph extends Building{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstConfig.AfCsph;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggcsph");
 			super.aniShpPrefixLs.add("ggcsph_e");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggcsph");
 			super.aniShpPrefixLs.add("ggcsph_e");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("gacsph");
 			super.aniShpPrefixLs.add("gacsph_e");
 		}

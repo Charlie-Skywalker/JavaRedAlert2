@@ -15,18 +15,15 @@ import redAlert.other.NuclearBombUp;
 import redAlert.other.Nuketo;
 import redAlert.other.YiShu;
 import redAlert.resourceCenter.ShpResourceCenter;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.MilitaryBuilding;
+import redAlert.shapeObjects.building.MilitaryBuilding.BuildingStage;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
 /**
  * 苏军核弹井
  */
-public class SfMisl extends Building{
-	
-	public SfMisl() {
-		
-	}
+public class SfMisl extends MilitaryBuilding{
 	
 	/**
 	 * 用于核弹井展开的动画
@@ -70,16 +67,9 @@ public class SfMisl extends Building{
 	 * 前几帧  发射井是不关闭的
 	 */
 	public int launchingCounter = 0;
-	/**
-	 * shp文件基础名
-	 */
-	public String basicName = "misl";
-	/**
-	 * 阵营 盟军
-	 */
-	public String team = "n";
 	
 	public SfMisl(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.SfMisl);
 		initShpSource(sceneType);
 		super.initBuildingValue(centerPoint,sceneType,unitColor);
 		
@@ -103,15 +93,12 @@ public class SfMisl extends Building{
 	public void initShpSource(SceneType sceneType) {
 		super.constConfig = ConstConfig.SfMisl;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ngmisl_e");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ngmisl_e");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("namisl_e");
 		}
 	}

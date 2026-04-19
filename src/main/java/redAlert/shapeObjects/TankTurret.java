@@ -4,6 +4,7 @@ import java.util.List;
 
 import redAlert.ShapeUnitFrame;
 import redAlert.enums.UnitColor;
+import redAlert.shapeObjects.building.Building;
 import redAlert.shapeObjects.vehicle.VehicleUtil;
 import redAlert.utils.VxlFileReader;
 

@@ -6,7 +6,7 @@ import java.util.List;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.MilitaryBuilding;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
@@ -14,30 +14,20 @@ import redAlert.utils.PointUtil;
  * 盟军空指部
  *
  */
-public class AfAirc extends Building{
-	/**
-	 * shp文件基础名
-	 */
-	public String basicName = "airc";
-	/**
-	 * 阵营 盟军
-	 */
-	public String team = "g";
+public class AfAirc extends MilitaryBuilding{
 	
 	public AfAirc(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.AfAirc);
 		initShpSource(sceneType);
 		super.initBuildingValue(centerPoint,sceneType,unitColor);
-		System.out.println(super.centerOffX+","+super.centerOffY);
 	}
 	
 	/**
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstConfig.AfAirc;
 		super.height = 100;
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
 			super.aniShpPrefixLs.add("ggairc");
 			super.aniShpPrefixLs.add("ggairc_c");
 			super.aniShpPrefixLs.add("ggaircbb");
@@ -45,7 +35,6 @@ public class AfAirc extends Building{
 			super.aniShpPrefixLs.add("ggairc_a");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark()  + basicName + "mk";
 			super.aniShpPrefixLs.add("ggairc");
 			super.aniShpPrefixLs.add("ggairc_c");
 			super.aniShpPrefixLs.add("ggaircbb");
@@ -53,7 +42,6 @@ public class AfAirc extends Building{
 			super.aniShpPrefixLs.add("ggairc_a");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark()  + basicName + "mk";
 			super.aniShpPrefixLs.add("gaairc");
 			super.aniShpPrefixLs.add("gaairc_c");
 			super.aniShpPrefixLs.add("gaaircbb");

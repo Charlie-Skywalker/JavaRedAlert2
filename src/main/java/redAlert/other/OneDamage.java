@@ -4,11 +4,11 @@ import redAlert.Constructor;
 import redAlert.enums.BuildingAreaType;
 import redAlert.resourceCenter.ShapeUnitResourceCenter;
 import redAlert.shapeObjects.Attackable;
-import redAlert.shapeObjects.Building;
 import redAlert.shapeObjects.ShapeUnit;
 import redAlert.shapeObjects.TankTurret;
 import redAlert.shapeObjects.Vehicle;
 import redAlert.shapeObjects.animation.TankShell;
+import redAlert.shapeObjects.building.Building;
 
 /**
  * 一次伤害

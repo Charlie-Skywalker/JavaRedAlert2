@@ -1,8 +1,355 @@
 package redAlert.shapeObjects.building;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+
+import redAlert.Constructor;
+import redAlert.ShapeUnitFrame;
+import redAlert.enums.BuildingAreaType;
+import redAlert.enums.BuildingStatus;
+import redAlert.enums.ConstConfig;
+import redAlert.enums.SceneType;
+import redAlert.enums.UnitColor;
+import redAlert.militaryBuildings.AfCnst;
+import redAlert.other.BuildingBloodBar;
+import redAlert.other.BuildingBone;
+import redAlert.resourceCenter.ShapeUnitResourceCenter;
+import redAlert.resourceCenter.ShpResourceCenter;
+import redAlert.shapeObjects.building.MilitaryBuilding.BuildingStage;
+import redAlert.utilBean.CenterPoint;
+import redAlert.utils.CanvasPainter;
+import redAlert.utils.PointUtil;
+
 /**
  * 可建造的军事建筑
+ * 
+ * 军事建筑的特点是  有建造动画、工作动画、损坏状态下的工作动画、变卖动画
  */
-public abstract class MilitaryBuilding {
+public abstract class MilitaryBuilding extends Building{
+	
+	/**
+	 * 建设阶段
+	 */
+	public enum BuildingStage{
+		
+		UnderConstruct("建设中"),
+		ConstructComplete("建设完成"),
+		Selling("贱卖中");
+		
+		private final String cnDesc;
+		
+		BuildingStage(String cnDesc){
+			this.cnDesc = cnDesc;
+		}
+	}
+	
+	
+	/**
+	 * 建造动画SHP文件前缀
+	 */
+	public String constShpFilePrefix = "";
+	/**
+	 * 运行动画SHP文件前缀集合
+	 */
+	public List<String> aniShpPrefixLs = new ArrayList<>();
+	/**
+	 * 建筑建造动画帧集合
+	 *   因为建造是一个单向连续的过程，不包括多个组成部分，所以是一个简单数组
+	 */
+	public List<ShapeUnitFrame> constructFrames;
+	/**
+	 * 建筑工作动画帧集合
+	 *   建筑工作可能分为多个shp文件协同，所以List中有多个shp帧序列
+	 */
+	public List<List<ShapeUnitFrame>> workingFrames;
+	/**
+	 * 建筑受损动画帧集合
+	 *   与建筑工作动画帧类似
+	 */
+	public List<List<ShapeUnitFrame>> damagedFrames;
+	/**
+	 * 建筑阶段  正在建设中或建设完成(动态展示中)
+	 */
+	public BuildingStage stage = BuildingStage.UnderConstruct;
+	/**
+	 * 建造时shp帧下标
+	 */
+	public int constIndex = 0;
+	/**
+	 * 工作时shp帧下标
+	 */
+	public int workingIndex = 0;
+	
+	
+	public MilitaryBuilding() {
+		super();
+	}
+	
+	public MilitaryBuilding(SceneType sceneType,ConstConfig config) {
+		super(sceneType,config);
+		this.constShpFilePrefix = constConfig.faction + sceneType.getSceneMark() + constConfig.shpBasicName + "mk";
+	}
+	
+	
+	/**
+	 * 由子类调用初始化Building的成员变量
+	 */
+	public void initBuildingValue(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		this.constructFrames = ShpResourceCenter.loadShpResource(constShpFilePrefix, sceneType.getPalPrefix());
+		this.workingFrames = ShpResourceCenter.loadWorkingFrames(aniShpPrefixLs, sceneType);
+		this.damagedFrames = ShpResourceCenter.loadDamagedFrames(aniShpPrefixLs, sceneType);
+		
+		super.setCenterOffXY(constructFrames);
+		
+		this.unitColor = unitColor;
+		this.positionX = centerPoint.getX()-centerOffX;
+		this.positionY = centerPoint.getY()-centerOffY;
+		this.frameNum = 0;
+		this.status = BuildingStatus.UNDEMAGED;
+		this.stage = BuildingStage.UnderConstruct;
+		this.curFrame = calculateFirstFrame();
+		this.positionMinX = curFrame.getMinX()+positionX;
+		this.positionMinY = curFrame.getMinY()+positionY;
+		this.curCenterPoint = PointUtil.getCenterPoint(super.positionX+super.centerOffX, super.positionY+super.centerOffY);
+		
+		//初始化血条的信息
+		bloodBar = new BuildingBloodBar(this);
+		Constructor.putOneShapeUnit(bloodBar);
+		
+		//初始化骨架的信息
+		bone = new BuildingBone(this);
+		Constructor.putOneShapeUnit(bone);
+	}
+	
+	/**
+	 * 由于新建建筑是直接扔进缓存队列的,所以需要计算好第一帧的颜色
+	 * 计算第一帧
+	 */
+	public ShapeUnitFrame calculateFirstFrame() {
+		ShapeUnitFrame firstConstFrame = constructFrames.get(0);
+		
+		ShapeUnitFrame newFrame = firstConstFrame.copy();
+		BufferedImage image = newFrame.getImg();
+		giveFrameUnitColor(image,newFrame);//上阵营色
+		return newFrame;
+	}
+	
+	
+	/**
+	 * 当一帧绘完  building会被扔入BuildingDrawer的队列中调用此方法算下一帧画面
+	 * 计算下一帧画面
+	 */
+	public void calculateNextFrame() {
+		
+		if(bloodBar.getCurHp()>bloodBar.getMaxHp()*0.5){
+			status = BuildingStatus.UNDEMAGED;
+		}else if(bloodBar.getCurHp()<=bloodBar.getMaxHp()*0.5 && bloodBar.getCurHp()>=1){
+			status = BuildingStatus.DEMAGED;
+		}else if(bloodBar.getCurHp()<1) {
+			super.end = true;
+		}
+		
+		if(this.stage==BuildingStage.UnderConstruct) {//建造动画
+			
+			if(constIndex<constructFrames.size()) {
+				ShapeUnitFrame constFrame = constructFrames.get(constIndex);
+				BufferedImage curImg = curFrame.getImg();
+				CanvasPainter.clearImage(curImg);
+				curFrame.setMinX(constFrame.getMinX());
+				curFrame.setMaxX(constFrame.getMaxX());
+				curFrame.setMinY(constFrame.getMinY());
+				curFrame.setMaxY(constFrame.getMaxY());
+				curFrame.setRealPartHeight(constFrame.getRealPartHeight());
+				curFrame.setRealPartWidth(constFrame.getRealPartWidth());
+				Graphics2D curG2d = curImg.createGraphics();
+				curG2d.drawImage(constFrame.getImg(), 0, 0, null);
+				curG2d.dispose();
+				giveFrameUnitColor(curImg,constFrame);//上阵营色
+				super.positionMinX = curFrame.getMinX()+positionX;
+				super.positionMinY = curFrame.getMinY()+positionY;
+				constIndex++;
+			}else {
+				this.stage = BuildingStage.ConstructComplete;
+				//找到基地并展示夹箱子动画
+				if(!this.getClass().equals(AfCnst.class)) {
+					ShapeUnitResourceCenter.exeCnstFetchAni();
+				}
+				//展示第一幅工作画面
+				calculateNextFrame();
+			}
+			
+		}else if(stage==BuildingStage.ConstructComplete) {//建设完成
+			
+			if(status==BuildingStatus.UNDEMAGED){
+				BufferedImage curImg = curFrame.getImg();
+				CanvasPainter.clearImage(curImg);
+				Graphics curG2d = curImg.createGraphics();
+				
+				int minX = 0;
+				int minY = 0;
+				int maxX = 0;
+				int maxY = 0;
+				for(int i=0;i<workingFrames.size();i++) {
+					List<ShapeUnitFrame> workingFrameLs = workingFrames.get(i);
+					ShapeUnitFrame frame = workingFrameLs.get(workingIndex%workingFrameLs.size());
+					BufferedImage oriImage = frame.getImg();
+					curG2d.drawImage(oriImage, 0, 0, null);
+					
+					giveFrameUnitColor(curImg,frame);//上阵营色
+					
+					if(i==0) {
+						minX = frame.getMinX();
+						minY = frame.getMinY();
+						maxX = frame.getMaxX();
+						maxY = frame.getMaxY();
+					}else {
+						if(frame.getMinX()<minX) {
+							minX = frame.getMinX();
+						}
+						if(frame.getMinY()<minY) {
+							minY = frame.getMinY();
+						}
+						if(frame.getMaxX()>maxX) {
+							maxX = frame.getMaxX();
+						}
+						if(frame.getMaxY()>maxY) {
+							maxY = frame.getMaxY();
+						}
+					}
+				}
+				curG2d.dispose();
+				super.positionMinX = positionX+minX;
+				super.positionMinY = positionY+minY;
+				curFrame.setMinX(minX);
+				curFrame.setMaxX(maxX);
+				curFrame.setMinY(minY);
+				curFrame.setMaxY(maxY);
+				if(ShapeUnitResourceCenter.isPowerOn || this.constConfig.lowPowerWorkable) {
+					workingIndex++;
+					if(workingIndex>=Integer.MAX_VALUE) {
+						workingIndex = 0;
+					}
+				}
+			}else if(status==BuildingStatus.DEMAGED){
+				BufferedImage curImg = curFrame.getImg();
+				CanvasPainter.clearImage(curImg);
+				Graphics curG2d = curImg.createGraphics();
+				
+				int minX = 0;
+				int minY = 0;
+				int maxX = 0;
+				int maxY = 0;
+				for(int i=0;i<damagedFrames.size();i++) {
+					List<ShapeUnitFrame> damagedFrameLs = damagedFrames.get(i);
+					ShapeUnitFrame frame = damagedFrameLs.get(workingIndex%damagedFrameLs.size());
+					BufferedImage oriImage = frame.getImg();
+					curG2d.drawImage(oriImage, 0, 0, null);
+					
+					giveFrameUnitColor(curImg,frame);//上阵营色
+					
+					if(i==0) {
+						minX = frame.getMinX();
+						minY = frame.getMinY();
+						maxX = frame.getMaxX();
+						maxY = frame.getMaxY();
+					}else {
+						if(frame.getMinX()<minX) {
+							minX = frame.getMinX();
+						}
+						if(frame.getMinY()<minY) {
+							minY = frame.getMinY();
+						}
+						if(frame.getMaxX()>maxX) {
+							maxX = frame.getMaxX();
+						}
+						if(frame.getMaxY()>maxY) {
+							maxY = frame.getMaxY();
+						}
+					}
+				}
+				curG2d.dispose();
+				super.positionMinX = positionX+minX;
+				super.positionMinY = positionY+minY;
+				curFrame.setMinX(minX);
+				curFrame.setMaxX(maxX);
+				curFrame.setMinY(minY);
+				curFrame.setMaxY(maxY);
+				if(ShapeUnitResourceCenter.isPowerOn || this.constConfig.lowPowerWorkable) {
+					workingIndex++;
+					if(workingIndex>=Integer.MAX_VALUE) {
+						workingIndex = 0;
+					}
+				}
+			}
+		}else if(stage==BuildingStage.Selling){//卖掉
+			if(constIndex>=constructFrames.size()) {
+				constIndex = constructFrames.size()-1;
+				
+				ShapeUnitFrame constFrame = constructFrames.get(constIndex);
+				BufferedImage curImg = curFrame.getImg();
+				CanvasPainter.clearImage(curImg);
+				curFrame.setMinX(constFrame.getMinX());
+				curFrame.setMaxX(constFrame.getMaxX());
+				curFrame.setMinY(constFrame.getMinY());
+				curFrame.setMaxY(constFrame.getMaxY());
+				curFrame.setRealPartHeight(constFrame.getRealPartHeight());
+				curFrame.setRealPartWidth(constFrame.getRealPartWidth());
+				Graphics2D curG2d = curImg.createGraphics();
+				curG2d.drawImage(constFrame.getImg(), 0, 0, null);
+				curG2d.dispose();
+				giveFrameUnitColor(curImg,constFrame);//上阵营色
+				super.positionMinX = curFrame.getMinX()+positionX;
+				super.positionMinY = curFrame.getMinY()+positionY;
+				constIndex--;
+			}else if(constIndex>=0 && constIndex<constructFrames.size()) {
+				ShapeUnitFrame constFrame = constructFrames.get(constIndex);
+				BufferedImage curImg = curFrame.getImg();
+				CanvasPainter.clearImage(curImg);
+				curFrame.setMinX(constFrame.getMinX());
+				curFrame.setMaxX(constFrame.getMaxX());
+				curFrame.setMinY(constFrame.getMinY());
+				curFrame.setMaxY(constFrame.getMaxY());
+				curFrame.setRealPartHeight(constFrame.getRealPartHeight());
+				curFrame.setRealPartWidth(constFrame.getRealPartWidth());
+				Graphics2D curG2d = curImg.createGraphics();
+				curG2d.drawImage(constFrame.getImg(), 0, 0, null);
+				curG2d.dispose();
+				giveFrameUnitColor(curImg,constFrame);//上阵营色
+				super.positionMinX = curFrame.getMinX()+positionX;
+				super.positionMinY = curFrame.getMinY()+positionY;
+				constIndex--;
+			}else if(constIndex<0){
+				Constructor.playOneMusic("ceva058");
+				this.end = true;
+				setVisible(false);
+				setEnd(true);
+				getCurCenterPoint().setBuilding(null);//上边的物品
+				ShapeUnitResourceCenter.removeOneBuilding(this);
+				this.getBloodBar().setVisible(false);
+				this.getBloodBar().setEnd(true);
+				ShapeUnitResourceCenter.removeOneUnit(bloodBar);
+				this.getBone().setVisible(false);
+				this.getBone().setEnd(true);
+				ShapeUnitResourceCenter.removeOneUnit(bone);
+				
+				getCurCenterPoint().buildingAreaType = BuildingAreaType.None;
+				
+			}
+		}
+	}
 
+
+	public BuildingStage getStage() {
+		return stage;
+	}
+
+
+	public void setStage(BuildingStage stage) {
+		this.stage = stage;
+	}
+	
+	
 }

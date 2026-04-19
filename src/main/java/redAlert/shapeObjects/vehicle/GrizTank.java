@@ -4,8 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import redAlert.enums.UnitColor;
-import redAlert.shapeObjects.Building;
 import redAlert.shapeObjects.Vehicle;
+import redAlert.shapeObjects.building.Building;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.CanvasPainter;
 

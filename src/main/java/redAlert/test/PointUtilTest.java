@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.Building;
 import redAlert.utilBean.CenterPoint;
 
 /**

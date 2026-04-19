@@ -3,39 +3,26 @@ package redAlert.militaryBuildings;
 import java.util.ArrayList;
 import java.util.List;
 
-import redAlert.Constructor;
 import redAlert.ShapeUnitFrame;
-import redAlert.enums.BuildingStatus;
 import redAlert.enums.ConstConfig;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
-import redAlert.other.BuildingBloodBar;
-import redAlert.other.BuildingBone;
-import redAlert.resourceCenter.ShpResourceCenter;
-import redAlert.shapeObjects.Building;
+import redAlert.shapeObjects.building.MilitaryBuilding;
 import redAlert.utilBean.CenterPoint;
 import redAlert.utils.PointUtil;
 
 /**
  * 盟军 爱国者飞弹
- * gg ga动画只有基座
+ * 游戏中爱国者飞弹是盟军的建筑，但名称是苏军格式的
+ * 例如建造动画nasammk.shp、ntsammk.shp、ngsammk.shp  运行动画nasam.shp ngsam.shp
+ * ng na 动画只有基座
  */
-public class AfSam extends Building{
-	/**
-	 * shp文件基础名
-	 */
-	public String basicName = "sam";
-	/**
-	 * 阵营 苏军
-	 */
-	public String team = "n";
+public class AfSam extends MilitaryBuilding{
 	
 	public AfSam(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.AfSam);
 		initShpSource(sceneType);
-		int positionX = centerPoint.getX()-centerOffX;
-		int positionY = centerPoint.getY()-centerOffY;
-		
-		super.constructFrames = ShpResourceCenter.loadShpResource(constShpFilePrefix, sceneType.getPalPrefix());
+		super.initBuildingValue(centerPoint,sceneType,unitColor);
 		
 		workingFrames = new ArrayList<List<ShapeUnitFrame>>(5);
 		List<ShapeUnitFrame> list1 = new ArrayList<>();
@@ -47,64 +34,22 @@ public class AfSam extends Building{
 		list2.add(constructFrames.get(constructFrames.size()-1));
 		damagedFrames.add(list2);
 		
-		
-		super.scene = sceneType;
-		super.unitColor = unitColor;
-		super.positionX = positionX;
-		super.positionY = positionY;
-		super.frameNum = 0;
-		super.status = BuildingStatus.UNDEMAGED;
-		super.stage = BuildingStage.UnderConstruct;
-		this.curFrame = calculateFirstFrame();
-		super.positionMinX = curFrame.getMinX()+positionX;
-		super.positionMinY = curFrame.getMinY()+positionY;
-		this.curCenterPoint = PointUtil.getCenterPoint(super.positionX+super.centerOffX, super.positionY+super.centerOffY);
-		
-		//初始化血条的信息
-		bloodBar = new BuildingBloodBar(this);
-		Constructor.putOneShapeUnit(bloodBar);
-		
-		//初始化骨架的信息
-		bone = new BuildingBone(this);
-		Constructor.putOneShapeUnit(bone);
-		
 	}
 	
 	/**
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.constConfig = ConstConfig.AfSam;
 		super.height = 60;
-		setCenterOffX(50);
-		setCenterOffY(50);
 		if(sceneType==SceneType.TEM) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
-			super.aniShpPrefixLs.add("ggairc");
-			super.aniShpPrefixLs.add("ggairc_c");
-			super.aniShpPrefixLs.add("ggaircbb");
-			super.aniShpPrefixLs.add("ggairc_b");
-			super.aniShpPrefixLs.add("ggairc_a");
+			super.aniShpPrefixLs.add("ngsam");
 		}
 		if(sceneType==SceneType.URBAN) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
-			super.aniShpPrefixLs.add("ggairc");
-			super.aniShpPrefixLs.add("ggairc_c");
-			super.aniShpPrefixLs.add("ggaircbb");
-			super.aniShpPrefixLs.add("ggairc_b");
-			super.aniShpPrefixLs.add("ggairc_a");
+			super.aniShpPrefixLs.add("ngsam");
 		}
 		if(sceneType==SceneType.SNOW) {
-			super.constShpFilePrefix = team + sceneType.getSceneMark() + basicName + "mk";
-			super.aniShpPrefixLs.add("gaairc");
-			super.aniShpPrefixLs.add("gaairc_c");
-			super.aniShpPrefixLs.add("gaaircbb");
-			super.aniShpPrefixLs.add("gaairc_b");
-			super.aniShpPrefixLs.add("gaairc_a");
+			super.aniShpPrefixLs.add("nasam");
 		}
-		//定义显示名称
-		super.unitName = "爱国者飞弹";
-		
 	}
 	
 	/**
