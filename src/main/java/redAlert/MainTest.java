@@ -6,6 +6,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import redAlert.civilBuilding.CityNewy10;
+import redAlert.civilBuilding.CityWa2a;
+import redAlert.civilBuilding.CityWa2b;
+import redAlert.civilBuilding.CityWa2c;
+import redAlert.civilBuilding.CityWa2d;
 import redAlert.civilBuilding.CityWash07;
 import redAlert.civilBuilding.CityWash16;
 import redAlert.enums.BuildingStatus;
@@ -145,6 +149,22 @@ public class MainTest {
 		CenterPoint cp5555 = PointUtil.getCenterPoint(800, 200);
 		CityWash16 build3 = new CityWash16(cp5555,SceneType.SNOW,UnitColor.Gray);
 		Constructor.putOneBuilding(build3);//民用建筑
+		
+		CenterPoint cp6666 = PointUtil.getCenterPoint(1400, 600);
+		CityWa2a build4 = new CityWa2a(cp6666,SceneType.SNOW,UnitColor.Gray);
+		Constructor.putOneBuilding(build4);//五角大楼
+		
+		CenterPoint cp7777 = PointUtil.getCenterPoint(1250, 660);
+		CityWa2b build5 = new CityWa2b(cp7777,SceneType.SNOW,UnitColor.Gray);
+		Constructor.putOneBuilding(build5);//五角大楼
+		
+		CenterPoint cp8888 = PointUtil.getCenterPoint(1150, 600);
+		CityWa2c build6 = new CityWa2c(cp8888,SceneType.SNOW,UnitColor.Gray);
+		Constructor.putOneBuilding(build6);//五角大楼
+		
+		CenterPoint cp9999 = PointUtil.getCenterPoint(1250, 550);
+		CityWa2d build7 = new CityWa2d(cp9999,SceneType.SNOW,UnitColor.Gray);
+		Constructor.putOneBuilding(build7);//五角大楼
 		
 //		Thread.sleep(time);
 //		Constructor.putOneBuilding(new AfSam(SceneType.TEM,UnitColor.LightBlue,550,550),scenePanel);//爱国者飞弹

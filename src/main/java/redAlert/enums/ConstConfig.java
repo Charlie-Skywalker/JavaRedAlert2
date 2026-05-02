@@ -46,6 +46,10 @@ public class ConstConfig {
 	public static ConstConfig CityNewy10;
 	public static ConstConfig CityWash07;
 	public static ConstConfig CityWash16;
+	public static ConstConfig CityWa2a;
+	public static ConstConfig CityWa2b;
+	public static ConstConfig CityWa2c;
+	public static ConstConfig CityWa2d;
 	
 	static {
 		AfCnst = new ConstConfig("g","cnst","盟军建造场",4,4,3000,"",3000,0,true);
@@ -92,6 +96,10 @@ public class ConstConfig {
 		CityNewy10 = new ConstConfig("c","newy10","美国电报电话大厦",2,3,0,"",1500,0,true);
 		CityWash07 = new ConstConfig("c","wash07","建筑物07",3,3,0,"",2200,0,true);
 		CityWash16 = new ConstConfig("c","wash16","史密斯国家博物馆",3,5,0,"",2200,0,true);
+		CityWa2a = new ConstConfig("c","wa2a","五角大楼",1,1,0,"",2200,0,true);
+		CityWa2b = new ConstConfig("c","wa2b","五角大楼",1,1,0,"",2200,0,true);
+		CityWa2c = new ConstConfig("c","wa2c","五角大楼",1,1,0,"",2200,0,true);
+		CityWa2d = new ConstConfig("c","wa2d","五角大楼",1,1,0,"",2200,0,true);
 	}
 	
 	/**
