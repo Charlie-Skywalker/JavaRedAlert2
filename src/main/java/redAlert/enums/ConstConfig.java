@@ -45,6 +45,7 @@ public class ConstConfig {
 	 */
 	public static ConstConfig CityNewy10;
 	public static ConstConfig CityWash07;
+	public static ConstConfig CityWash16;
 	
 	static {
 		AfCnst = new ConstConfig("g","cnst","盟军建造场",4,4,3000,"",3000,0,true);
@@ -89,7 +90,8 @@ public class ConstConfig {
 		SfMisl = new ConstConfig("n","Noooo","核弹发射井",3,3,5000,"msslicon",2200,200,false);
 		
 		CityNewy10 = new ConstConfig("c","newy10","美国电报电话大厦",2,3,0,"",1500,0,true);
-		CityWash07 = new ConstConfig("c","wash07","美国电报电话大厦",3,3,0,"",2200,0,true);
+		CityWash07 = new ConstConfig("c","wash07","建筑物07",3,3,0,"",2200,0,true);
+		CityWash16 = new ConstConfig("c","wash16","史密斯国家博物馆",3,5,0,"",2200,0,true);
 	}
 	
 	/**

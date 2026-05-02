@@ -6,14 +6,10 @@ import redAlert.enums.UnitColor;
 import redAlert.shapeObjects.building.CivilBuilding;
 import redAlert.utilBean.CenterPoint;
 
-/**
- * 美国电报电话大厦(原AT&T总部大楼)
- * 
- */
-public class CityNewy10 extends CivilBuilding{
-	
-	public CityNewy10(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
-		super(sceneType,ConstConfig.CityNewy10);
+public class CityWash16 extends CivilBuilding{
+
+	public CityWash16(CenterPoint centerPoint,SceneType sceneType,UnitColor unitColor) {
+		super(sceneType,ConstConfig.CityWash16);
 		initShpSource(sceneType);
 		super.initBuildingValue(centerPoint,sceneType,unitColor);
 	}
@@ -22,7 +18,6 @@ public class CityNewy10 extends CivilBuilding{
 	 * 此建筑独有的一些参数
 	 */
 	public void initShpSource(SceneType sceneType) {
-		super.height = 200;
+		super.height = 60;
 	}
-
 }

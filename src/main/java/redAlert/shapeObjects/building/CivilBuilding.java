@@ -216,7 +216,23 @@ public abstract class CivilBuilding extends Building{
 			super.positionMinY = curFrame.getMinY()+positionY;
 		}
 	}
-
+	
+	/**
+	 * 民用建筑的占地都不允许再建民用建筑或军事建筑
+	 */
+	@Override
+	public List<CenterPoint> getNoConstCpList() {
+		return super.getUsedCpList();
+	}
+	/**
+	 * 民用建筑的占地不允许有载具踩在上边
+	 */
+	@Override
+	public List<CenterPoint> getNoVehicleCpList() {
+		return getNoConstCpList();
+	}
+	
+	
 	public BuildingUsingStatus getUsingStatus() {
 		return usingStatus;
 	}

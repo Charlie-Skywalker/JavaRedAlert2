@@ -13,6 +13,7 @@ import redAlert.other.BuildingBone;
 import redAlert.shapeObjects.Bloodable;
 import redAlert.shapeObjects.ShapeUnit;
 import redAlert.utilBean.CenterPoint;
+import redAlert.utils.PointUtil;
 
 /**
  * 对建筑的抽象
@@ -97,6 +98,12 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 			setCenterOffX(imgCenter.x+30);
 			setCenterOffY(imgCenter.y+14+30+15);
 		}
+		
+		//2*5建筑物
+		if(constConfig.fxNum==2 && constConfig.fyNum==5) {
+			setCenterOffX(imgCenter.x+30+30);
+			setCenterOffY(imgCenter.y+14+30);
+		}
 	}
 	
 	/**
@@ -158,6 +165,107 @@ public abstract class Building extends ShapeUnit implements Bloodable{
 		}
 		return rightFirst;
 	}
+	
+	//计算一般情况下的建筑占地列表
+	public List<CenterPoint> getUsedCpList(){
+		int centerX = super.centerOffX + super.getPositionX();
+		int centerY = super.centerOffY + super.getPositionY();
+		List<CenterPoint> result = new ArrayList<>();
+		CenterPoint center = PointUtil.getCenterPoint(centerX, centerY);
+		if(constConfig.fxNum==1 && constConfig.fyNum==1) {
+			result.add(center);
+		}
+		if(constConfig.fxNum==2 && constConfig.fyNum==2) {
+			result.add(center);
+			result.add(center.getLeftDn());
+			result.add(center.getDn());
+			result.add(center.getRightDn());
+		}
+		if(constConfig.fxNum==2 && constConfig.fyNum==3) {
+			result.add(center);
+			result.add(center.getLeftUp());
+			result.add(center.getLeft());
+			result.add(center.getLeftDn());
+			result.add(center.getDn());
+			result.add(center.getRightDn());
+		}
+		if(constConfig.fxNum==3 && constConfig.fyNum==3) {
+			result.add(center);
+			result.add(center.getLeft());
+			result.add(center.getLeftDn());
+			result.add(center.getDn());
+			result.add(center.getRightDn());
+			result.add(center.getRight());
+			result.add(center.getRightUp());
+			result.add(center.getUp());
+			result.add(center.getLeftUp());
+		}
+		if(constConfig.fxNum==3 && constConfig.fyNum==4) {
+			result.add(center);
+			result.add(center.getLeft());
+			result.add(center.getLeftDn());
+			result.add(center.getDn());
+			result.add(center.getRightDn());
+			result.add(center.getRight());
+			result.add(center.getRightUp());
+			result.add(center.getUp());
+			result.add(center.getLeftUp());
+			result.add(center.getRight().getRightDn());
+			result.add(center.getRightDn().getRightDn());
+			result.add(center.getRightDn().getDn());
+		}
+		if(constConfig.fxNum==4 && constConfig.fyNum==4) {
+			result.add(center);
+			result.add(center.getLeft());
+			result.add(center.getLeftDn());
+			result.add(center.getDn());
+			result.add(center.getRightDn());
+			result.add(center.getRight());
+			result.add(center.getRightUp());
+			result.add(center.getUp());
+			result.add(center.getLeftUp());
+			result.add(center.getLeft().getLeftDn());
+			result.add(center.getLeftDn().getLeftDn());
+			result.add(center.getLeftDn().getDn());
+			result.add(center.getRight().getRightDn());
+			result.add(center.getRightDn().getRightDn());
+			result.add(center.getDn().getRightDn());
+			result.add(center.getDn().getDn());
+		}
+		if(constConfig.fxNum==3 && constConfig.fyNum==5) {
+			result.add(center);
+			result.add(center.getLeft());
+			result.add(center.getLeftDn());
+			result.add(center.getDn());
+			result.add(center.getRightDn());
+			result.add(center.getRight());
+			result.add(center.getRightUp());
+			result.add(center.getUp());
+			result.add(center.getLeftUp());
+			result.add(center.getRight().getRightDn());
+			result.add(center.getRightDn().getRightDn());
+			result.add(center.getRightDn().getDn());
+			result.add(center.getLeft().getLeftUp());
+			result.add(center.getLeftUp().getLeftUp());
+			result.add(center.getUp().getLeftUp());
+		}
+		if(constConfig.fxNum==2 && constConfig.fyNum==5) {//民用建筑中不确定是否存在2*5的建筑
+			result.add(center);
+			result.add(center.getLeftUp());
+			result.add(center.getLeftUp().getLeftUp());
+			result.add(center.getRightDn());
+			result.add(center.getRightDn().getRightDn());
+			result.add(center.getLeftDn());
+			result.add(center.getLeftDn().getLeftUp());
+			result.add(center.getLeftDn().getLeftUp().getLeftUp());
+			result.add(center.getLeftDn().getRightDn());
+			result.add(center.getLeftDn().getRightDn().getRightDn());
+		}
+		
+		return result;
+	}
+	
+	
 	
 	@Override
 	public int hashCode() {

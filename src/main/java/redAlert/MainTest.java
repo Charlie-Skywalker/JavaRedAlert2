@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import redAlert.civilBuilding.CityNewy10;
 import redAlert.civilBuilding.CityWash07;
+import redAlert.civilBuilding.CityWash16;
 import redAlert.enums.BuildingStatus;
 import redAlert.enums.SceneType;
 import redAlert.enums.UnitColor;
@@ -140,6 +141,11 @@ public class MainTest {
 		Constructor.putOneBuilding(build2);//民用建筑
 		build2.setStatus(BuildingStatus.DEMAGED);
 		build2.setUsingStatus(BuildingUsingStatus.ArmyIn);
+		
+		CenterPoint cp5555 = PointUtil.getCenterPoint(800, 200);
+		CityWash16 build3 = new CityWash16(cp5555,SceneType.SNOW,UnitColor.Gray);
+		Constructor.putOneBuilding(build3);//民用建筑
+		
 //		Thread.sleep(time);
 //		Constructor.putOneBuilding(new AfSam(SceneType.TEM,UnitColor.LightBlue,550,550),scenePanel);//爱国者飞弹
 //		Thread.sleep(time);
